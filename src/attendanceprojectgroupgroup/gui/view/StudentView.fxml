@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="399.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.StudentViewController">
+   <children>
+      <Label fx:id="idLabel" layoutX="16.0" layoutY="8.0" text="ID">
+         <font>
+            <Font name="SansSerif Regular" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameLabel" layoutX="72.0" layoutY="8.0" text="Name">
+         <font>
+            <Font name="SansSerif Regular" size="25.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutY="45.0" prefHeight="311.0" prefWidth="504.0">
+        <content>
+          <AnchorPane prefHeight="354.0" prefWidth="453.0">
+               <children>
+                  <TableView prefHeight="309.0" prefWidth="489.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="columnWeek" minWidth="0.0" prefWidth="42.0" text="Week" />
+                      <TableColumn fx:id="columnMonday" minWidth="0.0" prefWidth="75.0" text="Monday" />
+                        <TableColumn fx:id="columnTuesday" minWidth="0.0" prefWidth="75.0" text="Tuesday" />
+                        <TableColumn fx:id="columnWednesday" minWidth="0.0" prefWidth="75.0" text="Wednesday" />
+                        <TableColumn fx:id="columnThursday" minWidth="0.0" prefWidth="75.0" text="Thursday" />
+                        <TableColumn fx:id="columnFriday" minWidth="0.0" prefWidth="75.0" text="Friday" />
+                        <TableColumn fx:id="columnWeekTotal" minWidth="0.0" prefWidth="70.0" text="WeekTotal" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
