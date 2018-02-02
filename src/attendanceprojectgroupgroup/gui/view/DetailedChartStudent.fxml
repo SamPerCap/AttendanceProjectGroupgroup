@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="attendanceprojectgroupgroup.gui.view.DetailedChartStudentController">
+   <children>
+      <BarChart fx:id="weekDetailChart" prefHeight="400.0" prefWidth="507.0" title="WeekDetail" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+        <xAxis>
+          <CategoryAxis prefHeight="21.0" prefWidth="467.0" side="BOTTOM" fx:id="xBar" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis minorTickCount="2" prefHeight="242.0" prefWidth="28.0" side="LEFT" tickLabelGap="5.0" upperBound="95.0">
+               <tickLabelFont>
+                  <Font name="SansSerif Regular" size="10.0" />
+               </tickLabelFont>
+            </NumberAxis>
+        </yAxis>
+      </BarChart>
+      <ToggleButton layoutX="507.0" layoutY="14.0" mnemonicParsing="false" text="See in detail" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="10.0">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </ToggleButton>
+   </children>
+</AnchorPane>
