@@ -35,5 +35,6 @@
             </Button>
         </buttons>
       </ButtonBar>
+      <Button fx:id="btnStudentView" layoutX="498.0" layoutY="8.0" mnemonicParsing="false" onAction="#clickStudentView" text="StudentView" />
    </children>
 </AnchorPane>

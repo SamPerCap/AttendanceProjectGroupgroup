@@ -35,7 +35,9 @@ public class TeacherViewController implements Initializable
     private Button btnChart2;
     @FXML
     private Button btnChart3;
-
+    @FXML
+    private Button btnStudentView;
+    private LogInViewController parent;
     /**
      * Initializes the controller class.
      */
@@ -45,24 +47,16 @@ public class TeacherViewController implements Initializable
         // TODO
     }    
 
+        
+    public void setParentWindowController(LogInViewController parent) 
+    {
+        this.parent = parent;
+    }
+        
     @FXML
     private void clickOpenChart1(ActionEvent event) throws IOException
     {
-        Stage stage = new Stage();
 
-        stage.initModality(Modality.APPLICATION_MODAL);
-
-        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/StudentView.fxml"));
-
-        Parent root = fxLoader.load();
-
-        StudentViewController controller = fxLoader.getController();
-        controller.setParentWindowController(this);
-
-        Scene scene = new Scene(root);
-        stage.setTitle("Log In");
-        stage.setScene(scene);
-        stage.showAndWait();
     }
 
     @FXML
@@ -74,5 +68,24 @@ public class TeacherViewController implements Initializable
     private void clickOpenChart3(ActionEvent event)
     {
     }
-    
+
+    @FXML
+    private void clickStudentView(ActionEvent event) throws IOException
+    {
+        Stage stage = new Stage();
+
+//        stage.initModality(Modality.APPLICATION_MODAL);
+
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/StudentView.fxml"));
+
+        Parent root = fxLoader.load();
+
+        StudentViewController controller = fxLoader.getController();
+        controller.setParentWindowController(parent);
+
+        Scene scene = new Scene(root);
+        stage.setTitle("Student");
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
 }
