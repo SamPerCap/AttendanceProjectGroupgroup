@@ -16,30 +16,46 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.XYChart;
 
 /**
  * FXML Controller class
  *
  * @author Samuel
  */
-public class DetailedChartStudentController implements Initializable {
+public class DetailedChartStudentController {
 
     @FXML
     private BarChart<String, Integer> weekDetailChart;
     @FXML
     private CategoryAxis xBar;
-    
+
     private ObservableList<String> weekDays = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize() {
         // TODO
-        String[] weeks = DateFormatSymbols.getInstance(Locale.ENGLISH).getWeekdays();
+        String[] weeks = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
         weekDays.addAll(Arrays.asList(weeks));
         xBar.setCategories(weekDays);
-    }    
+        settingTheData();
+    }
     
+    private void settingTheData(){
+        int[] weekCounter =  new int [5];
+    XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        for (int i = 0; i < weekCounter.length; i++) {
+            series.getData().add(new XYChart.Data<>(weekDays.get(i),weekCounter[i]));
+        }
+        weekDetailChart.getData().add(series);
+    }
+
+    private LogInViewController parent;
+
+    public void setParentWindowController(LogInViewController parent) {
+        this.parent = parent;
+    }
+
 }
