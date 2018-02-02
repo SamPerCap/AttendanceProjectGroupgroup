@@ -42,13 +42,9 @@ public class StudentViewController implements Initializable {
     private TableColumn<?, ?> columnWeekTotal;
     @FXML
     private TableView<?> weekTableView;
-<<<<<<< HEAD
+
     @FXML
     private Button btnSeeDetailsChart;
-=======
- 
->>>>>>> 919c595ab763b2feac25bddbbaceb470f28eb6dc
-
     /**
      * Initializes the controller class.
      */
