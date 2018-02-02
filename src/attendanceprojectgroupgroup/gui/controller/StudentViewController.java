@@ -7,8 +7,10 @@ package attendanceprojectgroupgroup.gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,6 +42,8 @@ public class StudentViewController implements Initializable {
     private TableColumn<?, ?> columnWeekTotal;
     @FXML
     private TableView<?> weekTableView;
+    @FXML
+    private Button btnSeeDetailsChart;
 
     /**
      * Initializes the controller class.
@@ -48,5 +52,11 @@ public class StudentViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void clickSeeDetailsChart(ActionEvent event) {
+        
+        
+    }
     
 }
