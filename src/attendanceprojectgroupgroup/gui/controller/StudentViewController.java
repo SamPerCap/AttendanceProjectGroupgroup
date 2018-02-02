@@ -37,6 +37,7 @@ public class StudentViewController implements Initializable {
     private TableColumn<?, ?> columnFriday;
     @FXML
     private TableColumn<?, ?> columnWeekTotal;
+    private TeacherViewController parent;
 
     /**
      * Initializes the controller class.
@@ -46,4 +47,8 @@ public class StudentViewController implements Initializable {
         // TODO
     }    
     
+    
+        public void setParentWindowController(TeacherViewController parent) {
+        this.parent = parent;
+    }
 }
