@@ -22,11 +22,11 @@ public class LogInViewController implements Initializable {
     
     
     @FXML
-    private TextField usernameTxtField;
+    private TextField txtFieldUsername;
     @FXML
-    private TextField passwordTxtField;
+    private TextField txtFieldPassword;
     @FXML
-    private Button logInButton;
+    private Button btnLogIn;
     
     private void logInButton(ActionEvent event) {
     }
@@ -37,7 +37,7 @@ public class LogInViewController implements Initializable {
     }    
 
     @FXML
-    private void logInAction(ActionEvent event) {
+    private void clickLogIn(ActionEvent event) {
     }
     
 }

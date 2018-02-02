@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="264.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.LogInViewController">
    <children>
       <Label layoutX="24.0" layoutY="8.0" prefHeight="36.0" prefWidth="85.0" text="Log In" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="8.0">
@@ -26,9 +25,9 @@
             <Font name="SansSerif Regular" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameTxtField" layoutX="91.0" layoutY="60.0" />
-      <TextField fx:id="passwordTxtField" layoutX="91.0" layoutY="85.0" AnchorPane.topAnchor="90.0" />
-      <Button fx:id="logInButton" layoutX="112.0" layoutY="120.0" mnemonicParsing="false" onAction="#logInAction" text="Log In" AnchorPane.topAnchor="120.0">
+      <TextField fx:id="txtFieldUsername" layoutX="91.0" layoutY="60.0" />
+      <TextField fx:id="txtFieldPassword" layoutX="91.0" layoutY="85.0" AnchorPane.topAnchor="90.0" />
+      <Button fx:id="btnLogIn" layoutX="112.0" layoutY="120.0" mnemonicParsing="false" onAction="#clickLogIn" text="Log In" AnchorPane.topAnchor="120.0">
          <font>
             <Font name="SansSerif Regular" size="12.0" />
          </font>

@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 /**
  * FXML Controller class
@@ -37,6 +38,8 @@ public class StudentViewController implements Initializable {
     private TableColumn<?, ?> columnFriday;
     @FXML
     private TableColumn<?, ?> columnWeekTotal;
+    @FXML
+    private TableView<?> weekTableView;
 
     /**
      * Initializes the controller class.
