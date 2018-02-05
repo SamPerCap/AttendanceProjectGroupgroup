@@ -9,6 +9,7 @@ import java.net.URL;
 import java.text.DateFormatSymbols;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 /**
@@ -30,26 +32,27 @@ public class DetailedChartStudentController {
     @FXML
     private CategoryAxis xBar;
 
-    private ObservableList<String> weekDays = FXCollections.observableArrayList();
+    @FXML
+    private NumberAxis yAxis;
 
     /**
      * Initializes the controller class.
      */
     public void initialize() {
         // TODO
-        String[] weeks = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
-        weekDays.addAll(Arrays.asList(weeks));
-        xBar.setCategories(weekDays);
+
         settingTheData();
     }
-    
-    private void settingTheData(){
-        int[] weekCounter =  new int [5];
-    XYChart.Series<String, Integer> series = new XYChart.Series<>();
-        for (int i = 0; i < weekCounter.length; i++) {
-            series.getData().add(new XYChart.Data<>(weekDays.get(i),weekCounter[i]));
+
+    private void settingTheData() {
+        String[] weeks = DateFormatSymbols.getInstance(Locale.ENGLISH).getWeekdays();
+        Random r = new Random();
+        XYChart.Series<String, Integer> series = new XYChart.Series<>();
+        for (int i = 2; i < 7; i++) {
+            series.getData().add(new XYChart.Data<>(weeks[i], r.nextInt(100)));
         }
         weekDetailChart.getData().add(series);
+
     }
 
     private LogInViewController parent;

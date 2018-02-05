@@ -14,7 +14,7 @@
           <CategoryAxis prefHeight="56.0" prefWidth="442.0" side="BOTTOM" fx:id="xBar" />
         </xAxis>
         <yAxis>
-          <NumberAxis minorTickCount="2" prefHeight="242.0" prefWidth="28.0" side="LEFT" tickLabelGap="5.0" upperBound="95.0">
+          <NumberAxis fx:id="yAxis" minorTickCount="2" prefHeight="242.0" prefWidth="28.0" side="LEFT" tickLabelGap="5.0" upperBound="95.0">
                <tickLabelFont>
                   <Font size="10.0" />
                </tickLabelFont>
