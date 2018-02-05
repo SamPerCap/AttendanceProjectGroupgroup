@@ -7,30 +7,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="attendanceprojectgroupgroup.gui.controller.TeacherViewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.TeacherViewController">
    <children>
       <ListView fx:id="lstStudents" layoutX="14.0" layoutY="38.0" prefHeight="328.0" prefWidth="568.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0" />
       <Label layoutX="14.0" text="Teachers name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="5.0">
          <font>
-            <Font name="SansSerif Regular" size="26.0" />
+            <Font size="26.0" />
          </font>
       </Label>
       <ButtonBar layoutX="52.0" layoutY="373.0" prefHeight="40.0" prefWidth="510.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
         <buttons>
           <Button fx:id="btnChart1" mnemonicParsing="false" onAction="#clickOpenChart1" text="See absence chart">
                <font>
-                  <Font name="SansSerif Regular" size="12.0" />
+                  <Font size="12.0" />
                </font>
             </Button>
             <Button fx:id="btnChart2" mnemonicParsing="false" onAction="#clickOpenChart2" text="See individual student">
                <font>
-                  <Font name="SansSerif Regular" size="12.0" />
+                  <Font size="12.0" />
                </font>
             </Button>
             <Button fx:id="btnChart3" mnemonicParsing="false" onAction="#clickOpenChart3" text="See absence chart by day">
                <font>
-                  <Font name="SansSerif Regular" size="12.0" />
+                  <Font size="12.0" />
                </font>
             </Button>
         </buttons>
