@@ -3,6 +3,18 @@
     Created on : 05-feb-2018, 9:25:37
     Author     : Samuel
 */
+
 .root{    
-   -fx-font-family:'SansSerif'; 
+    -fx-font-family:'SansSerif'; 
+    -fx-font-weight: bold;
+    -fx-background-color: black;
+}
+.label{
+    -fx-text-fill: "019ADC"; 
+    -fx-font-size: 13.3px;
+}
+.list-view{
+
+
+    -fx-border-color: "FBBB2C";
 }

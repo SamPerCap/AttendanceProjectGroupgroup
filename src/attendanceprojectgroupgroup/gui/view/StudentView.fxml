@@ -10,21 +10,21 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="504.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.StudentViewController">
     <children>
-        <Label fx:id="idLabel" layoutX="44.0" layoutY="10.0" text="ID" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="10.0">
+        <Label fx:id="idLabel" layoutX="44.0" layoutY="10.0" text="ID" AnchorPane.leftAnchor="44.0" AnchorPane.topAnchor="15.0">
             <font>
                 <Font size="25.0" />
             </font>
         </Label>
-        <Label fx:id="nameLabel" layoutX="119.0" layoutY="10.0" text="Name" AnchorPane.leftAnchor="119.0" AnchorPane.topAnchor="10.0">
+        <Label fx:id="nameLabel" layoutX="119.0" layoutY="10.0" text="Name" AnchorPane.leftAnchor="119.0" AnchorPane.topAnchor="15.0">
             <font>
                 <Font size="25.0" />
             </font>
         </Label>
-        <ScrollPane layoutY="45.0" prefHeight="311.0" prefWidth="504.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+        <ScrollPane layoutY="50.0" prefHeight="311.0" prefWidth="504.0">
             <content>
-                <AnchorPane prefHeight="315.0" prefWidth="489.0">
+                <AnchorPane>
                     <children>
-                        <TableView fx:id="weekTableView" prefHeight="309.0" prefWidth="489.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="weekTableView" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
                                 <TableColumn fx:id="columnWeek" minWidth="0.0" prefWidth="42.0" text="Week" />
                                 <TableColumn fx:id="columnMonday" minWidth="0.0" prefWidth="75.0" text="Monday" />
@@ -42,6 +42,6 @@
                 </AnchorPane>
             </content>
         </ScrollPane>
-      <Button fx:id="btnSeeDetailsChart" layoutX="401.0" layoutY="367.0" mnemonicParsing="false" onAction="#clickSeeDetailsChart" text="See details chart" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="15.0" />
+      <Button fx:id="btnSeeDetailsChart" layoutX="401.0" layoutY="367.0" mnemonicParsing="false" onAction="#clickSeeDetailsChart" text="See details chart" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="0.0" />
     </children>
 </AnchorPane>
