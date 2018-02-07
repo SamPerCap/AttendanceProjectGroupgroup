@@ -32,8 +32,9 @@ public class LogInViewController implements Initializable {
     private TextField txtFieldUsername;
     @FXML
     private Button btnLogIn;
-    @FXML
     private PasswordField txtPasswordField;
+    @FXML
+    private PasswordField txtFieldPassword;
     
     private void logInButton(ActionEvent event) {
     }
@@ -46,24 +47,69 @@ public class LogInViewController implements Initializable {
     @FXML
     private void clickLogIn(ActionEvent event) throws IOException 
     {
-        Stage stage = new Stage();
+        String username = txtFieldUsername.getText();
+        String pass = txtFieldPassword.getText();
+        if (username.equals("Teacher") && pass.equals("tpass")) {
+        
+            Stage stage = new Stage();
+
+         // stage.initModality(Modality.APPLICATION_MODAL);
+
+            FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/TeacherView.fxml"));
+
+            Parent root = fxLoader.load();
+
+            TeacherViewController controller = fxLoader.getController();
+            controller.setParentWindowController(this);
+
+            Scene scene = new Scene(root);
+            stage.setTitle("Teacher");
+            stage.setScene(scene);
+            stage.showAndWait();
+        }
+        else if (username.equals("Student") && pass.equals("spass")) {
+            
+            Stage stage = new Stage();
 
        // stage.initModality(Modality.APPLICATION_MODAL);
 
-        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/TeacherView.fxml"));
+        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/StudentView.fxml"));
 
         Parent root = fxLoader.load();
 
-        TeacherViewController controller = fxLoader.getController();
+        StudentViewController controller = fxLoader.getController();
         controller.setParentWindowController(this);
 
         Scene scene = new Scene(root);
-        stage.setTitle("Teacher");
+        stage.setTitle("Student");
         stage.setScene(scene);
         stage.showAndWait();
-        //doesn't work
+        }
+        else    
+            System.out.println("System could not recognize your login, try again mr juicebrick. try Teacher, tpass or Student spass");
+        
+//        
+//        Stage stage = new Stage();
+//
+//       // stage.initModality(Modality.APPLICATION_MODAL);
+//
+//        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/TeacherView.fxml"));
+//
+//        Parent root = fxLoader.load();
+//
+//        TeacherViewController controller = fxLoader.getController();
+//        controller.setParentWindowController(this);
+//
+//        Scene scene = new Scene(root);
+//        stage.setTitle("Teacher");
+//        stage.setScene(scene);
+//        stage.showAndWait();
+//
+//        //doesn't work
+//        btnLogIn.getScene().getWindow();
+//        stage.close();
         Stage window = (Stage) btnLogIn.getScene().getWindow();
-        stage.close();
+        window.close();
     }
     
  

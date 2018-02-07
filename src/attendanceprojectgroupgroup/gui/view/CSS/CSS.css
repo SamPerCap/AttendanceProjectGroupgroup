@@ -18,3 +18,8 @@
 
     -fx-border-color: "FBBB2C";
 }
+
+.button
+{
+    -fx-font-weight: bold;
+}

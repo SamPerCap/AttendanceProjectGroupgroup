@@ -8,20 +8,20 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="264.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.LogInViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="266.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.LogInViewController">
     <children>
-        <Label layoutX="20.0" layoutY="71.0" prefHeight="17.0" prefWidth="71.0" stylesheets="@CSS/CSS.css" text="Username">
+        <Label layoutX="20.0" layoutY="71.0" prefHeight="17.0" prefWidth="71.0" stylesheets="@CSS/CSS.css" text="Username" AnchorPane.leftAnchor="24.0">
         
         </Label>
-        <Label layoutX="21.0" layoutY="101.0" text="Password" AnchorPane.topAnchor="101.0">
+        <Label layoutX="24.0" layoutY="100.0" text="Password" AnchorPane.leftAnchor="24.0" AnchorPane.topAnchor="100.0">
         </Label>
-        <TextField fx:id="txtFieldUsername" layoutX="94.0" layoutY="67.0" />
-        <Button fx:id="btnLogIn" layoutX="143.0" layoutY="125.0" mnemonicParsing="false" onAction="#clickLogIn" text="Log In" />
-        <ImageView fitHeight="34.5" fitWidth="100.0" layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+        <TextField fx:id="txtFieldUsername" layoutX="94.0" layoutY="67.0" AnchorPane.leftAnchor="93.25217236235818" AnchorPane.rightAnchor="24.0" />
+        <Button fx:id="btnLogIn" layoutX="143.0" layoutY="125.0" mnemonicParsing="false" onAction="#clickLogIn" text="Log In" AnchorPane.rightAnchor="69.2434765440394" AnchorPane.topAnchor="125.0" />
+        <ImageView fitHeight="34.5" fitWidth="100.0" layoutX="20.0" layoutY="14.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="146.08699639650422" AnchorPane.topAnchor="14.0">
             <image>
                 <Image url="@easv%20logo.png" />
             </image>
         </ImageView>
-        <PasswordField fx:id="txtPasswordField" layoutX="94.0" layoutY="97.0" />
+        <PasswordField fx:id="txtFieldPassword" layoutX="94.0" layoutY="97.0" AnchorPane.leftAnchor="93.25217236235818" AnchorPane.rightAnchor="24.0" />
     </children>
 </AnchorPane>
