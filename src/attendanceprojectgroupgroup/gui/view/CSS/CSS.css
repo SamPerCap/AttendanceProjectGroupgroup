@@ -16,10 +16,16 @@
 .list-view{
 
 
-    -fx-border-color: "FBBB2C";
+    -fx-border-color: #FBBB2C;
 }
 
 .button
 {
     -fx-font-weight: bold;
 }
+
+.default-color0.chart-bar 
+{  
+    -fx-bar-fill: #FBBB2C ;
+}
+.

@@ -73,17 +73,17 @@ public class LogInViewController implements Initializable {
 
        // stage.initModality(Modality.APPLICATION_MODAL);
 
-        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/StudentView.fxml"));
+            FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/StudentView.fxml"));
 
-        Parent root = fxLoader.load();
+            Parent root = fxLoader.load();
 
-        StudentViewController controller = fxLoader.getController();
-        controller.setParentWindowController(this);
+            StudentViewController controller = fxLoader.getController();
+            controller.setParentWindowController(this);
 
-        Scene scene = new Scene(root);
-        stage.setTitle("Student");
-        stage.setScene(scene);
-        stage.showAndWait();
+            Scene scene = new Scene(root);
+            stage.setTitle("Student");
+            stage.setScene(scene);
+            stage.showAndWait();
         }
         else    
             System.out.println("System could not recognize your login, try again mr juicebrick. try Teacher, tpass or Student spass");
