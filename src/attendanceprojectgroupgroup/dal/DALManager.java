@@ -11,4 +11,7 @@ package attendanceprojectgroupgroup.dal;
  */
 public class DALManager {
     
+    
+    
+    
 }

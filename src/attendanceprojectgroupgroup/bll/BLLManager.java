@@ -5,10 +5,17 @@
  */
 package attendanceprojectgroupgroup.bll;
 
+import attendanceprojectgroupgroup.dal.DALManager;
+
 /**
  *
  * @author Samuel
  */
 public class BLLManager {
+    
+    DALManager dalm = new DALManager();
+    
+    
+    
     
 }
