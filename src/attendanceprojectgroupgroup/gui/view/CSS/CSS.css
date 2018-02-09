@@ -10,7 +10,7 @@
     -fx-background-color: black;
 }
 .label{
-    -fx-text-fill: "019ADC"; 
+    -fx-text-fill: #019ADC; 
     -fx-font-size: 13.3px;
 }
 .list-view{
