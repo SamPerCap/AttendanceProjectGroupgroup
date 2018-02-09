@@ -31,13 +31,10 @@ public class LogInViewController implements Initializable {
     @FXML
     private TextField txtFieldUsername;
     @FXML
-    private Button btnLogIn;
-    private PasswordField txtPasswordField;
-    @FXML
     private PasswordField txtFieldPassword;
+    @FXML
+    private Button btnLogIn;
     
-    private void logInButton(ActionEvent event) {
-    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -49,6 +46,7 @@ public class LogInViewController implements Initializable {
     {
         String username = txtFieldUsername.getText();
         String pass = txtFieldPassword.getText();
+        
         if (username.equals("Teacher") && pass.equals("tpass")) {
         
             Stage stage = new Stage();
@@ -65,6 +63,7 @@ public class LogInViewController implements Initializable {
             Scene scene = new Scene(root);
             stage.setTitle("Teacher");
             stage.setScene(scene);
+            stage.showAndWait();
             
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
@@ -85,7 +84,8 @@ public class LogInViewController implements Initializable {
             Scene scene = new Scene(root);
             stage.setTitle("Student");
             stage.setScene(scene);
-
+            stage.showAndWait();
+            
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
 

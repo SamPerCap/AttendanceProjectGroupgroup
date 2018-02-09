@@ -5,6 +5,7 @@
  */
 package attendanceprojectgroupgroup.gui.controller;
 
+import com.jfoenix.controls.JFXToggleButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,6 +39,8 @@ public class TeacherViewController implements Initializable {
     private Button btnAttendanceDayChart;
     @FXML
     private Button btnStudentDetails;
+    @FXML
+    private JFXToggleButton tglAttendance;
 
     /**
      * Initializes the controller class.
@@ -75,5 +78,9 @@ public class TeacherViewController implements Initializable {
         stage.setTitle("Student");
         stage.setScene(scene);
         stage.showAndWait();
+    }
+
+    @FXML
+    private void toggleAttendance(ActionEvent event) {
     }
 }
