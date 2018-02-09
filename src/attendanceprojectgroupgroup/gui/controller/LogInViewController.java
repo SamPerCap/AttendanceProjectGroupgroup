@@ -63,7 +63,7 @@ public class LogInViewController implements Initializable {
             Scene scene = new Scene(root);
             stage.setTitle("Teacher");
             stage.setScene(scene);
-            stage.showAndWait();
+            stage.show();
             
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
@@ -84,7 +84,7 @@ public class LogInViewController implements Initializable {
             Scene scene = new Scene(root);
             stage.setTitle("Student");
             stage.setScene(scene);
-            stage.showAndWait();
+            stage.show();
             
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
