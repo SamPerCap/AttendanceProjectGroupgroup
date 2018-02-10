@@ -56,6 +56,7 @@ public class StudentViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        fillWeekColumn();
     }    
 
     @FXML
@@ -77,6 +78,12 @@ public class StudentViewController implements Initializable {
         Stage window = (Stage) btnSeeDetailsChart.getScene().getWindow();
         stage.close();
         
+    }
+    private void fillWeekColumn(){
+        for (int i = 0; i < 5; i++) {
+            
+        }
+    
     }
     
        private LogInViewController parent;
