@@ -21,6 +21,7 @@
 
 .button
 {
+    -fx-text-fill: #019ADC;
     -fx-font-weight: bold;
 }
 

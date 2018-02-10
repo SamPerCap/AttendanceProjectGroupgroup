@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -42,6 +42,6 @@
                 </AnchorPane>
             </content>
         </ScrollPane>
-      <Button fx:id="btnSeeDetailsChart" layoutX="401.0" layoutY="367.0" mnemonicParsing="false" onAction="#clickSeeDetailsChart" text="See details chart" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="0.0" />
+      <JFXButton fx:id="btnSeeDetailsChart" layoutX="392.0" layoutY="369.0" onAction="#clickSeeDetailsChart" text="See details chart" />
     </children>
 </AnchorPane>
