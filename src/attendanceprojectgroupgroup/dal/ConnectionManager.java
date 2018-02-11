@@ -13,14 +13,14 @@ import java.sql.Connection;
  *
  * @author Samuel
  */
-public class connectionManager {
+public class ConnectionManager {
 
     private SQLServerDataSource ds = new SQLServerDataSource();
 
     /**
      * All the information to connect to the database.
      */
-    public connectionManager() {
+    public ConnectionManager() {
         ds.setDatabaseName("Attendancegroupgroup");
         ds.setUser("CS2017B_25");
         ds.setPassword("vbx97jfz");

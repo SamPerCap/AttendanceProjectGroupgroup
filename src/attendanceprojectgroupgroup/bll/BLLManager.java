@@ -11,11 +11,14 @@ import attendanceprojectgroupgroup.dal.DALManager;
  *
  * @author Samuel
  */
-public class BLLManager {
-    
+public class BLLManager
+{
+
     DALManager dalm = new DALManager();
-    
-    
-    
+
+    public void loadAttendance()
+    {
+        dalm.getAttendance();
+    }
     
 }

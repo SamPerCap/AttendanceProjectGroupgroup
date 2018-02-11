@@ -5,10 +5,19 @@
  */
 package attendanceprojectgroupgroup.gui.model;
 
+import attendanceprojectgroupgroup.bll.BLLManager;
+
 /**
  *
  * @author Samuel
  */
-public class AttendanceModel {
+public class AttendanceModel
+{
+    BLLManager bll = new BLLManager();
+    
+    public void loadAttendance()
+    {
+        bll.loadAttendance();
+    }
     
 }

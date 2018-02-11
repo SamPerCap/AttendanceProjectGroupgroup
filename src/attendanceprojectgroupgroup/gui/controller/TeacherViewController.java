@@ -5,6 +5,10 @@
  */
 package attendanceprojectgroupgroup.gui.controller;
 
+import attendanceprojectgroupgroup.be.Attendance;
+import attendanceprojectgroupgroup.be.Student;
+import attendanceprojectgroupgroup.gui.model.AttendanceModel;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +22,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -26,10 +33,9 @@ import javafx.stage.Stage;
  *
  * @author Anni
  */
-public class TeacherViewController implements Initializable {
+public class TeacherViewController implements Initializable
+{
 
-    @FXML
-    private ListView<?> lstStudents;
     private LogInViewController parent;
     @FXML
     private Label labelTeachersName;
@@ -41,32 +47,50 @@ public class TeacherViewController implements Initializable {
     private Button btnStudentDetails;
     @FXML
     private JFXToggleButton tglAttendance;
+    @FXML
+    private TableView<?> tableStudents;
+    @FXML
+    private JFXDatePicker datePicker;
+    @FXML
+    private TableColumn<Student, String> columnStudentsName;
+    @FXML
+    private TableColumn<Attendance, String> columnStudentsAttendance;
 
+    private AttendanceModel model = new AttendanceModel();
+    
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        columnStudentsName.setCellValueFactory(new PropertyValueFactory("Name"));
+        columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("Attendance"));
+        
+        model.loadAttendance();
     }
 
-    public void setParentWindowController(LogInViewController parent) {
+    public void setParentWindowController(LogInViewController parent)
+    {
         this.parent = parent;
     }
 
     @FXML
-    private void clickOpenAttendanceChart(ActionEvent event) {
+    private void clickOpenAttendanceChart(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickOpenAttendanceDayChart(ActionEvent event) {
+    private void clickOpenAttendanceDayChart(ActionEvent event)
+    {
     }
 
     @FXML
-    private void clickStudentDetails(ActionEvent event) throws IOException {
+    private void clickStudentDetails(ActionEvent event) throws IOException
+    {
         Stage stage = new Stage();
 
-//        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/StudentView.fxml"));
 
         Parent root = fxLoader.load();
@@ -81,6 +105,7 @@ public class TeacherViewController implements Initializable {
     }
 
     @FXML
-    private void toggleAttendance(ActionEvent event) {
+    private void toggleAttendance(ActionEvent event)
+    {
     }
 }
