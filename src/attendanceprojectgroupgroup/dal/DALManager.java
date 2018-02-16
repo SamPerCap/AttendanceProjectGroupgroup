@@ -25,6 +25,8 @@ public class DALManager
 
     public List<Attendance> getAttendance()
     {
+        System.out.println("Getting attendance");
+        
         List<Attendance> allAttendance = new ArrayList();
 
         try (Connection con = cm.getConnection())

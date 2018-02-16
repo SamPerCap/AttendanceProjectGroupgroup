@@ -31,6 +31,6 @@
           <TableColumn fx:id="columnStudentsAttendance" prefWidth="90.0" text="Attendance" />
         </columns>
       </TableView>
-      <JFXDatePicker fx:id="datePicker" defaultColor="#019adc" layoutX="260.0" layoutY="39.0" />
+      <JFXDatePicker fx:id="dtPicker" defaultColor="#019adc" layoutX="260.0" layoutY="39.0" onAction="#datePicker" />
    </children>
 </AnchorPane>
