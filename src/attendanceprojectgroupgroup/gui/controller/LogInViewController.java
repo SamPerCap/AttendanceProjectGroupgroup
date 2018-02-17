@@ -35,6 +35,8 @@ public class LogInViewController implements Initializable {
     @FXML
     private Button btnLogIn;
     
+    private TeacherViewController tVC = new TeacherViewController();
+    private StudentViewController sVC = new StudentViewController();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -64,6 +66,8 @@ public class LogInViewController implements Initializable {
             stage.setTitle("Teacher");
             stage.setScene(scene);
             stage.show();
+            /* this shit doesnt work
+            tVC.labelTeachersName.setText("work bitch");*/
             
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
@@ -85,6 +89,8 @@ public class LogInViewController implements Initializable {
             stage.setTitle("Student");
             stage.setScene(scene);
             stage.show();
+            /* Same
+            sVC.nameLabel.setText("NWJE");*/
             
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();

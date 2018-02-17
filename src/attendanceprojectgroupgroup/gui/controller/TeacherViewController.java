@@ -40,7 +40,7 @@ public class TeacherViewController implements Initializable
 
     private LogInViewController parent;
     @FXML
-    private Label labelTeachersName;
+    public Label labelTeachersName;
     @FXML
     private Button btnAttendanceChart;
     @FXML

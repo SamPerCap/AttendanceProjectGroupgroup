@@ -27,7 +27,7 @@
       <JFXButton fx:id="btnStudentDetails" layoutX="358.0" layoutY="365.0" onAction="#clickStudentDetails" text="Student details" />
       <TableView fx:id="tableStudents" layoutX="14.0" layoutY="40.0" prefHeight="317.0" prefWidth="234.0">
         <columns>
-          <TableColumn fx:id="columnStudentsName" prefWidth="143.0" text="Ńame" />
+          <TableColumn fx:id="columnStudentsName" prefWidth="143.0" text="Name" />
           <TableColumn fx:id="columnStudentsAttendance" prefWidth="90.0" text="Attendance" />
         </columns>
       </TableView>

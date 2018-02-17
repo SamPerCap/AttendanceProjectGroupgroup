@@ -30,7 +30,7 @@ public class StudentViewController implements Initializable {
     @FXML
     private Label idLabel;
     @FXML
-    private Label nameLabel;
+    public Label nameLabel;
     @FXML
     private TableColumn<?, ?> columnWeek;
     @FXML
