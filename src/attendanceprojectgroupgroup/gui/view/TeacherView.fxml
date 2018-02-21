@@ -23,7 +23,7 @@
             <JFXButton fx:id="btnAttendanceChart" onAction="#clickOpenAttendanceChart" text="See attendance chart" />
         </buttons>
       </ButtonBar>
-      <JFXToggleButton fx:id="tglAttendance" contentDisplay="RIGHT" layoutX="123.0" layoutY="-7.0" onAction="#toggleAttendance" text="Not present" textFill="#019abc" toggleColor="#019adc" toggleLineColor="WHITE" unToggleColor="#fbbb2c" unToggleLineColor="WHITE" />
+      <JFXToggleButton fx:id="tglAttendance" contentDisplay="RIGHT" layoutX="123.0" layoutY="-7.0" onAction="#toggleAttendance" text="Not present" textFill="#019abc" toggleColor="#019adc" toggleLineColor="WHITE" unToggleColor="#fbbb2c" unToggleLineColor="WHITE" AnchorPane.rightAnchor="232.0" />
       <JFXButton fx:id="btnStudentDetails" layoutX="358.0" layoutY="365.0" onAction="#clickStudentDetails" text="Student details" />
       <TableView fx:id="tableStudents" layoutX="14.0" layoutY="40.0" prefHeight="317.0" prefWidth="234.0">
         <columns>
