@@ -30,8 +30,6 @@ public class StudentViewController implements Initializable {
     @FXML
     private Label idLabel;
     @FXML
-    public Label nameLabel;
-    @FXML
     private TableColumn<?, ?> columnWeek;
     @FXML
     private TableColumn<?, ?> columnMonday;
@@ -50,25 +48,28 @@ public class StudentViewController implements Initializable {
 
     @FXML
     private Button btnSeeDetailsChart;
+    @FXML
+    protected Label labelStudentName;
+    @FXML
+    private Label labelClass;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        fillWeekColumn();
-    }    
+
+    }
 
     @FXML
     private void clickSeeDetailsChart(ActionEvent event) throws IOException {
         Stage stage = new Stage();
 
-       // stage.initModality(Modality.APPLICATION_MODAL);
-
+        // stage.initModality(Modality.APPLICATION_MODAL);
         FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/DetailedChartStudent.fxml"));
 
         Parent root = fxLoader.load();
-
 
         Scene scene = new Scene(root);
         stage.setTitle("BarChart");
@@ -77,17 +78,12 @@ public class StudentViewController implements Initializable {
         //doesn't work
         Stage window = (Stage) btnSeeDetailsChart.getScene().getWindow();
         stage.close();
-        
+
     }
-    private void fillWeekColumn(){
-        for (int i = 0; i < 5; i++) {
-            
-        }
-    
-    }
-    
-       private LogInViewController parent;
-        public void setParentWindowController(LogInViewController parent) {
+
+    private LogInViewController parent;
+
+    public void setParentWindowController(LogInViewController parent) {
         this.parent = parent;
     }
 }

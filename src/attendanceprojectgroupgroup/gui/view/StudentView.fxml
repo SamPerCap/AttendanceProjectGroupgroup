@@ -15,12 +15,12 @@
                 <Font size="25.0" />
             </font>
         </Label>
-      <Label fx:id="nameLabel1" layoutX="217.0" layoutY="15.0" text="Name">
+      <Label fx:id="labelStudentName" layoutX="217.0" layoutY="15.0" text="Name">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label layoutX="120.0" layoutY="15.0" text="Class" />
+      <Label fx:id="labelClass" layoutX="120.0" layoutY="15.0" text="Class" />
         <ScrollPane layoutY="50.0" prefHeight="311.0" prefWidth="504.0">
             <content>
                 <AnchorPane>

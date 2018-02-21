@@ -61,13 +61,13 @@ public class LogInViewController implements Initializable {
 
             TeacherViewController controller = fxLoader.getController();
             controller.setParentWindowController(this);
+            
+            controller.labelTeachersName.setText(username);
 
             Scene scene = new Scene(root);
             stage.setTitle("Teacher");
             stage.setScene(scene);
             stage.show();
-            /* this shit doesnt work
-            tVC.labelTeachersName.setText("work bitch");*/
             
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
@@ -85,12 +85,12 @@ public class LogInViewController implements Initializable {
             StudentViewController controller = fxLoader.getController();
             controller.setParentWindowController(this);
 
+            controller.labelStudentName.setText(username);
+            
             Scene scene = new Scene(root);
             stage.setTitle("Student");
             stage.setScene(scene);
             stage.show();
-            /* Same
-            sVC.nameLabel.setText("NWJE");*/
             
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
