@@ -6,6 +6,7 @@
 package attendanceprojectgroupgroup.bll;
 
 import attendanceprojectgroupgroup.be.Attendance;
+import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.dal.DALManager;
 import java.util.List;
 
@@ -22,5 +23,7 @@ public class BLLManager
     {
         return dalm.getAttendance();
     }
-    
+    public List<Week> getWeek(){
+        return dalm.getWeek();
+    }
 }

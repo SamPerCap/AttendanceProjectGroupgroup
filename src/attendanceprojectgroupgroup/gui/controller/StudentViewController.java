@@ -6,6 +6,7 @@
 package attendanceprojectgroupgroup.gui.controller;
 
 import attendanceprojectgroupgroup.be.Attendance;
+import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import java.io.IOException;
 import java.net.URL;
@@ -76,7 +77,6 @@ public class StudentViewController implements Initializable {
             choosingTheWeek();
         }
     }
-
     @FXML
     private void clickSeeDetailsChart(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -103,6 +103,6 @@ public class StudentViewController implements Initializable {
     Attendance m = new Attendance();
 
     private void choosingTheWeek() {
-       
+        
     }
 }
