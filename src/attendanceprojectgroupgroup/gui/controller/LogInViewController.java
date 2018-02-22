@@ -7,6 +7,7 @@ package attendanceprojectgroupgroup.gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -78,7 +79,10 @@ public class LogInViewController implements Initializable {
             StudentViewController controller = fxLoader.getController();
             controller.setParentWindowController(this);
 
+            Random rand = new Random();
+            int random = rand.nextInt(999)+1;
             controller.labelStudentName.setText(username);
+            controller.idLabel.setText(""+random);
 
             Scene scene = new Scene(root);
             stage.setTitle("Student");
@@ -87,6 +91,7 @@ public class LogInViewController implements Initializable {
 
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
+
             if (username.endsWith("A")) {
                 controller.labelClass.setText("Datamatiker_2017");
 
