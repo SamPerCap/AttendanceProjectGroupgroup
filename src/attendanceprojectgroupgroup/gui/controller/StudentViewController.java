@@ -5,12 +5,15 @@
  */
 package attendanceprojectgroupgroup.gui.controller;
 
+import attendanceprojectgroupgroup.be.Attendance;
+import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,9 +37,9 @@ import static javax.management.Query.value;
  * @author Samuel
  */
 public class StudentViewController implements Initializable {
-    
+
     @FXML
-    private Label idLabel;
+    protected Label idLabel;
     @FXML
     private TableColumn<Integer, Integer> columnWeek;
     @FXML
@@ -53,13 +56,14 @@ public class StudentViewController implements Initializable {
     private TableColumn<?, ?> columnWeekTotal;
     @FXML
     private TableView<Integer> weekTableView;
-    
+
     @FXML
     private Button btnSeeDetailsChart;
     @FXML
     protected Label labelStudentName;
     @FXML
-    private Label labelClass;
+    protected Label labelClass;
+    private final List<Integer> yearWeeks = new ArrayList<>();
 
     /**
      * Initializes the controller class.
@@ -67,18 +71,21 @@ public class StudentViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        fillintList();
+        for (int i = 1; i <= 52; i++) {
+            yearWeeks.add(i);
+            choosingTheWeek();
+        }
     }
-    
+
     @FXML
     private void clickSeeDetailsChart(ActionEvent event) throws IOException {
         Stage stage = new Stage();
 
         // stage.initModality(Modality.APPLICATION_MODAL);
         FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/DetailedChartStudent.fxml"));
-        
+
         Parent root = fxLoader.load();
-        
+
         Scene scene = new Scene(root);
         stage.setTitle("BarChart");
         stage.setScene(scene);
@@ -86,31 +93,16 @@ public class StudentViewController implements Initializable {
         //doesn't work
         Stage window = (Stage) btnSeeDetailsChart.getScene().getWindow();
         stage.close();
-        
-    }
-    
-    List<Integer> intList = new ArrayList<>();
-    
-    private void fillintList() {
-        
-        for (int i = 1; i < 6; i++) {
-            intList.add(i);
-        }
-        
-    }
-    
-    private void fillTheColumn() {
-        
-        Callback<TableColumn<Integer, Integer>, TableCell<Integer, Integer>> value = null;
-        for (int i = 0; i < intList.size(); i++) {
-        }
-        
-        columnWeek.setCellFactory(value);
-        
+
     }
     private LogInViewController parent;
-    
+
     public void setParentWindowController(LogInViewController parent) {
         this.parent = parent;
+    }
+    Attendance m = new Attendance();
+
+    private void choosingTheWeek() {
+       
     }
 }
