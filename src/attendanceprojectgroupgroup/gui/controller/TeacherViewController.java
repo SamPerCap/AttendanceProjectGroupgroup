@@ -140,6 +140,6 @@ public class TeacherViewController implements Initializable
     @FXML
     private void datePicker(ActionEvent event)
     {
-
+        System.out.println(dtPicker.getValue());
     }
 }
