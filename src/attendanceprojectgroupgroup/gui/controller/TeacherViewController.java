@@ -7,6 +7,7 @@ package attendanceprojectgroupgroup.gui.controller;
 
 import attendanceprojectgroupgroup.be.Attendance;
 import attendanceprojectgroupgroup.be.Student;
+import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
@@ -42,23 +43,25 @@ public class TeacherViewController implements Initializable
     @FXML
     protected Label labelTeachersName;
     @FXML
-    private Button btnAttendanceChart;
-    @FXML
-    private Button btnAttendanceDayChart;
-    @FXML
     private Button btnStudentDetails;
     @FXML
     private JFXToggleButton tglAttendance;
+    
     @FXML
-    private TableView<Attendance> tableStudents;
+    private TableView<StudentAttendance> tableStudents;
     @FXML
-    private TableColumn<Student, String> columnStudentsName;
+    private TableColumn<StudentAttendance, String> columnStudentsName;
     @FXML
-    private TableColumn<Attendance, String> columnStudentsAttendance;
+    private TableColumn<StudentAttendance, Float> columnStudentsAttendance;
+    @FXML
+    private TableColumn<StudentAttendance, String> columnStudentPresence;
+        
     @FXML
     private JFXDatePicker dtPicker;
     
     private AttendanceModel model = new AttendanceModel();
+
+
     
     /**
      * Initializes the controller class.
@@ -69,10 +72,11 @@ public class TeacherViewController implements Initializable
         //editingCells();
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
+        columnStudentPresence.setCellValueFactory(new PropertyValueFactory("presence"));
         
-        model.getAttendance();
+        model.getStudentAttendance();
         
-        tableStudents.setItems(model.loadAttendance());
+        tableStudents.setItems(model.loadStudentAttendance());
         
         tglAttendance.selectedProperty().addListener(new ChangeListener<Boolean>()
         {
@@ -92,21 +96,14 @@ public class TeacherViewController implements Initializable
             }     
         });
     }
+    
+    
 
     public void setParentWindowController(LogInViewController parent)
     {
         this.parent = parent;
     }
 
-    @FXML
-    private void clickOpenAttendanceChart(ActionEvent event)
-    {
-    }
-
-    @FXML
-    private void clickOpenAttendanceDayChart(ActionEvent event)
-    {
-    }
 
     @FXML
     private void clickStudentDetails(ActionEvent event) throws IOException
@@ -130,7 +127,7 @@ public class TeacherViewController implements Initializable
     @FXML
     private void toggleAttendance(ActionEvent event)
     {
-        System.out.println("Action hello");
+        //System.out.println("Action hello");
     }
 
     @FXML

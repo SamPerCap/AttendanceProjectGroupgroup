@@ -6,6 +6,7 @@
 package attendanceprojectgroupgroup.bll;
 
 import attendanceprojectgroupgroup.be.Attendance;
+import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.dal.DALManager;
 import java.util.List;
 
@@ -18,9 +19,9 @@ public class BLLManager
 
     DALManager dalm = new DALManager();
 
-    public List<Attendance> getAttendance()
+    public List<StudentAttendance> getStudentAttendance()
     {
-        return dalm.getAttendance();
+        return dalm.getStudentAttendance();
     }
     
 }

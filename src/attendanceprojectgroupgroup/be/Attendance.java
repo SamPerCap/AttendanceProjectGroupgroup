@@ -65,7 +65,7 @@ public class Attendance
     @Override
     public String toString()
     {
-        return "Attendance{" + "date=" + date + ", attendance=" + attendance + '}';
+        return date.getValue() + attendance.getValue();
     }
 
 }

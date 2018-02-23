@@ -6,6 +6,7 @@
 package attendanceprojectgroupgroup.gui.model;
 
 import attendanceprojectgroupgroup.be.Attendance;
+import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.bll.BLLManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,16 +19,16 @@ public class AttendanceModel
 {
     BLLManager bll = new BLLManager();
     
-    private ObservableList<Attendance> attendanceList = FXCollections.observableArrayList();
+    private ObservableList<StudentAttendance> studentAttendanceList = FXCollections.observableArrayList();
     
-    public void getAttendance()
+    public void getStudentAttendance()
     {
-        attendanceList.clear();
-        attendanceList.addAll(bll.getAttendance());
+        studentAttendanceList.clear();
+        studentAttendanceList.addAll(bll.getStudentAttendance());
     }
     
-    public ObservableList<Attendance> loadAttendance()
+    public ObservableList<StudentAttendance> loadStudentAttendance()
     {
-        return attendanceList;
+        return studentAttendanceList;
     }
 }
