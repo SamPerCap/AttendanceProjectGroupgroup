@@ -13,9 +13,14 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +51,7 @@ public class TeacherViewController implements Initializable
     private Button btnStudentDetails;
     @FXML
     private JFXToggleButton tglAttendance;
-    
+
     @FXML
     private TableView<StudentAttendance> tableStudents;
     @FXML
@@ -55,14 +60,12 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, Float> columnStudentsAttendance;
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
-        
+
     @FXML
     private JFXDatePicker dtPicker;
-    
+
     private AttendanceModel model = new AttendanceModel();
 
-
-    
     /**
      * Initializes the controller class.
      */
@@ -73,37 +76,41 @@ public class TeacherViewController implements Initializable
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
         columnStudentPresence.setCellValueFactory(new PropertyValueFactory("presence"));
-        
-        model.getStudentAttendance();
-        
-        tableStudents.setItems(model.loadStudentAttendance());
-        
+
+        Thread t = new Thread(() ->
+        {
+            model.getStudentAttendance();
+            
+            Platform.runLater(() ->
+            {
+                tableStudents.setItems(model.loadStudentAttendance());
+            });
+        }
+        );
+        t.start();
+
         tglAttendance.selectedProperty().addListener(new ChangeListener<Boolean>()
         {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
             {
-                if(tglAttendance.isSelected() == true)
+                if (tglAttendance.isSelected() == true)
                 {
                     System.out.println("Hello");
                     tglAttendance.setText("Here");
-                }
-                else
+                } else
                 {
                     System.out.println("Not hello");
                     tglAttendance.setText("Not here");
                 }
-            }     
+            }
         });
     }
-    
-    
 
     public void setParentWindowController(LogInViewController parent)
     {
         this.parent = parent;
     }
-
 
     @FXML
     private void clickStudentDetails(ActionEvent event) throws IOException
@@ -133,6 +140,6 @@ public class TeacherViewController implements Initializable
     @FXML
     private void datePicker(ActionEvent event)
     {
-        
+
     }
 }
