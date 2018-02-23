@@ -35,10 +35,10 @@ public class DALManager
         for (int i = 0; i < 9; i++)
         {
             StudentAttendance a = new StudentAttendance();
-            a.setId(i);
-            a.setName("student" + i);
-            a.setAttendance(50f);
-            a.setPresence("here");
+                a.setId(i);
+                a.setName("student" + i);
+                a.setAttendance(50f);
+                a.setPresence("here");
 
             allStudentAttendance.add(a);
 
@@ -67,6 +67,27 @@ public class DALManager
         }
         return allStudentAttendance;
     }
+    
+    public List<Week> getWeek()
+    {
+        System.out.println("Getting attendance");
+
+        List<Week> allWeek = new ArrayList();
+
+        for (int i = 1; i < 9; i++)
+        {
+            Week w = new Week();
+                w.setWeekNumber(i);
+                w.setMonday("here");
+                w.setTuesday("here");
+                w.setWednesday("here");
+                w.setThursday("here");
+                w.setFriday("here");
+
+            allWeek.add(w);
+        }
+        return allWeek;
+    }
 
 //    public List<Attendance> getAttendance() {
 //        System.out.println("Getting attendance");
@@ -90,30 +111,4 @@ public class DALManager
 //            Logger.getLogger(DALManager.class.getName()).log(
 //                    Level.SEVERE, null, ex);
 //        }
-    public List<Week> getWeek()
-    {
-        System.out.println("Getting weeks info");
-
-        List<Week> allWeekInfo = new ArrayList();
-
-        try (Connection con = cm.getConnection())
-        {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM weekNumber");
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next())
-            {
-                Week w = new Week();
-                w.setWeekNumber(rs.getInt("eekNumber"));
-                w.setDate(rs.getString("date"));
-
-                allWeekInfo.add(w);
-            }
-
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(DALManager.class.getName()).log(
-                    Level.SEVERE, null, ex);
-        }
-        return allWeekInfo;
-    }
 }

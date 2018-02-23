@@ -80,7 +80,7 @@ public class TeacherViewController implements Initializable
         Thread t = new Thread(() ->
         {
             model.getStudentAttendance();
-            
+
             Platform.runLater(() ->
             {
                 tableStudents.setItems(model.loadStudentAttendance());

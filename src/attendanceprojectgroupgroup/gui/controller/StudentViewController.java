@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
@@ -28,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import static javax.management.Query.value;
@@ -37,26 +39,28 @@ import static javax.management.Query.value;
  *
  * @author Samuel
  */
-public class StudentViewController implements Initializable {
+public class StudentViewController implements Initializable
+{
 
     @FXML
     protected Label idLabel;
+
     @FXML
-    private TableColumn<Integer, Integer> columnWeek;
+    private TableColumn<Week, Integer> columnWeek;
     @FXML
-    private TableColumn<?, ?> columnMonday;
+    private TableColumn<Week, String> columnMonday;
     @FXML
-    private TableColumn<?, ?> columnTuesday;
+    private TableColumn<Week, String> columnTuesday;
     @FXML
-    private TableColumn<?, ?> columnWednesday;
+    private TableColumn<Week, String> columnWednesday;
     @FXML
-    private TableColumn<?, ?> columnThursday;
+    private TableColumn<Week, String> columnThursday;
     @FXML
-    private TableColumn<?, ?> columnFriday;
+    private TableColumn<Week, String> columnFriday;
     @FXML
-    private TableColumn<?, ?> columnWeekTotal;
+    private TableColumn<Week, String> columnWeekTotal;
     @FXML
-    private TableView<Integer> weekTableView;
+    private TableView<Week> weekTableView;
 
     @FXML
     private Button btnSeeDetailsChart;
@@ -64,45 +68,52 @@ public class StudentViewController implements Initializable {
     protected Label labelStudentName;
     @FXML
     protected Label labelClass;
+    
     private final List<Integer> yearWeeks = new ArrayList<>();
+    
+    private AttendanceModel model = new AttendanceModel();
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        for (int i = 1; i <= 52; i++) {
-            yearWeeks.add(i);
-            choosingTheWeek();
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        columnWeek.setCellValueFactory(new PropertyValueFactory("weekNumber"));
+        columnMonday.setCellValueFactory(new PropertyValueFactory("monday"));
+        columnTuesday.setCellValueFactory(new PropertyValueFactory("tuesday"));
+        columnWednesday.setCellValueFactory(new PropertyValueFactory("wednesday"));
+        columnThursday.setCellValueFactory(new PropertyValueFactory("thursday"));
+        columnFriday.setCellValueFactory(new PropertyValueFactory("friday"));
+
+        
+        Thread t = new Thread(() ->
+        {
+            model.getWeek();
+
+            Platform.runLater(() ->
+            {
+                weekTableView.setItems(model.loadWeek());
+            });
         }
+        );
+        t.start();
     }
+    
+    public void setParentWindowController(LogInViewController parent)
+    {
+        this.parent = parent;
+    }
+
     @FXML
-    private void clickSeeDetailsChart(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-
-        // stage.initModality(Modality.APPLICATION_MODAL);
-        FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/DetailedChartStudent.fxml"));
-
-        Parent root = fxLoader.load();
-
-        Scene scene = new Scene(root);
-        stage.setTitle("BarChart");
-        stage.setScene(scene);
-        stage.showAndWait();
-        //doesn't work
-        Stage window = (Stage) btnSeeDetailsChart.getScene().getWindow();
-        stage.close();
+    private void clickSeeDetailsChart(ActionEvent event) throws IOException
+    {
 
     }
     private LogInViewController parent;
 
-    public void setParentWindowController(LogInViewController parent) {
-        this.parent = parent;
-    }
-    Attendance m = new Attendance();
+    private void choosingTheWeek()
+    {
 
-    private void choosingTheWeek() {
-        
     }
 }
