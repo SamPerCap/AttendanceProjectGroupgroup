@@ -5,6 +5,7 @@
  */
 package attendanceprojectgroupgroup.dal;
 
+import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.be.Attendance;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import java.sql.Connection;
@@ -22,14 +23,15 @@ import java.util.logging.Logger;
  */
 public class DALManager
 {
+
     private ConnectionManager cm = new ConnectionManager();
 
     public List<StudentAttendance> getStudentAttendance()
     {
         System.out.println("Getting attendance");
-        
+
         List<StudentAttendance> allStudentAttendance = new ArrayList();
-        
+
         for (int i = 0; i < 9; i++)
         {
             StudentAttendance a = new StudentAttendance();
@@ -37,10 +39,9 @@ public class DALManager
             a.setName("student" + i);
             a.setAttendance(50f);
             a.setPresence("here");
-            
+
             allStudentAttendance.add(a);
-        }
-        
+
 //        List<StudentAttendance> allStudentAttendance = new ArrayList();
 //
 //        try (Connection con = cm.getConnection())
@@ -63,6 +64,56 @@ public class DALManager
 //            Logger.getLogger(DALManager.class.getName()).log(
 //                    Level.SEVERE, null, ex);
 //        }
+        }
         return allStudentAttendance;
+    }
+
+//    public List<Attendance> getAttendance() {
+//        System.out.println("Getting attendance");
+//
+//        List<Attendance> allAttendance = new ArrayList();
+//
+//        try (Connection con = cm.getConnection()) {
+//            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Attendance");
+//            ResultSet rs = stmt.executeQuery();
+//
+//            while (rs.next()) {
+//                Attendance a = new Attendance();
+//                a.setId(rs.getInt("id"));
+//                a.setStudentId(rs.getInt("studentId"));
+//                a.setDate(rs.getString("date"));
+//                a.setAttendance(rs.getString("attendance"));
+//
+//                allAttendance.add(a);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DALManager.class.getName()).log(
+//                    Level.SEVERE, null, ex);
+//        }
+    public List<Week> getWeek()
+    {
+        System.out.println("Getting weeks info");
+
+        List<Week> allWeekInfo = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM weekNumber");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                Week w = new Week();
+                w.setWeekNumber(rs.getInt("eekNumber"));
+                w.setDate(rs.getString("date"));
+
+                allWeekInfo.add(w);
+            }
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return allWeekInfo;
     }
 }

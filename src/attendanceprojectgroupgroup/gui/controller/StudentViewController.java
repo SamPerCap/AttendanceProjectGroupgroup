@@ -5,9 +5,18 @@
  */
 package attendanceprojectgroupgroup.gui.controller;
 
+import attendanceprojectgroupgroup.be.Attendance;
+import attendanceprojectgroupgroup.be.Week;
+import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,9 +25,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import static javax.management.Query.value;
 
 /**
  * FXML Controller class
@@ -28,9 +40,9 @@ import javafx.stage.Stage;
 public class StudentViewController implements Initializable {
 
     @FXML
-    private Label idLabel;
+    protected Label idLabel;
     @FXML
-    private TableColumn<?, ?> columnWeek;
+    private TableColumn<Integer, Integer> columnWeek;
     @FXML
     private TableColumn<?, ?> columnMonday;
     @FXML
@@ -44,14 +56,15 @@ public class StudentViewController implements Initializable {
     @FXML
     private TableColumn<?, ?> columnWeekTotal;
     @FXML
-    private TableView<?> weekTableView;
+    private TableView<Integer> weekTableView;
 
     @FXML
     private Button btnSeeDetailsChart;
     @FXML
     protected Label labelStudentName;
     @FXML
-    private Label labelClass;
+    protected Label labelClass;
+    private final List<Integer> yearWeeks = new ArrayList<>();
 
     /**
      * Initializes the controller class.
@@ -59,9 +72,11 @@ public class StudentViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
+        for (int i = 1; i <= 52; i++) {
+            yearWeeks.add(i);
+            choosingTheWeek();
+        }
     }
-
     @FXML
     private void clickSeeDetailsChart(ActionEvent event) throws IOException {
         Stage stage = new Stage();
@@ -80,10 +95,14 @@ public class StudentViewController implements Initializable {
         stage.close();
 
     }
-
     private LogInViewController parent;
 
     public void setParentWindowController(LogInViewController parent) {
         this.parent = parent;
+    }
+    Attendance m = new Attendance();
+
+    private void choosingTheWeek() {
+        
     }
 }
