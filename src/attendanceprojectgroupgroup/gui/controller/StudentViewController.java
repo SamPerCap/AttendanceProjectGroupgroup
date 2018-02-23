@@ -5,34 +5,19 @@
  */
 package attendanceprojectgroupgroup.gui.controller;
 
-import attendanceprojectgroupgroup.be.Attendance;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import javafx.util.Callback;
-import static javax.management.Query.value;
 
 /**
  * FXML Controller class
@@ -58,12 +43,8 @@ public class StudentViewController implements Initializable
     @FXML
     private TableColumn<Week, String> columnFriday;
     @FXML
-    private TableColumn<Week, String> columnWeekTotal;
-    @FXML
     private TableView<Week> weekTableView;
 
-    @FXML
-    private Button btnSeeDetailsChart;
     @FXML
     protected Label labelStudentName;
     @FXML
@@ -105,11 +86,6 @@ public class StudentViewController implements Initializable
         this.parent = parent;
     }
 
-    @FXML
-    private void clickSeeDetailsChart(ActionEvent event) throws IOException
-    {
-
-    }
     private LogInViewController parent;
 
     private void choosingTheWeek()
