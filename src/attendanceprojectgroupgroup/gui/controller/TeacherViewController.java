@@ -5,24 +5,19 @@
  */
 package attendanceprojectgroupgroup.gui.controller;
 
-import attendanceprojectgroupgroup.be.Attendance;
-import attendanceprojectgroupgroup.be.Student;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
+import com.sun.javafx.property.adapter.PropertyDescriptor;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,7 +26,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -76,10 +70,9 @@ public class TeacherViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        //editingCells();
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
-        columnStudentPresence.setCellValueFactory(new PropertyValueFactory("presence"));
+        columnStudentPresence.setCellValueFactory(param -> param.getValue().presenceProperty());
 
         Thread t = new Thread(() ->
         {
@@ -93,25 +86,20 @@ public class TeacherViewController implements Initializable
         );
         t.start();
 
-        tglAttendance.selectedProperty().addListener(new ChangeListener<Boolean>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
-            {
-                if (tglAttendance.isSelected() == true)
-                {
-                    System.out.println("Hello");
-                    tglAttendance.setText("Here");
-                } else
-                {
-                    System.out.println("Not hello");
-                    tglAttendance.setText("Not here");
-                }
-            }
-        });
-      //   choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
+        //   choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
 // also go to dal and delete or remove outcommenting
-         //issue with the above, not sure if it's because you didn't make any classes?
+        //issue with the above, not sure if it's because you didn't make any classes?
+    }
+
+    private String getPresence()
+    {
+        return tableStudents.getSelectionModel().getSelectedItem().getPresence();
+
+    }
+
+    private String getName()
+    {
+        return tableStudents.getSelectionModel().getSelectedItem().getName();
     }
 
     public void setParentWindowController(LogInViewController parent)
@@ -141,7 +129,38 @@ public class TeacherViewController implements Initializable
     @FXML
     private void toggleAttendance(ActionEvent event)
     {
-        //System.out.println("Action hello");
+
+        tglAttendance.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) ->
+        {
+            if (tglAttendance.isSelected() == true)
+            {
+                tglAttendance.setText("Present");
+
+            } else
+            {
+                tglAttendance.setText("Absent");
+
+            }
+        });
+        changePressence();
+
+    }
+
+    private void changePressence()
+    {
+        if (tglAttendance.getText() == "Present")
+        {
+            tableStudents.getItems().stream()
+                    .filter(row -> row.getPresence().equals("here"))
+                    .findFirst()
+                    .ifPresent(row -> row.setPresence("Absent"));
+        } else if (tglAttendance.getText() == "Absent")
+        {
+            tableStudents.getItems().stream()
+                    .filter(row -> row.getPresence().equals("Absent"))
+                    .findFirst()
+                    .ifPresent(row -> row.setPresence("here"));
+        }
     }
 
     @FXML
