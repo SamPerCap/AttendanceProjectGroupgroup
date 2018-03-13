@@ -5,10 +5,12 @@
  */
 package attendanceprojectgroupgroup.gui.model;
 
+import attendanceprojectgroupgroup.be.AClass;
 import attendanceprojectgroupgroup.be.Attendance;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.bll.BLLManager;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,7 +20,7 @@ import javafx.collections.ObservableList;
  */
 public class AttendanceModel
 {
-    BLLManager bll = new BLLManager();
+    BLLManager bllm = new BLLManager();
     
     private ObservableList<StudentAttendance> studentAttendanceList = FXCollections.observableArrayList();
     private ObservableList<Week> weekList = FXCollections.observableArrayList();
@@ -26,7 +28,7 @@ public class AttendanceModel
     public void getStudentAttendance()
     {
         studentAttendanceList.clear();
-        studentAttendanceList.addAll(bll.getStudentAttendance());
+        studentAttendanceList.addAll(bllm.getStudentAttendance());
     }
     
     public ObservableList<StudentAttendance> loadStudentAttendance()
@@ -34,10 +36,14 @@ public class AttendanceModel
         return studentAttendanceList;
     }
     
+    public List<AClass> getAllClasses() {
+        return bllm.getAllClasses();
+    }
+    
     public void getWeek()
     {
         weekList.clear();
-        weekList.addAll(bll.getWeek());
+        weekList.addAll(bllm.getWeek());
     }
     
     public ObservableList<Week> loadWeek()

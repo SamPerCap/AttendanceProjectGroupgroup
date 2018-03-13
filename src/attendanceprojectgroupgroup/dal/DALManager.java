@@ -5,10 +5,17 @@
  */
 package attendanceprojectgroupgroup.dal;
 
+import attendanceprojectgroupgroup.be.AClass;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.be.StudentAttendance;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -104,4 +111,29 @@ public class DALManager
 //            Logger.getLogger(DALManager.class.getName()).log(
 //                    Level.SEVERE, null, ex);
 //        }
+    
+     public List<AClass> getAllClasses() {
+        System.out.println("Getting all Classes.");
+
+        List<AClass> allClasses = new ArrayList();
+
+        try (Connection con = cm.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Class");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                AClass c = new AClass();
+              //  c.setId(rs.getInt("id"));
+                c.setName(rs.getString("name"));
+              //  c.setTeacherId(rs.getInt("teacherId"));
+
+
+                allClasses.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return allClasses;
+    }
 }
