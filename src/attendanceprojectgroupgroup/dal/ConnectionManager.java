@@ -21,9 +21,9 @@ public class ConnectionManager {
      * All the information to connect to the database.
      */
     public ConnectionManager() {
-        ds.setDatabaseName("Attendancegroupgroup");
-        ds.setUser("CS2017B_25");
-        ds.setPassword("vbx97jfz");
+        ds.setDatabaseName("AttendanceProject");
+        ds.setUser("CS2017B_14_java");
+        ds.setPassword("javajava");
         ds.setPortNumber(1433);
         ds.setServerName("10.176.111.31");
 
