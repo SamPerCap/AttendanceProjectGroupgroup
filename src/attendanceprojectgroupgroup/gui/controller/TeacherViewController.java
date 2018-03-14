@@ -62,14 +62,17 @@ public class TeacherViewController implements Initializable
 
     @FXML
     private ChoiceBox<AClass> choiceBoxClass;
-    
+
     private AttendanceModel model = new AttendanceModel();
     @FXML
+    StudentAttendance sModel = new StudentAttendance();
+
     private JFXDatePicker dtPicker;
+    private int studentID;
+    private float attendanceInfo;
     @FXML
     private JFXDatePicker dtPickerTo;
 
-    
     /**
      * Initializes the controller class.
      */
@@ -107,6 +110,16 @@ public class TeacherViewController implements Initializable
         return tableStudents.getSelectionModel().getSelectedItem().getName();
     }
 
+    private int getStudentID()
+    {
+        return tableStudents.getSelectionModel().getSelectedItem().getId();
+    }
+
+    private Float getAttendance()
+    {
+        return tableStudents.getSelectionModel().getSelectedItem().getAttendance();
+    }
+
     public void setParentWindowController(LogInViewController parent)
     {
         this.parent = parent;
@@ -131,20 +144,45 @@ public class TeacherViewController implements Initializable
         stage.showAndWait();
     }
 
+//    @FXML
+//    private void toggleAttendance(ActionEvent event)
+//    {
+//
+//        tglAttendance.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) ->
+//        {
+//            if (tglAttendance.isSelected() == true)
+//            {
+//                tglAttendance.setText("Present");
+//
+//            } else
+//            {
+//                tglAttendance.setText("Absent");
+//
+//            }
+//        });
+//        changePressence();
+//
+//    }
     @FXML
     private void toggleAttendance(ActionEvent event)
     {
 
-        tglAttendance.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) ->
+        tglAttendance.selectedProperty().addListener(new ChangeListener<Boolean>()
         {
-            if (tglAttendance.isSelected() == true)
-            {
-                tglAttendance.setText("Present");
 
-            } else
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
             {
-                tglAttendance.setText("Absent");
 
+                if (tglAttendance.isSelected() == true)
+                {
+                    tglAttendance.setText("Present");
+
+                } else
+                {
+                    tglAttendance.setText("Absent");
+
+                }
             }
         });
         changePressence();
@@ -153,21 +191,58 @@ public class TeacherViewController implements Initializable
 
     private void changePressence()
     {
+
         if (tglAttendance.getText() == "Present")
         {
-            tableStudents.getItems().stream()
-                    .filter(row -> row.getPresence().equals("here"))
-                    .findFirst()
-                    .ifPresent(row -> row.setPresence("Absent"));
+            setAbsent();
+
+            studentID = getStudentID();
+            attendanceInfo = getAttendance();
+            System.out.println(studentID + " " + attendanceInfo);
+
         } else if (tglAttendance.getText() == "Absent")
         {
-            tableStudents.getItems().stream()
-                    .filter(row -> row.getPresence().equals("Absent"))
-                    .findFirst()
-                    .ifPresent(row -> row.setPresence("here"));
+            setHere();
+
+            studentID = getStudentID();
+            attendanceInfo = getAttendance();
+            System.out.println(studentID + " " + attendanceInfo);
+
         }
     }
 
+    private void setAbsent()
+    {
+        tableStudents.getItems().stream()
+                .filter(row -> row.getPresence().equals("Here"))
+                .findFirst()
+                .ifPresent(row -> row.setPresence("Absent"));
+    }
+
+    private void setHere()
+    {
+        tableStudents.getItems().stream()
+                .filter(row -> row.getPresence().equals("Absent"))
+                .findFirst()
+                .ifPresent(row -> row.setPresence("Here"));
+    }
+
+//    private void changePressence()
+//    {
+//        if (tglAttendance.getText() == "Present")
+//        {
+//            tableStudents.getItems().stream()
+//                    .filter(row -> row.getPresence().equals("here"))
+//                    .findFirst()
+//                    .ifPresent(row -> row.setPresence("Absent"));
+//        } else if (tglAttendance.getText() == "Absent")
+//        {
+//            tableStudents.getItems().stream()
+//                    .filter(row -> row.getPresence().equals("Absent"))
+//                    .findFirst()
+//                    .ifPresent(row -> row.setPresence("here"));
+//        }
+//    }
     @FXML
     private void datePicker(ActionEvent event)
     {
@@ -180,14 +255,14 @@ public class TeacherViewController implements Initializable
         //System.out.println(dtPickerTo.getValue());
         attendanceFromTo();
     }
-    
+
     private void attendanceFromTo()
     {
         int i = 0;
         LocalDate fromDate = dtPicker.getValue();
         LocalDate toDate = dtPickerTo.getValue().plusDays(1);
-        
-        while(fromDate.plusDays(i).isBefore(toDate))
+
+        while (fromDate.plusDays(i).isBefore(toDate))
         {
             System.out.println(fromDate.plusDays(i++));
         }
