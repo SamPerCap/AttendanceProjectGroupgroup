@@ -214,7 +214,7 @@ public class TeacherViewController implements Initializable
     private void setAbsent()
     {
         tableStudents.getItems().stream()
-                .filter(row -> row.getPresence().equals("Here"))
+                .filter(row -> row.getPresence().equals("here"))
                 .findFirst()
                 .ifPresent(row -> row.setPresence("Absent"));
     }
@@ -224,7 +224,7 @@ public class TeacherViewController implements Initializable
         tableStudents.getItems().stream()
                 .filter(row -> row.getPresence().equals("Absent"))
                 .findFirst()
-                .ifPresent(row -> row.setPresence("Here"));
+                .ifPresent(row -> row.setPresence("here"));
     }
 
 //    private void changePressence()
