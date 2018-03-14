@@ -17,7 +17,6 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -63,6 +62,11 @@ public class TeacherViewController implements Initializable
     private AttendanceModel model = new AttendanceModel();
     @FXML
     private ChoiceBox<?> choiceBoxClass;
+// Sam
+//    StudentAttendance sModel = new StudentAttendance();
+//
+//    private int studentID;
+//    private float attendanceInfo;
 
     /**
      * Initializes the controller class.
@@ -101,6 +105,16 @@ public class TeacherViewController implements Initializable
     {
         return tableStudents.getSelectionModel().getSelectedItem().getName();
     }
+//Sam
+//    private int getStudentID()
+//    {
+//        return tableStudents.getSelectionModel().getSelectedItem().getId();
+//    }
+//
+//    private Float getAttendance()
+//    {
+//        return tableStudents.getSelectionModel().getSelectedItem().getAttendance();
+//    }
 
     public void setParentWindowController(LogInViewController parent)
     {
@@ -125,42 +139,69 @@ public class TeacherViewController implements Initializable
         stage.setScene(scene);
         stage.showAndWait();
     }
+//sam
+//    @FXML
+//    private void toggleAttendance(ActionEvent event)
+//    {
+//
+//        tglAttendance.selectedProperty().addListener(new ChangeListener<Boolean>()
+//        {
+//
+//            @Override
+//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+//            {
+//
+//                if (tglAttendance.isSelected() == true)
+//                {
+//                    tglAttendance.setText("Present");
+//
+//                } else
+//                {
+//                    tglAttendance.setText("Absent");
+//
+//                }
+//            }
+//        });
+//        changePressence();
+//
+//    }
+//  sam
+//    private void changePressence()
+//    {
+//
+//        if (tglAttendance.getText() == "Present")
+//        {
+//            setAbsent();
+//
+//            studentID = getStudentID();
+//            attendanceInfo = getAttendance();
+//            System.out.println(studentID + " " + attendanceInfo);
+//
+//        } else if (tglAttendance.getText() == "Absent")
+//        {
+//            setHere();
+//
+//            studentID = getStudentID();
+//            attendanceInfo = getAttendance();
+//            System.out.println(studentID + " " + attendanceInfo);
+//            
+//        }
+//    }
+//
+//    private void setAbsent()
+//    {
+//        tableStudents.getItems().stream()
+//                .filter(row -> row.getPresence().equals("Here"))
+//                .findFirst()
+//                .ifPresent(row -> row.setPresence("Absent"));
+//    }
 
-    @FXML
-    private void toggleAttendance(ActionEvent event)
+    private void setHere()
     {
-
-        tglAttendance.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) ->
-        {
-            if (tglAttendance.isSelected() == true)
-            {
-                tglAttendance.setText("Present");
-
-            } else
-            {
-                tglAttendance.setText("Absent");
-
-            }
-        });
-        changePressence();
-
-    }
-
-    private void changePressence()
-    {
-        if (tglAttendance.getText() == "Present")
-        {
-            tableStudents.getItems().stream()
-                    .filter(row -> row.getPresence().equals("here"))
-                    .findFirst()
-                    .ifPresent(row -> row.setPresence("Absent"));
-        } else if (tglAttendance.getText() == "Absent")
-        {
-            tableStudents.getItems().stream()
-                    .filter(row -> row.getPresence().equals("Absent"))
-                    .findFirst()
-                    .ifPresent(row -> row.setPresence("here"));
-        }
+        tableStudents.getItems().stream()
+                .filter(row -> row.getPresence().equals("Absent"))
+                .findFirst()
+                .ifPresent(row -> row.setPresence("Here"));
     }
 
     @FXML
