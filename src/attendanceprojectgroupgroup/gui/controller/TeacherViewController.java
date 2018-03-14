@@ -63,6 +63,8 @@ public class TeacherViewController implements Initializable
     private AttendanceModel model = new AttendanceModel();
     @FXML
     private ChoiceBox<?> choiceBoxClass;
+    @FXML
+    private JFXDatePicker dtPickerTo;
 
     /**
      * Initializes the controller class.
@@ -167,5 +169,10 @@ public class TeacherViewController implements Initializable
     private void datePicker(ActionEvent event)
     {
         System.out.println(dtPicker.getValue());
+    }
+
+    @FXML
+    private void datePickerTo(ActionEvent event)
+    {
     }
 }
