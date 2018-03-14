@@ -128,9 +128,11 @@ public class DALManager
             while (rs.next())
             {
                 AClass c = new AClass();
-                //  c.setId(rs.getInt("id"));
+
+                c.setId(rs.getInt("id"));
                 c.setName(rs.getString("name"));
-                //  c.setTeacherId(rs.getInt("teacherId"));
+                c.setTeacherId(rs.getInt("teacherId"));
+
 
                 allClasses.add(c);
 
