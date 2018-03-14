@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXToggleButton;
 import com.sun.javafx.property.adapter.PropertyDescriptor;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -58,14 +59,15 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, String> columnStudentPresence;
 
     @FXML
-    private JFXDatePicker dtPicker;
-
-    private AttendanceModel model = new AttendanceModel();
-    @FXML
     private ChoiceBox<?> choiceBoxClass;
+    
+    @FXML
+    private JFXDatePicker dtPicker;
     @FXML
     private JFXDatePicker dtPickerTo;
 
+    private AttendanceModel model = new AttendanceModel();
+    
     /**
      * Initializes the controller class.
      */
@@ -89,14 +91,13 @@ public class TeacherViewController implements Initializable
         t.start();
 
         //   choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
-// also go to dal and delete or remove outcommenting
+        // also go to dal and delete or remove outcommenting
         //issue with the above, not sure if it's because you didn't make any classes?
     }
 
     private String getPresence()
     {
         return tableStudents.getSelectionModel().getSelectedItem().getPresence();
-
     }
 
     private String getName()
@@ -168,11 +169,25 @@ public class TeacherViewController implements Initializable
     @FXML
     private void datePicker(ActionEvent event)
     {
-        System.out.println(dtPicker.getValue());
+        //System.out.println(dtPicker.getValue());
     }
 
     @FXML
     private void datePickerTo(ActionEvent event)
     {
+        //System.out.println(dtPickerTo.getValue());
+        attendanceFromTo();
+    }
+    
+    private void attendanceFromTo()
+    {
+        int i = 0;
+        LocalDate fromDate = dtPicker.getValue();
+        LocalDate toDate = dtPickerTo.getValue().plusDays(1);
+        
+        while(fromDate.plusDays(i).isBefore(toDate))
+        {
+            System.out.println(fromDate.plusDays(i++));
+        }
     }
 }
