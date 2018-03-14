@@ -5,6 +5,7 @@
  */
 package attendanceprojectgroupgroup.gui.controller;
 
+import attendanceprojectgroupgroup.be.AClass;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import com.jfoenix.controls.JFXDatePicker;
@@ -16,6 +17,7 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -62,7 +64,7 @@ public class TeacherViewController implements Initializable
 
     private AttendanceModel model = new AttendanceModel();
     @FXML
-    private ChoiceBox<?> choiceBoxClass;
+    private ChoiceBox<AClass> choiceBoxClass;
     @FXML
     private JFXDatePicker dtPickerTo;
 
@@ -88,9 +90,8 @@ public class TeacherViewController implements Initializable
         );
         t.start();
 
-        //   choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
-// also go to dal and delete or remove outcommenting
-        //issue with the above, not sure if it's because you didn't make any classes?
+           choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
+
     }
 
     private String getPresence()
