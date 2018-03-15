@@ -31,43 +31,46 @@ public class DALManager
         System.out.println("Getting attendance");
 
         List<StudentAttendance> allStudentAttendance = new ArrayList();
+//
+//        for (int i = 0; i < 9; i++)
+//        {
+//            StudentAttendance a = new StudentAttendance();
+//                a.setId(i);
+//                a.setName("student" + i);
+//                a.setAttendance(50f);
+//                a.setPresence("Here");
+//
+//            allStudentAttendance.add(a);
 
-        for (int i = 0; i < 9; i++)
+        try (Connection con = cm.getConnection())
         {
-            StudentAttendance a = new StudentAttendance();
-                a.setId(i);
-                a.setName("student" + i);
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT DISTINCT s.id, s.name, a.attendance"
+                    + " FROM Attendance a, Student s"
+                    + " WHERE a.studentID = s.id");
+            
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                StudentAttendance a = new StudentAttendance();
+
+                a.setId(rs.getInt("id"));
+                a.setName(rs.getString("name"));
                 a.setAttendance(50f);
-                a.setPresence("here");
+                a.setPresence(rs.getString("attendance"));
 
-            allStudentAttendance.add(a);
-
-//        List<StudentAttendance> allStudentAttendance = new ArrayList();
-//
-//        try (Connection con = cm.getConnection())
-//        {
-//            PreparedStatement stmt = con.prepareStatement("");
-//            ResultSet rs = stmt.executeQuery();
-//
-//            while (rs.next())
-//            {
-//                StudentAttendance a = new StudentAttendance();
-//                a.setId(rs.getInt("id"));
-//                a.setName(rs.getString("name"));
-//                
-//                //a.setAttendance(rs.getFloat("Attendance"));
-//                
-//                allStudentAttendance.add(a);
-//            }
-//        } catch (SQLException ex)
-//        {
-//            Logger.getLogger(DALManager.class.getName()).log(
-//                    Level.SEVERE, null, ex);
-//        }
+                allStudentAttendance.add(a);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
         }
+
         return allStudentAttendance;
     }
-    
+
     public List<Week> getWeek()
     {
         System.out.println("Getting attendance");
@@ -77,12 +80,12 @@ public class DALManager
         for (int i = 1; i < 9; i++)
         {
             Week w = new Week();
-                w.setWeekNumber(i);
-                w.setMonday("here");
-                w.setTuesday("here");
-                w.setWednesday("here");
-                w.setThursday("here");
-                w.setFriday("here");
+            w.setWeekNumber(i);
+            w.setMonday("here");
+            w.setTuesday("here");
+            w.setWednesday("here");
+            w.setThursday("here");
+            w.setFriday("here");
 
             allWeek.add(w);
         }
@@ -111,28 +114,34 @@ public class DALManager
 //            Logger.getLogger(DALManager.class.getName()).log(
 //                    Level.SEVERE, null, ex);
 //        }
-    
-     public List<AClass> getAllClasses() {
+    public List<AClass> getAllClasses()
+    {
         System.out.println("Getting all Classes.");
 
         List<AClass> allClasses = new ArrayList();
 
-        try (Connection con = cm.getConnection()) {
+        try (Connection con = cm.getConnection())
+        {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM Class");
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next())
+            {
                 AClass c = new AClass();
+
                 c.setId(rs.getInt("id"));
                 c.setName(rs.getString("name"));
                 c.setTeacherId(rs.getInt("teacherId"));
 
 
                 allClasses.add(c);
+
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DALManager.class.getName()).log(
-                    Level.SEVERE, null, ex);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class
+                    .getName()).log(
+                            Level.SEVERE, null, ex);
         }
         return allClasses;
     }
