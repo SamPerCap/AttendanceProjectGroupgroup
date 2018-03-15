@@ -59,20 +59,10 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, Float> columnStudentsAttendance;
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
-
-    @FXML
-<<<<<<< HEAD
-    private ChoiceBox<?> choiceBoxClass;
-    
-    @FXML
-    private JFXDatePicker dtPicker;
-=======
-    private JFXDatePicker dtPicker;
-
-    private AttendanceModel model = new AttendanceModel();
     @FXML
     private ChoiceBox<AClass> choiceBoxClass;
->>>>>>> 8e18cd1353d1612fa2a40d8220155044e703975f
+    @FXML
+    private JFXDatePicker dtPicker;
     @FXML
     private JFXDatePicker dtPickerTo;
 
@@ -100,14 +90,11 @@ public class TeacherViewController implements Initializable
         );
         t.start();
 
-<<<<<<< HEAD
         //   choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         // also go to dal and delete or remove outcommenting
         //issue with the above, not sure if it's because you didn't make any classes?
-=======
-           choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
 
->>>>>>> 8e18cd1353d1612fa2a40d8220155044e703975f
+           choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
     }
 
     private String getPresence()
