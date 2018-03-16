@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -10,26 +9,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="541.0" prefWidth="312.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.TeacherViewController">
+<AnchorPane id="AnchorPane" prefHeight="525.0" prefWidth="407.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.TeacherViewController">
    <children>
       <Label fx:id="labelTeachersName" layoutX="14.0" layoutY="14.0" text="Teachers name" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <JFXToggleButton fx:id="tglAttendance" contentDisplay="RIGHT" layoutX="201.0" layoutY="161.0" onAction="#toggleAttendance" text="Absent" textFill="#019abc" toggleColor="#019adc" toggleLineColor="WHITE" unToggleColor="#fbbb2c" unToggleLineColor="WHITE" AnchorPane.rightAnchor="0.0" />
-      <JFXButton fx:id="btnStudentDetails" layoutX="11.0" layoutY="178.0" onAction="#clickStudentDetails" text="Student details" />
-      <TableView fx:id="tableStudents" layoutX="14.0" layoutY="99.0" prefHeight="317.0" prefWidth="283.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
+      <JFXButton fx:id="btnStudentDetails" layoutX="13.0" layoutY="144.0" onAction="#clickStudentDetails" text="Student details" />
+      <TableView fx:id="tableStudents" layoutX="14.0" layoutY="186.0" prefHeight="317.0" prefWidth="283.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0">
         <columns>
           <TableColumn fx:id="columnStudentsName" prefWidth="127.0" text="Name" />
           <TableColumn fx:id="columnStudentsAttendance" prefWidth="84.0" text="Attendance" />
             <TableColumn fx:id="columnStudentPresence" prefWidth="72.0" text="Presence" />
+            <TableColumn fx:id="buttonsColumn" prefWidth="95.0" />
         </columns>
       </TableView>
       <JFXDatePicker fx:id="dtPicker" defaultColor="#019adc" layoutX="133.0" layoutY="60.0" onAction="#datePicker" AnchorPane.rightAnchor="7.0" />
-      <ChoiceBox fx:id="choiceBoxClass" accessibleText="Class" layoutX="14.0" layoutY="145.0" prefHeight="26.0" prefWidth="113.0" />
-      <JFXDatePicker fx:id="dtPickerTo" defaultColor="#019adc" layoutX="133.0" layoutY="94.0" onAction="#datePickerTo" />
-      <Label layoutX="108.0" layoutY="107.0" text="To:" />
-      <Label layoutX="92.0" layoutY="72.0" text="From:" />
+      <ChoiceBox fx:id="choiceBoxClass" accessibleText="Class" layoutX="282.0" layoutY="143.0" prefHeight="26.0" prefWidth="113.0" />
+      <JFXDatePicker fx:id="dtPickerTo" defaultColor="#019adc" layoutX="133.0" layoutY="94.0" onAction="#datePickerTo" AnchorPane.rightAnchor="7.0" />
+      <Label layoutX="108.0" layoutY="107.0" text="To:" AnchorPane.rightAnchor="190.0" />
+      <Label layoutX="92.0" layoutY="72.0" text="From:" AnchorPane.rightAnchor="190.0" />
    </children>
 </AnchorPane>

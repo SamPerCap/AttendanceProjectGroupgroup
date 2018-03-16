@@ -16,21 +16,27 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -48,7 +54,6 @@ public class TeacherViewController implements Initializable
     protected Label labelTeachersName;
     @FXML
     private Button btnStudentDetails;
-    @FXML
     private JFXToggleButton tglAttendance;
 
     @FXML
@@ -59,19 +64,23 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, Float> columnStudentsAttendance;
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
-
+    @FXML
+    private TableColumn<StudentAttendance, StudentAttendance> buttonsColumn;
     @FXML
     private ChoiceBox<AClass> choiceBoxClass;
 
     private AttendanceModel model = new AttendanceModel();
-    @FXML
     StudentAttendance sModel = new StudentAttendance();
 
+    @FXML
     private JFXDatePicker dtPicker;
     private int studentID;
     private float attendanceInfo;
     @FXML
     private JFXDatePicker dtPickerTo;
+
+    @FXML
+    ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
 
     /**
      * Initializes the controller class.
@@ -79,9 +88,56 @@ public class TeacherViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
-        columnStudentPresence.setCellValueFactory(param -> param.getValue().presenceProperty());
+
+        columnStudentPresence.setCellFactory(param ->
+        {
+            // plain old cell:
+            TableCell<StudentAttendance, String> cell = new TableCell<>();
+            // if the cell is reused for an item from a different row, update it:
+            cell.indexProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
+            // if the password changes, update:
+            cell.itemProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
+            // if the set of users with shown password changes, update the cell:
+            studentsPresence.addListener((Change<? extends StudentAttendance> change) -> updateCell(studentsPresence, cell));
+            return cell;
+
+        });
+        // just use whole row (studentsPresence) as data for cells in this column:
+        columnStudentPresence.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue()));
+        // cell factory for toggle buttons:
+        columnStudentPresence.setCellFactory(param -> new TableCell<StudentAttendance, StudentAttendance>()
+        {
+            // create toggle button once for cell:
+            private final JFXToggleButton button = new JFXToggleButton();
+            //anonymous constructor:
+
+            
+            {
+                // update toggle button state if usersWithShownPasswords changes:
+                studentsPresence.addListener((Change<? extends User> change) ->
+                {
+                    button.setSelected(studentsPresence.contains(getItem()));
+                });
+                // update usersWithShownPasswords if toggle selection changes:
+                button.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+                {
+                    if (isNowSelected)
+                    {
+                        studentsPresence.add(getItem());
+                    } else
+                    {
+                        studentsPresence.remove(getItem());
+                    }
+                });
+                // keep text "Absent" or "Present" appropriately:
+                button.textProperty().bind(Bindings.when(button.selectedProperty()).then("Absent").otherwise("Present"));
+                setAlignment(Pos.CENTER);
+            }
+
+        });
 
         Thread t = new Thread(() ->
         {
@@ -98,6 +154,27 @@ public class TeacherViewController implements Initializable
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         // also go to dal and delete or remove outcommenting
         //issue with the above, not sure if it's because you didn't make any classes?
+    }
+
+    private void updateCell(ObservableSet<StudentAttendance> studentAttendances,
+            TableCell<StudentAttendance, String> cell)
+    {
+        int index = cell.getIndex();
+        TableView<StudentAttendance> table = cell.getTableView();
+        if (index < 0 || index >= table.getItems().size())
+        {
+            cell.setText("");
+        } else
+        {
+            StudentAttendance sA = table.getItems().get(index);
+            if (studentsPresence.contains(sA))
+            {
+                cell.setText(sA.getPresence());
+            } else
+            {
+                cell.setText(mask(sA.getPresence()));
+            }
+        }
     }
 
     private String getPresence()
@@ -144,7 +221,6 @@ public class TeacherViewController implements Initializable
         stage.showAndWait();
     }
 
-    @FXML
     private void toggleAttendance(ActionEvent event)
     {
 
