@@ -99,7 +99,7 @@ public class TeacherViewController implements Initializable
             // if the cell is reused for an item from a different row, update it:
             cell.indexProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
             // if the password changes, update:
-            cell.itemProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
+            cell.itemProperty().addListener((obs, oldItem, newItem) -> updateCell(studentsPresence, cell));
             // if the set of users with shown password changes, update the cell:
             studentsPresence.addListener((Change<? extends StudentAttendance> change) -> updateCell(studentsPresence, cell));
             return cell;
@@ -114,8 +114,7 @@ public class TeacherViewController implements Initializable
             private final JFXToggleButton button = new JFXToggleButton();
             //anonymous constructor:
 
-            
-            {
+             {
                 // update toggle button state if usersWithShownPasswords changes:
                 studentsPresence.addListener((Change<? extends User> change) ->
                 {
