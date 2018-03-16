@@ -50,7 +50,6 @@ public class TeacherViewController implements Initializable
     private Button btnStudentDetails;
     @FXML
     private JFXToggleButton tglAttendance;
-
     @FXML
     private TableView<StudentAttendance> tableStudents;
     @FXML
@@ -61,21 +60,17 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, String> columnStudentPresence;
     @FXML
     private ChoiceBox<AClass> choiceBoxClass;
-<<<<<<< HEAD
     @FXML
     private JFXDatePicker dtPicker;
-=======
-
-    private AttendanceModel model = new AttendanceModel();
-    @FXML
-    StudentAttendance sModel = new StudentAttendance();
-
-    private JFXDatePicker dtPicker;
-    private int studentID;
-    private float attendanceInfo;
->>>>>>> fdaf19d379bd317367a47e83a4883780896d3f38
     @FXML
     private JFXDatePicker dtPickerTo;
+    
+    private AttendanceModel model = new AttendanceModel();
+    StudentAttendance sModel = new StudentAttendance();
+    
+    private int studentID;
+    private float attendanceInfo;
+    
 
     /**
      * Initializes the controller class.
@@ -99,17 +94,17 @@ public class TeacherViewController implements Initializable
         );
         t.start();
 
-<<<<<<< HEAD
-        //   choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
-        // also go to dal and delete or remove outcommenting
+        //choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
+        //also go to dal and delete or remove outcommenting
         //issue with the above, not sure if it's because you didn't make any classes?
 
-           choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
-=======
+        choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
+
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         // also go to dal and delete or remove outcommenting
         //issue with the above, not sure if it's because you didn't make any classes?
->>>>>>> fdaf19d379bd317367a47e83a4883780896d3f38
+        
+        
     }
 
     private String getPresence()
@@ -175,6 +170,7 @@ public class TeacherViewController implements Initializable
 //        changePressence();
 //
 //    }
+    
     @FXML
     private void toggleAttendance(ActionEvent event)
     {
@@ -255,6 +251,7 @@ public class TeacherViewController implements Initializable
 //                    .ifPresent(row -> row.setPresence("here"));
 //        }
 //    }
+    
     @FXML
     private void datePicker(ActionEvent event)
     {
@@ -265,7 +262,8 @@ public class TeacherViewController implements Initializable
     private void datePickerTo(ActionEvent event)
     {
         //System.out.println(dtPickerTo.getValue());
-        attendanceFromTo();
+        //attendanceFromTo();
+        attendancePercentage();
     }
 
     private void attendanceFromTo()
@@ -277,6 +275,47 @@ public class TeacherViewController implements Initializable
         while (fromDate.plusDays(i).isBefore(toDate))
         {
             System.out.println(fromDate.plusDays(i++));
+        }
+    }
+    
+    private void attendancePercentage()
+    {
+        for (int i = 0; i < model.loadStudentAttendance().size(); i++)
+        {   
+            int count = 0;
+            int absense = 0;
+                    
+            for (int j = 0; j < model.loadStudentAttendance().size(); j++)
+            {
+                tableStudents.getSelectionModel().select(j);
+                int studentId = tableStudents.getSelectionModel().getSelectedItem().getId();
+                
+                if(studentId == i)
+                {
+                    String studentPresence = tableStudents.getSelectionModel().getSelectedItem().getPresence();
+
+                    if(studentPresence.equals("Absent"))
+                    {
+                        absense++;
+                    }
+
+                    count++;
+                }
+            }
+        
+            float absensePercentage = (absense / count) * 100;
+            
+            for (int j = 0; j < model.loadStudentAttendance().size(); j++)
+            {
+                tableStudents.getSelectionModel().select(j);
+                int studentId = tableStudents.getSelectionModel().getSelectedItem().getId();
+                
+                if(studentId == i)
+                {
+                    tableStudents.getSelectionModel().select(j);
+                    tableStudents.getSelectionModel().getSelectedItem().setAttendance(absensePercentage);
+                }
+            }
         }
     }
 }
