@@ -144,25 +144,6 @@ public class TeacherViewController implements Initializable
         stage.showAndWait();
     }
 
-//    @FXML
-//    private void toggleAttendance(ActionEvent event)
-//    {
-//
-//        tglAttendance.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) ->
-//        {
-//            if (tglAttendance.isSelected() == true)
-//            {
-//                tglAttendance.setText("Present");
-//
-//            } else
-//            {
-//                tglAttendance.setText("Absent");
-//
-//            }
-//        });
-//        changePressence();
-//
-//    }
     @FXML
     private void toggleAttendance(ActionEvent event)
     {
@@ -214,7 +195,7 @@ public class TeacherViewController implements Initializable
     private void setAbsent()
     {
         tableStudents.getItems().stream()
-                .filter(row -> row.getPresence().equals("here"))
+                .filter(row -> row.getPresence().equals("Here"))
                 .findFirst()
                 .ifPresent(row -> row.setPresence("Absent"));
     }
@@ -224,25 +205,9 @@ public class TeacherViewController implements Initializable
         tableStudents.getItems().stream()
                 .filter(row -> row.getPresence().equals("Absent"))
                 .findFirst()
-                .ifPresent(row -> row.setPresence("here"));
+                .ifPresent(row -> row.setPresence("Here"));
     }
 
-//    private void changePressence()
-//    {
-//        if (tglAttendance.getText() == "Present")
-//        {
-//            tableStudents.getItems().stream()
-//                    .filter(row -> row.getPresence().equals("here"))
-//                    .findFirst()
-//                    .ifPresent(row -> row.setPresence("Absent"));
-//        } else if (tglAttendance.getText() == "Absent")
-//        {
-//            tableStudents.getItems().stream()
-//                    .filter(row -> row.getPresence().equals("Absent"))
-//                    .findFirst()
-//                    .ifPresent(row -> row.setPresence("here"));
-//        }
-//    }
     @FXML
     private void datePicker(ActionEvent event)
     {
