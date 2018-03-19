@@ -303,7 +303,7 @@ public class TeacherViewController implements Initializable
                 }
             }
         
-            float absensePercentage = 100 - ((absense * 1f / count) * 100);
+            float absensePercentage = 100 - ((absense * 1f / count * 1f) * 100);
             
             for (int j = 0; j < model.loadStudentAttendance().size(); j++)
             {
