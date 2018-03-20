@@ -95,6 +95,7 @@ public class TeacherViewController implements Initializable
 
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
+        columnStudentPresence.setCellValueFactory(new PropertyValueFactory("presence"));
 
         Thread t = new Thread(() ->
         {
@@ -200,6 +201,8 @@ public class TeacherViewController implements Initializable
 //                cell.setText(mask(sA.getPresence()));
 //            }
 //        }
+
+    //attendancePercentage();
     }
 
     private String getPresence()
@@ -319,7 +322,14 @@ public class TeacherViewController implements Initializable
     private void datePickerTo(ActionEvent event)
     {
         //System.out.println(dtPickerTo.getValue());
-        //attendanceFromTo();
+        Thread t = new Thread(() ->
+        {
+           attendanceFromTo(); 
+        }
+        );
+        t.start();
+
+        attendancePercentage();
     }
 
     private void attendanceFromTo()
@@ -330,15 +340,14 @@ public class TeacherViewController implements Initializable
 
         while (fromDate.plusDays(i).isBefore(toDate))
         {
-            //System.out.println(fromDate.plusDays(i));
+            System.out.println(fromDate.plusDays(i));
     
-            Date date = (Date) Date.from(fromDate.plusDays(i).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date date = Date.valueOf(fromDate.plusDays(i));
             
             model.getStudentAttendanceByDate(date);
             model.loadStudentAttendance();
-            attendancePercentage();
             
-            i = i++;
+            i++;
         }
     }
 

@@ -155,9 +155,10 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT s.id, s.name, a.attendance"
-                    + " FROM Attendance a, Student s"
-                    + " WHERE a.date = ?");
+                    "SELECT Student.id, Student.name, Attendance.attendance, Attendance.date " +
+                    "FROM Student " +
+                    "JOIN Attendance ON Student.id = Attendance.studentId " +
+                    "WHERE Attendance.date = ?");
             
             stmt.setDate(1, (java.sql.Date) date);
             ResultSet rs = stmt.executeQuery();

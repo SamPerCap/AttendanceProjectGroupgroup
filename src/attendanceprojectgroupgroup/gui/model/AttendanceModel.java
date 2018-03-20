@@ -35,7 +35,6 @@ public class AttendanceModel
     
     public void getStudentAttendanceByDate(Date date)
     {
-        studentAttendanceList.clear();
         studentAttendanceList.addAll(bllm.getStudentAttendanceByDate(date));
     }
     
