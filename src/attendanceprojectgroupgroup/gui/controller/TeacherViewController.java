@@ -101,7 +101,7 @@ public class TeacherViewController implements Initializable
             // if the password changes, update:
             cell.itemProperty().addListener((obs, oldItem, newItem) -> updateCell(studentsPresence, cell));
             // if the set of users with shown password changes, update the cell: ->
-            studentsPresence.addListener((Change<? extends StudentAttendance> change) -> updateCell(studentsPresence, cell));
+            studentsPresence.addListener((SetChangeListener<StudentAttendance>) change -> updateCell(studentsPresence, cell));
             return cell;
 
         });
@@ -117,7 +117,7 @@ public class TeacherViewController implements Initializable
             
             {
                 // update toggle button state if usersWithShownPasswords changes:
-                studentsPresence.addListener((Change<? extends User> change) ->
+                studentsPresence.addListener((Change<? extends User>) change ->
                 {
                     button.setSelected(studentsPresence.contains(getItem()));
                 });
