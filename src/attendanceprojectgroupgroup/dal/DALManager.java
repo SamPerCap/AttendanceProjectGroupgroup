@@ -6,13 +6,16 @@
 package attendanceprojectgroupgroup.dal;
 
 import attendanceprojectgroupgroup.be.AClass;
+import attendanceprojectgroupgroup.be.Student;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +43,7 @@ public class DALManager
 //                a.setAttendance(50f);
 //                a.setPresence("Here");
 //
-//            allStudentAttendance.add(a);
+//            allStudentAttendanceDates.add(a);
 
         try (Connection con = cm.getConnection())
         {
@@ -171,5 +174,111 @@ public class DALManager
 //                    Level.SEVERE, null, ex);
 //        }
 //    }
+
+    /**
+     * This method gets all the movies on a list way.
+     *
+     * @return
+     */
+    public List<Student> getAllStudents()
+    {
+        System.out.println("Getting all Students.");
+
+        List<Student> allStudents = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Student");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+
+                allStudents.add(s);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return allStudents;
+    }
+
+    public List<StudentAttendance> getStudentByDate(Date date)
+    {
+        List<StudentAttendance> allStudentAttendanceDates = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT Student.id, Student.name, Attendance.attendance, Attendance.date "
+                    + "FROM Student "
+                    + "JOIN Attendance ON Student.id = Attendance.studentId "
+                    + "WHERE Attendance.date = ?");
+
+            stmt.setDate(1, (java.sql.Date) date);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                StudentAttendance a = new StudentAttendance();
+
+                a.setId(rs.getInt("id"));
+                a.setName(rs.getString("name"));
+                a.setAttendance(0f);
+                a.setPresence(rs.getString("attendance"));
+
+                allStudentAttendanceDates.add(a);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+
+        return allStudentAttendanceDates;
+    }
+
+    /**
+     *
+     * Gets all students from selected Class
+     */
+    public List<Student> getAllStudentsInClass(int selectedId)
+    {
+        List<Student> allStudentsInClass = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement(
+                    " SELECT * "
+                    + " FROM ((StudentClass "
+                    + " JOIN Class ON StucentClass.classId = Class.id) "
+                    + " JOIN Student ON StudentClass.studentId = Student.id) "
+                    + " WHERE Class.id = ? "
+            );
+
+            stmt.setInt(1, selectedId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                //     m.setAttendingClass(rs.getString("password"));
+
+                allStudentsInClass.add(s);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return allStudentsInClass;
+    }
 
 }

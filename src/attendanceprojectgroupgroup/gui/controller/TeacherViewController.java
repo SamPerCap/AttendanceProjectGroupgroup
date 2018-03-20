@@ -13,7 +13,9 @@ import com.jfoenix.controls.JFXToggleButton;
 import com.sun.javafx.property.adapter.PropertyDescriptor;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -211,8 +213,16 @@ public class TeacherViewController implements Initializable
     private void datePickerTo(ActionEvent event)
     {
         //System.out.println(dtPickerTo.getValue());
-        //attendanceFromTo();
-        attendancePercentage();
+        
+        model.clearStudentAttendanceList();
+        
+        Thread t = new Thread(() ->
+        {
+           attendanceFromTo();
+           attendancePercentage();
+        }
+        );
+        t.start();        
     }
 
     private void attendanceFromTo()
@@ -223,7 +233,14 @@ public class TeacherViewController implements Initializable
 
         while (fromDate.plusDays(i).isBefore(toDate))
         {
-            System.out.println(fromDate.plusDays(i++));
+            System.out.println(fromDate.plusDays(i));
+    
+            Date date = Date.valueOf(fromDate.plusDays(i));
+            
+            model.getStudentAttendanceByDate(date);
+            model.loadStudentAttendance();
+            
+            i++;
         }
     }
 
@@ -251,9 +268,9 @@ public class TeacherViewController implements Initializable
                     count++;
                 }
             }
-
-            float absensePercentage = 100 - ((absense * 1f / count) * 100);
-
+        
+            float absensePercentage = 100 - ((absense * 1f / count * 1f) * 100);
+            
             for (int j = 0; j < model.loadStudentAttendance().size(); j++)
             {
                 tableStudents.getSelectionModel().select(j);

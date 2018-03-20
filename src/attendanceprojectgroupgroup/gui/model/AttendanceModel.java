@@ -10,6 +10,8 @@ import attendanceprojectgroupgroup.be.Attendance;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.bll.BLLManager;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +31,16 @@ public class AttendanceModel
     {
         studentAttendanceList.clear();
         studentAttendanceList.addAll(bllm.getStudentAttendance());
+    }
+    
+    public void getStudentAttendanceByDate(Date date)
+    {
+        studentAttendanceList.addAll(bllm.getStudentAttendanceByDate(date));
+    }
+    
+    public void clearStudentAttendanceList()
+    {
+        studentAttendanceList.clear();
     }
     
     public ObservableList<StudentAttendance> loadStudentAttendance()
