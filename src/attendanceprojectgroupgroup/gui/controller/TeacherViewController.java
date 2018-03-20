@@ -22,6 +22,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
+import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -111,18 +112,18 @@ public class TeacherViewController implements Initializable
         columnStudentPresence.setCellFactory(param -> new TableCell<StudentAttendance, StudentAttendance>()
         {
             // create toggle button once for cell:
-            private final JFXToggleButton button = new JFXToggleButton();
+            private final JFXToggleButton tglAttendance = new JFXToggleButton();
             //anonymous constructor:
 
             
             {
                 // update toggle button state if usersWithShownPasswords changes:
-                studentsPresence.addListener((Change<? extends User>) change ->
+                studentsPresence.addListener((SetChangeListener<StudentAttendance>) change ->
                 {
-                    button.setSelected(studentsPresence.contains(getItem()));
+                    tglAttendance.setSelected(studentsPresence.contains(getItem()));
                 });
                 // update usersWithShownPasswords if toggle selection changes:
-                button.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+                tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
                 {
                     if (isNowSelected)
                     {
@@ -133,7 +134,7 @@ public class TeacherViewController implements Initializable
                     }
                 });
                 // keep text "Absent" or "Present" appropriately:
-                button.textProperty().bind(Bindings.when(button.selectedProperty()).then("Absent").otherwise("Present"));
+                tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Absent").otherwise("Present"));
                 setAlignment(Pos.CENTER);
             }
 
@@ -169,10 +170,12 @@ public class TeacherViewController implements Initializable
             StudentAttendance sA = table.getItems().get(index);
             if (studentsPresence.contains(sA))
             {
-                cell.setText(sA.getPresence());
+                //cell.setText(sA.getPresence());
+                System.out.println("Primer");
             } else
             {
-                cell.setText(sA.setPresence("sunnysunshine"));
+                //cell.setText(sA.setPresence("sunnysunshine"));
+                System.out.println("Segun");
             }
         }
     }
