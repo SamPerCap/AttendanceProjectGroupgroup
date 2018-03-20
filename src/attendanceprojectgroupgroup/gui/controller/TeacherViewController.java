@@ -100,13 +100,13 @@ public class TeacherViewController implements Initializable
             cell.indexProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
             // if the password changes, update:
             cell.itemProperty().addListener((obs, oldItem, newItem) -> updateCell(studentsPresence, cell));
-            // if the set of users with shown password changes, update the cell:
+            // if the set of users with shown password changes, update the cell: ->
             studentsPresence.addListener((Change<? extends StudentAttendance> change) -> updateCell(studentsPresence, cell));
             return cell;
 
         });
         // just use whole row (studentsPresence) as data for cells in this column:
-        columnStudentPresence.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue()));
+        columnStudentPresence.setCellValueFactory( cell-> new ReadOnlyObjectWrapper<>(cell.getValue()));
         // cell factory for toggle buttons:
         columnStudentPresence.setCellFactory(param -> new TableCell<StudentAttendance, StudentAttendance>()
         {
@@ -114,7 +114,8 @@ public class TeacherViewController implements Initializable
             private final JFXToggleButton button = new JFXToggleButton();
             //anonymous constructor:
 
-             {
+            
+            {
                 // update toggle button state if usersWithShownPasswords changes:
                 studentsPresence.addListener((Change<? extends User> change) ->
                 {
@@ -138,7 +139,7 @@ public class TeacherViewController implements Initializable
 
         });
 
-        Thread t = new Thread(() ->
+        Thread thread = new Thread(() ->
         {
             model.getStudentAttendance();
 
@@ -148,7 +149,7 @@ public class TeacherViewController implements Initializable
             });
         }
         );
-        t.start();
+        thread.start();
 
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         // also go to dal and delete or remove outcommenting
@@ -171,7 +172,7 @@ public class TeacherViewController implements Initializable
                 cell.setText(sA.getPresence());
             } else
             {
-                cell.setText("a");
+                cell.setText(sA.setPresence("sunnysunshine"));
             }
         }
     }
