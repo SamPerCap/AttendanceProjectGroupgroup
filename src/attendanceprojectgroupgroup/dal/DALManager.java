@@ -12,7 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +42,7 @@ public class DALManager
 //                a.setAttendance(50f);
 //                a.setPresence("Here");
 //
-//            allStudentAttendance.add(a);
+//            allStudentAttendanceDates.add(a);
 
         try (Connection con = cm.getConnection())
         {
@@ -144,5 +146,39 @@ public class DALManager
                             Level.SEVERE, null, ex);
         }
         return allClasses;
+    }
+    
+    public List<StudentAttendance> getStudentByDate(Date date)
+    {
+        List<StudentAttendance> allStudentAttendanceDates = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT s.id, s.name, a.attendance"
+                    + " FROM Attendance a, Student s"
+                    + " WHERE a.date = ?");
+            
+            stmt.setDate(1, (java.sql.Date) date);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                StudentAttendance a = new StudentAttendance();
+
+                a.setId(rs.getInt("id"));
+                a.setName(rs.getString("name"));
+                a.setAttendance(0f);
+                a.setPresence(rs.getString("attendance"));
+
+                allStudentAttendanceDates.add(a);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+
+        return allStudentAttendanceDates;
     }
 }

@@ -22,6 +22,7 @@ public class StudentAttendance
     private final StringProperty name = new SimpleStringProperty();
     private final FloatProperty attendance = new SimpleFloatProperty();
     private final StringProperty presence = new SimpleStringProperty();
+    private final StringProperty date = new SimpleStringProperty();
     
     public int getId()
     {
@@ -81,6 +82,21 @@ public class StudentAttendance
     public FloatProperty attendanceProperty()
     {
         return attendance;
+    }
+    
+    public String getDate()
+    {
+        return name.get();
+    }
+
+    public void setDate(String value)
+    {
+        name.set(value);
+    }
+
+    public StringProperty dateProperty()
+    {
+        return name;
     }
 
     @Override

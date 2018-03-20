@@ -9,6 +9,8 @@ import attendanceprojectgroupgroup.be.AClass;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.dal.DALManager;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -24,11 +26,18 @@ public class BLLManager
     {
         return dalm.getStudentAttendance();
     }
+    
+    public List<StudentAttendance> getStudentAttendanceByDate(Date date)
+    {
+        return dalm.getStudentByDate(date);
+    }
+    
     public List<Week> getWeek(){
         return dalm.getWeek();
     }
     
-     public List<AClass> getAllClasses() {
+    public List<AClass> getAllClasses() 
+    {
         return dalm.getAllClasses();
     }
 }
