@@ -4,9 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Samuel/Documents/NetBeansProjects/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/gui/controller/LogInViewController.java</file>
-            <file>file:/C:/Users/Samuel/Documents/NetBeansProjects/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/dal/DALManager.java</file>
+            <file>file:/C:/Users/Samuel/Documents/NetBeansProjects/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/AttendanceProjectGroupgroup.java</file>
             <file>file:/C:/Users/Samuel/Documents/NetBeansProjects/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/gui/controller/TeacherViewController.java</file>
-            <file>file:/C:/Users/Samuel/Documents/NetBeansProjects/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/gui/model/AttendanceModel.java</file>
         </group>
     </open-files>
 </project-private>

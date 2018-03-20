@@ -48,7 +48,7 @@ public class DALManager
                     "SELECT DISTINCT s.id, s.name, a.attendance"
                     + " FROM Attendance a, Student s"
                     + " WHERE a.studentID = s.id");
-            
+
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next())
@@ -133,7 +133,6 @@ public class DALManager
                 c.setName(rs.getString("name"));
                 c.setTeacherId(rs.getInt("teacherId"));
 
-
                 allClasses.add(c);
 
             }
@@ -145,4 +144,32 @@ public class DALManager
         }
         return allClasses;
     }
+//I need this code
+//    public void editStudentAttendance(StudentAttendance sA)
+//    {
+//        try (Connection con = cm.getConnection())
+//        {
+//            String sql
+//                    = "UPDATE s.id, s.name, a.attendance"
+//                    + " FROM Attendance a, Student s"
+//                    + " WHERE a.studentID = s.id";
+//
+//            PreparedStatement pstmt = con.prepareStatement(sql);
+//
+//            pstmt.setString(1, sA.getPresence());
+//            pstmt.setInt(2, sA.getId());
+//
+//            int affected = pstmt.executeUpdate();
+//            if (affected < 1)
+//            {
+//                throw new SQLException("Student could not be edited");
+//            }
+//
+//        } catch (SQLException ex)
+//        {
+//            Logger.getLogger(DALManager.class.getName()).log(
+//                    Level.SEVERE, null, ex);
+//        }
+//    }
+
 }
