@@ -91,89 +91,89 @@ public class TeacherViewController implements Initializable
 
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
-//  Sam
-//        columnStudentPresence.setCellFactory(param ->
-//        {
-//            // plain old cell:
-//            TableCell<StudentAttendance, String> cell = new TableCell<>();
-//            // if the cell is reused for an item from a different row, update it:
-//            cell.indexProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
-//            // if the password changes, update:
-//            cell.itemProperty().addListener((obs, oldItem, newItem) -> updateCell(studentsPresence, cell));
-//            // if the set of users with shown password changes, update the cell:
-//            studentsPresence.addListener((Change<? extends StudentAttendance> change) -> updateCell(studentsPresence, cell));
-//            return cell;
-//
-//        });
-//        // just use whole row (studentsPresence) as data for cells in this column:
-//        columnStudentPresence.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue()));
-//        // cell factory for toggle buttons:
-//        columnStudentPresence.setCellFactory(param -> new TableCell<StudentAttendance, StudentAttendance>()
-//        {
-//            // create toggle button once for cell:
-//            private final JFXToggleButton button = new JFXToggleButton();
-//            //anonymous constructor:
-//
-//             {
-//                // update toggle button state if usersWithShownPasswords changes:
-//                studentsPresence.addListener((Change<? extends User> change) ->
-//                {
-//                    button.setSelected(studentsPresence.contains(getItem()));
-//                });
-//                // update usersWithShownPasswords if toggle selection changes:
-//                button.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-//                {
-//                    if (isNowSelected)
-//                    {
-//                        studentsPresence.add(getItem());
-//                    } else
-//                    {
-//                        studentsPresence.remove(getItem());
-//                    }
-//                });
-//                // keep text "Absent" or "Present" appropriately:
-//                button.textProperty().bind(Bindings.when(button.selectedProperty()).then("Absent").otherwise("Present"));
-//                setAlignment(Pos.CENTER);
-//            }
-//
-//        });
-//
-//        Thread t = new Thread(() ->
-//        {
-//            model.getStudentAttendance();
-//
-//            Platform.runLater(() ->
-//            {
-//                tableStudents.setItems(model.loadStudentAttendance());
-//            });
-//        }
-//        );
-//        t.start();
-//
-//        choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
-//        // also go to dal and delete or remove outcommenting
-//        //issue with the above, not sure if it's because you didn't make any classes?
-//    }
-//
-//    private void updateCell(ObservableSet<StudentAttendance> studentAttendances,
-//            TableCell<StudentAttendance, String> cell)
-//    {
-//        int index = cell.getIndex();
-//        TableView<StudentAttendance> table = cell.getTableView();
-//        if (index < 0 || index >= table.getItems().size())
-//        {
-//            cell.setText("");
-//        } else
-//        {
-//            StudentAttendance sA = table.getItems().get(index);
-//            if (studentsPresence.contains(sA))
-//            {
-//                cell.setText(sA.getPresence());
-//            } else
-//            {
-//                cell.setText(mask(sA.getPresence()));
-//            }
-//        }
+
+        columnStudentPresence.setCellFactory(param ->
+        {
+            // plain old cell:
+            TableCell<StudentAttendance, String> cell = new TableCell<>();
+            // if the cell is reused for an item from a different row, update it:
+            cell.indexProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
+            // if the password changes, update:
+            cell.itemProperty().addListener((obs, oldItem, newItem) -> updateCell(studentsPresence, cell));
+            // if the set of users with shown password changes, update the cell:
+            studentsPresence.addListener((Change<? extends StudentAttendance> change) -> updateCell(studentsPresence, cell));
+            return cell;
+
+        });
+        // just use whole row (studentsPresence) as data for cells in this column:
+        columnStudentPresence.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue()));
+        // cell factory for toggle buttons:
+        columnStudentPresence.setCellFactory(param -> new TableCell<StudentAttendance, StudentAttendance>()
+        {
+            // create toggle button once for cell:
+            private final JFXToggleButton button = new JFXToggleButton();
+            //anonymous constructor:
+
+             {
+                // update toggle button state if usersWithShownPasswords changes:
+                studentsPresence.addListener((Change<? extends User> change) ->
+                {
+                    button.setSelected(studentsPresence.contains(getItem()));
+                });
+                // update usersWithShownPasswords if toggle selection changes:
+                button.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+                {
+                    if (isNowSelected)
+                    {
+                        studentsPresence.add(getItem());
+                    } else
+                    {
+                        studentsPresence.remove(getItem());
+                    }
+                });
+                // keep text "Absent" or "Present" appropriately:
+                button.textProperty().bind(Bindings.when(button.selectedProperty()).then("Absent").otherwise("Present"));
+                setAlignment(Pos.CENTER);
+            }
+
+        });
+
+        Thread t = new Thread(() ->
+        {
+            model.getStudentAttendance();
+
+            Platform.runLater(() ->
+            {
+                tableStudents.setItems(model.loadStudentAttendance());
+            });
+        }
+        );
+        t.start();
+
+        choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
+        // also go to dal and delete or remove outcommenting
+        //issue with the above, not sure if it's because you didn't make any classes?
+    }
+
+    private void updateCell(ObservableSet<StudentAttendance> studentAttendances,
+            TableCell<StudentAttendance, String> cell)
+    {
+        int index = cell.getIndex();
+        TableView<StudentAttendance> table = cell.getTableView();
+        if (index < 0 || index >= table.getItems().size())
+        {
+            cell.setText("");
+        } else
+        {
+            StudentAttendance sA = table.getItems().get(index);
+            if (studentsPresence.contains(sA))
+            {
+                cell.setText(sA.getPresence());
+            } else
+            {
+                cell.setText("a");
+            }
+        }
     }
 
     private String getPresence()
