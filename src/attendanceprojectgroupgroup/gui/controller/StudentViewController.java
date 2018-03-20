@@ -5,19 +5,25 @@
  */
 package attendanceprojectgroupgroup.gui.controller;
 
+import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
+import com.jfoenix.controls.JFXToggleButton;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 /**
  * FXML Controller class
@@ -43,16 +49,20 @@ public class StudentViewController implements Initializable
     @FXML
     private TableColumn<Week, String> columnFriday;
     @FXML
+    private TableColumn<Week, JFXToggleButton> columnButtons;
+    @FXML
     private TableView<Week> weekTableView;
 
     @FXML
     protected Label labelStudentName;
     @FXML
     protected Label labelClass;
-    
+
     private final List<Integer> yearWeeks = new ArrayList<>();
-    
+
     private AttendanceModel model = new AttendanceModel();
+    
+    
 
     /**
      * Initializes the controller class.
@@ -67,7 +77,6 @@ public class StudentViewController implements Initializable
         columnThursday.setCellValueFactory(new PropertyValueFactory("thursday"));
         columnFriday.setCellValueFactory(new PropertyValueFactory("friday"));
 
-        
         Thread t = new Thread(() ->
         {
             model.getWeek();
@@ -80,13 +89,21 @@ public class StudentViewController implements Initializable
         );
         t.start();
     }
-    
+
     public void setParentWindowController(LogInViewController parent)
     {
         this.parent = parent;
     }
 
+    private Week getSelectedPresence()
+    {
+        return weekTableView.getSelectionModel().getSelectedItem();
+
+    }
+
     private LogInViewController parent;
+
+    
 
     private void choosingTheWeek()
     {

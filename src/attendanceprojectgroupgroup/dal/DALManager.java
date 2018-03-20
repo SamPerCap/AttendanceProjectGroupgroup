@@ -60,7 +60,7 @@ public class DALManager
 
                 a.setId(rs.getInt("id"));
                 a.setName(rs.getString("name"));
-                a.setAttendance(0f);
+                a.setAttendance(50f);
                 a.setPresence(rs.getString("attendance"));
 
                 allStudentAttendance.add(a);
@@ -84,11 +84,11 @@ public class DALManager
         {
             Week w = new Week();
             w.setWeekNumber(i);
-            w.setMonday("here");
-            w.setTuesday("here");
-            w.setWednesday("here");
-            w.setThursday("here");
-            w.setFriday("here");
+            w.setMonday("Here");
+            w.setTuesday("Here");
+            w.setWednesday("Here");
+            w.setThursday("Here");
+            w.setFriday("Here");
 
             allWeek.add(w);
         }
@@ -147,33 +147,32 @@ public class DALManager
         }
         return allClasses;
     }
-//I need this code
-//    public void editStudentAttendance(StudentAttendance sA)
-//    {
-//        try (Connection con = cm.getConnection())
-//        {
-//            String sql
-//                    = "UPDATE s.id, s.name, a.attendance"
-//                    + " FROM Attendance a, Student s"
-//                    + " WHERE a.studentID = s.id";
-//
-//            PreparedStatement pstmt = con.prepareStatement(sql);
-//
-//            pstmt.setString(1, sA.getPresence());
-//            pstmt.setInt(2, sA.getId());
-//
-//            int affected = pstmt.executeUpdate();
-//            if (affected < 1)
-//            {
-//                throw new SQLException("Student could not be edited");
-//            }
-//
-//        } catch (SQLException ex)
-//        {
-//            Logger.getLogger(DALManager.class.getName()).log(
-//                    Level.SEVERE, null, ex);
-//        }
-//    }
+    public void editStudentAttendance(StudentAttendance sA)
+    {
+        try (Connection con = cm.getConnection())
+        {
+            String sql
+                    = "UPDATE s.id, s.name, a.attendance"
+                    + " FROM Attendance a, Student s"
+                    + " WHERE a.studentID = s.id";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+
+            pstmt.setString(1, sA.getPresence());
+            pstmt.setInt(2, sA.getId());
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Student could not be edited");
+            }
+
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * This method gets all the movies on a list way.

@@ -62,4 +62,7 @@ public class AttendanceModel
     {
         return weekList;
     }
+    public void editAttendance(StudentAttendance sA) {
+        bllm.editAttendance(sA);
+    }
 }
