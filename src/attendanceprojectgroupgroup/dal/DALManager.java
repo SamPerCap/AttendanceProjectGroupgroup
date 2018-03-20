@@ -6,6 +6,7 @@
 package attendanceprojectgroupgroup.dal;
 
 import attendanceprojectgroupgroup.be.AClass;
+import attendanceprojectgroupgroup.be.Student;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import java.sql.Connection;
@@ -50,7 +51,7 @@ public class DALManager
                     "SELECT DISTINCT s.id, s.name, a.attendance"
                     + " FROM Attendance a, Student s"
                     + " WHERE a.studentID = s.id");
-            
+
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next())
@@ -135,7 +136,6 @@ public class DALManager
                 c.setName(rs.getString("name"));
                 c.setTeacherId(rs.getInt("teacherId"));
 
-
                 allClasses.add(c);
 
             }
@@ -147,7 +147,39 @@ public class DALManager
         }
         return allClasses;
     }
-    
+
+    /**
+     * This method gets all the movies on a list way.
+     *
+     * @return
+     */
+    public List<Student> getAllStudents()
+    {
+        System.out.println("Getting all Students.");
+
+        List<Student> allStudents = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Student");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+
+                allStudents.add(s);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return allStudents;
+    }
+
     public List<StudentAttendance> getStudentByDate(Date date)
     {
         List<StudentAttendance> allStudentAttendanceDates = new ArrayList();
@@ -155,11 +187,11 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT Student.id, Student.name, Attendance.attendance, Attendance.date " +
-                    "FROM Student " +
-                    "JOIN Attendance ON Student.id = Attendance.studentId " +
-                    "WHERE Attendance.date = ?");
-            
+                    "SELECT Student.id, Student.name, Attendance.attendance, Attendance.date "
+                    + "FROM Student "
+                    + "JOIN Attendance ON Student.id = Attendance.studentId "
+                    + "WHERE Attendance.date = ?");
+
             stmt.setDate(1, (java.sql.Date) date);
             ResultSet rs = stmt.executeQuery();
 
@@ -182,4 +214,44 @@ public class DALManager
 
         return allStudentAttendanceDates;
     }
+
+    /**
+     *
+     * Gets all students from selected Class
+     */
+    public List<Student> getAllStudentsInClass(int selectedId)
+    {
+        List<Student> allStudentsInClass = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement(
+                    " SELECT * "
+                    + " FROM ((StudentClass "
+                    + " JOIN Class ON StucentClass.classId = Class.id) "
+                    + " JOIN Student ON StudentClass.studentId = Student.id) "
+                    + " WHERE Class.id = ? "
+            );
+
+            stmt.setInt(1, selectedId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                Student s = new Student();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                //     m.setAttendingClass(rs.getString("password"));
+
+                allStudentsInClass.add(s);
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        return allStudentsInClass;
+    }
+
 }
