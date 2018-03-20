@@ -322,14 +322,16 @@ public class TeacherViewController implements Initializable
     private void datePickerTo(ActionEvent event)
     {
         //System.out.println(dtPickerTo.getValue());
+        
+        model.clearStudentAttendanceList();
+        
         Thread t = new Thread(() ->
         {
-           attendanceFromTo(); 
+           attendanceFromTo();
+           attendancePercentage();
         }
         );
-        t.start();
-
-        attendancePercentage();
+        t.start();        
     }
 
     private void attendanceFromTo()

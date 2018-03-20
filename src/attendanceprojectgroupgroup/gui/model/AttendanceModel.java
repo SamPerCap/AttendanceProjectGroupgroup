@@ -38,6 +38,11 @@ public class AttendanceModel
         studentAttendanceList.addAll(bllm.getStudentAttendanceByDate(date));
     }
     
+    public void clearStudentAttendanceList()
+    {
+        studentAttendanceList.clear();
+    }
+    
     public ObservableList<StudentAttendance> loadStudentAttendance()
     {
         return studentAttendanceList;
