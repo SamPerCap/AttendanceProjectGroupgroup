@@ -66,7 +66,7 @@ public class TeacherViewController implements Initializable
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
     @FXML
-    private TableColumn<StudentAttendance, StudentAttendance> buttonsColumn;
+    private TableColumn<StudentAttendance, StudentAttendance> meon;
     @FXML
     private ChoiceBox<AClass> choiceBoxClass;
 
@@ -92,24 +92,30 @@ public class TeacherViewController implements Initializable
 
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
+        columnStudentPresence.setCellValueFactory(cellData -> cellData.getValue().presenceProperty());
 
-        columnStudentPresence.setCellFactory(param ->
-        {
-            // plain old cell:
-            TableCell<StudentAttendance, String> cell = new TableCell<>();
-            // if the cell is reused for an item from a different row, update it:
-            cell.indexProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
-            // if the password changes, update:
-            cell.itemProperty().addListener((obs, oldItem, newItem) -> updateCell(studentsPresence, cell));
-            // if the set of users with shown password changes, update the cell: ->
-            studentsPresence.addListener((SetChangeListener<StudentAttendance>) change -> updateCell(studentsPresence, cell));
-            return cell;
+//        columnStudentPresence.setCellFactory(param ->
+//        {
+//            // plain old cell:
+//            TableCell<StudentAttendance, String> cell = new TableCell<>();
+//            // if the cell is reused for an item from a different row, update it:
+//            cell.indexProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
+//            // if the password changes, update:
+//            cell.itemProperty().addListener((obs, oldItem, newItem) -> updateCell(studentsPresence, cell));
+//            // if the set of users with shown password changes, update the cell: ->
+//            studentsPresence.addListener((SetChangeListener<StudentAttendance>) change -> updateCell(studentsPresence, cell));
+//            return cell;
+//
+//        });
 
-        });
+        TableColumn<StudentAttendance, StudentAttendance> buttonsColumn = new TableColumn<>("Buttonsitos");
+
         // just use whole row (studentsPresence) as data for cells in this column:
-        columnStudentPresence.setCellValueFactory( cell-> new ReadOnlyObjectWrapper<>(cell.getValue()));
+        buttonsColumn.setCellValueFactory(cell
+                -> new ReadOnlyObjectWrapper<>());
         // cell factory for toggle buttons:
-        columnStudentPresence.setCellFactory(param -> new TableCell<StudentAttendance, StudentAttendance>()
+        buttonsColumn.setCellFactory(param
+                -> new TableCell<StudentAttendance, StudentAttendance>()
         {
             // create toggle button once for cell:
             private final JFXToggleButton tglAttendance = new JFXToggleButton();
@@ -120,17 +126,17 @@ public class TeacherViewController implements Initializable
                 // update toggle button state if usersWithShownPasswords changes:
                 studentsPresence.addListener((SetChangeListener<StudentAttendance>) change ->
                 {
-                    tglAttendance.setSelected(studentsPresence.contains(getItem()));
+                    tglAttendance.setSelected(studentsPresence.contains(getText()));
                 });
                 // update usersWithShownPasswords if toggle selection changes:
                 tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
                 {
                     if (isNowSelected)
                     {
-                        studentsPresence.add(getItem());
+                        studentsPresence.add(sModel);
                     } else
                     {
-                        studentsPresence.remove(getItem());
+                        studentsPresence.remove(sModel);
                     }
                 });
                 // keep text "Absent" or "Present" appropriately:
@@ -138,7 +144,8 @@ public class TeacherViewController implements Initializable
                 setAlignment(Pos.CENTER);
             }
 
-        });
+        }
+        );
 
         Thread thread = new Thread(() ->
         {
@@ -170,12 +177,12 @@ public class TeacherViewController implements Initializable
             StudentAttendance sA = table.getItems().get(index);
             if (studentsPresence.contains(sA))
             {
-                //cell.setText(sA.getPresence());
+                cell.setText(sModel.getPresence());
                 System.out.println("Primer");
             } else
             {
-                //cell.setText(sA.setPresence("sunnysunshine"));
-                System.out.println("Segun");
+                cell.setText(sModel.getPresence());
+                System.out.println("Supossed to get presence");
             }
         }
     }
