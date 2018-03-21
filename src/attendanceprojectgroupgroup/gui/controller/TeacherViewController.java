@@ -10,23 +10,18 @@ import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
-import com.sun.javafx.property.adapter.PropertyDescriptor;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -39,7 +34,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -66,6 +60,7 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, Float> columnStudentsAttendance;
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
+    private final TableColumn<StudentAttendance, JFXToggleButton> buttonsColumn = new TableColumn<>("Buttons");
 
     @FXML
     private TableColumn<StudentAttendance, StudentAttendance> meon;
@@ -73,15 +68,11 @@ public class TeacherViewController implements Initializable
     private ChoiceBox<AClass> choiceBoxClass;
 
     private AttendanceModel model = new AttendanceModel();
-    StudentAttendance sModel = new StudentAttendance();
 
     @FXML
     private JFXDatePicker dtPicker;
     @FXML
     private JFXDatePicker dtPickerTo;
-
-    private int studentID;
-    private float attendanceInfo;
 
     @FXML
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
@@ -97,117 +88,71 @@ public class TeacherViewController implements Initializable
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
         columnStudentPresence.setCellValueFactory(cellData -> cellData.getValue().presenceProperty());
 
-//        columnStudentPresence.setCellFactory(param ->
-//        {
-//            // plain old cell:
-//            TableCell<StudentAttendance, String> cell = new TableCell<>();
-//            // if the cell is reused for an item from a different row, update it:
-//            cell.indexProperty().addListener((obs, oldIndex, newIndex) -> updateCell(studentsPresence, cell));
-//            // if the password changes, update:
-//            cell.itemProperty().addListener((obs, oldItem, newItem) -> updateCell(studentsPresence, cell));
-//            // if the set of users with shown password changes, update the cell: ->
-//            studentsPresence.addListener((SetChangeListener<StudentAttendance>) change -> updateCell(studentsPresence, cell));
-//            return cell;
-//
-//        });
-
-        TableColumn<StudentAttendance, StudentAttendance> buttonsColumn = new TableColumn<>("Buttonsitos");
-
         // just use whole row (studentsPresence) as data for cells in this column:
         buttonsColumn.setCellValueFactory(cell
                 -> new ReadOnlyObjectWrapper<>());
         // cell factory for toggle buttons:
         buttonsColumn.setCellFactory(param
-                -> new TableCell<StudentAttendance, StudentAttendance>()
+                -> new TableCell<StudentAttendance, JFXToggleButton>()
         {
+            @Override
+            protected void updateItem(JFXToggleButton item, boolean empty)
+            {
+                super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                if (empty)
+                {
+                    setGraphic(null);
+                } else
+
+                {
+
+                    setGraphic(tglAttendance);
+                }
+            }
             // create toggle button once for cell:
             private final JFXToggleButton tglAttendance = new JFXToggleButton();
-            //anonymous constructor:
 
+            //anonymous constructor:
             
             {
-                // update toggle button state if usersWithShownPasswords changes:
+                tglAttendance.setSize(5);
+                tglAttendance.setEllipsisString("");
+
                 studentsPresence.addListener((SetChangeListener<StudentAttendance>) change ->
                 {
                     tglAttendance.setSelected(studentsPresence.contains(getText()));
+
                 });
-                // update usersWithShownPasswords if toggle selection changes:
                 tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
                 {
+                    StudentAttendance att = ((StudentAttendance) this.getTableRow().getItem());
                     if (isNowSelected)
                     {
-                        studentsPresence.add(sModel);
+                        att.setPresence("Absent");
                     } else
                     {
-                        studentsPresence.remove(sModel);
+                        att.setPresence("Here");
                     }
+                    model.editAttendance(att);
+
                 });
-                // keep text "Absent" or "Present" appropriately:
-                tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Absent").otherwise("Present"));
-                setAlignment(Pos.CENTER);
+                // keep text "Absent" or "Present" appropriately
+                tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then(" ").otherwise(" "));
+
             }
 
         }
         );
 
-        Thread thread = new Thread(() ->
-        {
-            model.getStudentAttendance();
-
-            Platform.runLater(() ->
-            {
-                tableStudents.setItems(model.loadStudentAttendance());
-            });
-        }
-        );
-        thread.start();
+        threadLoadsAttendance();
 
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
-        // also go to dal and delete or remove outcommenting
-        //issue with the above, not sure if it's because you didn't make any classes?
+        tableStudents.getColumns().add(buttonsColumn);
     }
 
-    private void updateCell(ObservableSet<StudentAttendance> studentAttendances,
-            TableCell<StudentAttendance, String> cell)
+    private StudentAttendance getPresence()
     {
-        int index = cell.getIndex();
-        TableView<StudentAttendance> table = cell.getTableView();
-        if (index < 0 || index >= table.getItems().size())
-        {
-            cell.setText("");
-        } else
-        {
-            StudentAttendance sA = table.getItems().get(index);
-            if (studentsPresence.contains(sA))
-            {
-                cell.setText(sModel.getPresence());
-                System.out.println("Primer");
-            } else
-            {
-                cell.setText(sModel.getPresence());
-                System.out.println("Supossed to get presence");
-            }
-        }
-    }
-
-    private String getPresence()
-    {
-        return tableStudents.getSelectionModel().getSelectedItem().getPresence();
-    }
-
-    private String getName()
-    {
-        return tableStudents.getSelectionModel().getSelectedItem().getName();
-    }
-
-    private int getStudentID()
-    {
-        return tableStudents.getSelectionModel().getSelectedItem().getId();
-    }
-
-    private Float getAttendance()
-    {
-        return tableStudents.getSelectionModel().getSelectedItem().getAttendance();
+        return tableStudents.getSelectionModel().getSelectedItem();
     }
 
     public void setParentWindowController(LogInViewController parent)
@@ -234,67 +179,19 @@ public class TeacherViewController implements Initializable
         stage.showAndWait();
     }
 
-    private void toggleAttendance(ActionEvent event)
+    private void threadLoadsAttendance()
     {
-
-        tglAttendance.selectedProperty().addListener(new ChangeListener<Boolean>()
+        Thread thread = new Thread(() ->
         {
+            model.getStudentAttendance();
 
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+            Platform.runLater(() ->
             {
-
-                if (tglAttendance.isSelected() == true)
-                {
-                    tglAttendance.setText("Present");
-
-                } else
-                {
-                    tglAttendance.setText("Absent");
-
-                }
-            }
-        });
-        changePressence();
-
-    }
-
-    private void changePressence()
-    {
-
-        if (tglAttendance.getText() == "Present")
-        {
-            setAbsent();
-
-            studentID = getStudentID();
-            attendanceInfo = getAttendance();
-            System.out.println(studentID + " " + attendanceInfo);
-
-        } else if (tglAttendance.getText() == "Absent")
-        {
-            setHere();
-
-            studentID = getStudentID();
-            attendanceInfo = getAttendance();
-            System.out.println(studentID + " " + attendanceInfo);
-
+                tableStudents.setItems(model.loadStudentAttendance());
+            });
         }
-    }
-
-    private void setAbsent()
-    {
-        tableStudents.getItems().stream()
-                .filter(row -> row.getPresence().equals("Here"))
-                .findFirst()
-                .ifPresent(row -> row.setPresence("Absent"));
-    }
-
-    private void setHere()
-    {
-        tableStudents.getItems().stream()
-                .filter(row -> row.getPresence().equals("Absent"))
-                .findFirst()
-                .ifPresent(row -> row.setPresence("Here"));
+        );
+        thread.start();
     }
 
     @FXML
@@ -307,16 +204,16 @@ public class TeacherViewController implements Initializable
     private void datePickerTo(ActionEvent event)
     {
         //System.out.println(dtPickerTo.getValue());
-        
+
         model.clearStudentAttendanceList();
-        
+
         Thread t = new Thread(() ->
         {
-           attendanceFromTo();
-           attendancePercentage();
+            attendanceFromTo();
+            attendancePercentage();
         }
         );
-        t.start();        
+        t.start();
     }
 
     private void attendanceFromTo()
@@ -328,12 +225,12 @@ public class TeacherViewController implements Initializable
         while (fromDate.plusDays(i).isBefore(toDate))
         {
             System.out.println(fromDate.plusDays(i));
-    
+
             Date date = Date.valueOf(fromDate.plusDays(i));
-            
+
             model.getStudentAttendanceByDate(date);
             model.loadStudentAttendance();
-            
+
             i++;
         }
     }
@@ -362,9 +259,9 @@ public class TeacherViewController implements Initializable
                     count++;
                 }
             }
-        
+
             float absensePercentage = 100 - ((absense * 1f / count * 1f) * 100);
-            
+
             for (int j = 0; j < model.loadStudentAttendance().size(); j++)
             {
                 tableStudents.getSelectionModel().select(j);

@@ -152,9 +152,8 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             String sql
-                    = "UPDATE s.id, s.name, a.attendance"
-                    + " FROM Attendance a, Student s"
-                    + " WHERE a.studentID = s.id";
+                    = "UPDATE Attendance SET attendance=? "
+                    + " WHERE id=?";
 
             PreparedStatement pstmt = con.prepareStatement(sql);
 
