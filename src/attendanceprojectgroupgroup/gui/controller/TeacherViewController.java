@@ -60,7 +60,7 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, Float> columnStudentsAttendance;
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
-    private final TableColumn<StudentAttendance, JFXToggleButton> buttonsColumn = new TableColumn<>("Buttons");
+    private TableColumn<StudentAttendance, JFXToggleButton> buttonsColumn = new TableColumn<>("Buttons");
 
     @FXML
     private TableColumn<StudentAttendance, Date> columnStudentDate;

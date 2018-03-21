@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="466.0" prefWidth="407.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.TeacherViewController">
+<AnchorPane id="AnchorPane" prefHeight="466.0" prefWidth="499.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.TeacherViewController">
    <children>
       <Label fx:id="labelTeachersName" layoutX="14.0" layoutY="71.0" text="Teachers name" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="19.0">
          <font>
@@ -26,7 +26,7 @@
         </columns>
       </TableView>
       <JFXDatePicker fx:id="dtPicker" defaultColor="#019adc" layoutX="228.0" layoutY="11.0" onAction="#datePicker" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="11.0" />
-      <ChoiceBox fx:id="choiceBoxClass" accessibleText="Class" layoutX="280.0" layoutY="86.0" prefHeight="26.0" prefWidth="113.0" />
+      <ChoiceBox fx:id="choiceBoxClass" accessibleText="Class" layoutX="320.0" layoutY="87.0" prefHeight="26.0" prefWidth="142.0" />
       <JFXDatePicker fx:id="dtPickerTo" defaultColor="#019adc" layoutX="228.0" layoutY="46.0" onAction="#datePickerTo" AnchorPane.rightAnchor="7.0" />
       <Label layoutX="196.0" layoutY="54.0" text="To:" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="54.0" />
       <Label layoutX="179.0" layoutY="19.0" text="From:" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="19.0" />
