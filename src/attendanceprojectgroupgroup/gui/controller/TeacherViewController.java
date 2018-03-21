@@ -66,25 +66,23 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, Float> columnStudentsAttendance;
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
-
     @FXML
-    private TableColumn<StudentAttendance, StudentAttendance> meon;
+    private TableColumn<StudentAttendance, Date> columnStudentDate;
     @FXML
     private ChoiceBox<AClass> choiceBoxClass;
-
-    private AttendanceModel model = new AttendanceModel();
-    StudentAttendance sModel = new StudentAttendance();
-
     @FXML
     private JFXDatePicker dtPicker;
     @FXML
     private JFXDatePicker dtPickerTo;
 
+    private AttendanceModel model = new AttendanceModel();
+    private StudentAttendance sModel = new StudentAttendance();
+    
     private int studentID;
     private float attendanceInfo;
 
-    @FXML
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
+
 
     /**
      * Initializes the controller class.
@@ -92,9 +90,9 @@ public class TeacherViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
+        columnStudentDate.setCellValueFactory(new PropertyValueFactory("date"));
         columnStudentPresence.setCellValueFactory(cellData -> cellData.getValue().presenceProperty());
 
 //        columnStudentPresence.setCellFactory(param ->
@@ -327,7 +325,7 @@ public class TeacherViewController implements Initializable
 
         while (fromDate.plusDays(i).isBefore(toDate))
         {
-            System.out.println(fromDate.plusDays(i));
+            //System.out.println(fromDate.plusDays(i));
     
             Date date = Date.valueOf(fromDate.plusDays(i));
             

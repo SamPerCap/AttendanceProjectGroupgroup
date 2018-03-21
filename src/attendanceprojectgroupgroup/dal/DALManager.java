@@ -34,16 +34,6 @@ public class DALManager
         System.out.println("Getting attendance");
 
         List<StudentAttendance> allStudentAttendance = new ArrayList();
-//
-//        for (int i = 0; i < 9; i++)
-//        {
-//            StudentAttendance a = new StudentAttendance();
-//                a.setId(i);
-//                a.setName("student" + i);
-//                a.setAttendance(50f);
-//                a.setPresence("Here");
-//
-//            allStudentAttendanceDates.add(a);
 
         try (Connection con = cm.getConnection())
         {
@@ -209,7 +199,7 @@ public class DALManager
     public List<StudentAttendance> getStudentByDate(Date date)
     {
         List<StudentAttendance> allStudentAttendanceDates = new ArrayList();
-
+        
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
@@ -228,6 +218,7 @@ public class DALManager
                 a.setId(rs.getInt("id"));
                 a.setName(rs.getString("name"));
                 a.setAttendance(0f);
+                a.setDate(rs.getString("date"));
                 a.setPresence(rs.getString("attendance"));
 
                 allStudentAttendanceDates.add(a);
