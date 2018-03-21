@@ -60,7 +60,7 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, Float> columnStudentsAttendance;
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
-    private TableColumn<StudentAttendance, JFXToggleButton> buttonsColumn = new TableColumn<>("Buttons");
+    private TableColumn<StudentAttendance, JFXToggleButton> buttonsColumn = new TableColumn<>("Edit");
 
     @FXML
     private TableColumn<StudentAttendance, Date> columnStudentDate;
@@ -122,11 +122,7 @@ public class TeacherViewController implements Initializable
                 tglAttendance.setSize(5);
                 tglAttendance.setEllipsisString("");
 
-                studentsPresence.addListener((SetChangeListener<StudentAttendance>) change ->
-                {
-                    tglAttendance.setSelected(studentsPresence.contains(getText()));
-
-                });
+               
                 tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
                 {
                     StudentAttendance att = ((StudentAttendance) this.getTableRow().getItem());

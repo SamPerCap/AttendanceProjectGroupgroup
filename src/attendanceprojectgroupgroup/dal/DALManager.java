@@ -74,11 +74,11 @@ public class DALManager
         {
             Week w = new Week();
             w.setWeekNumber(i);
-            w.setMonday("Here");
-            w.setTuesday("Here");
-            w.setWednesday("Here");
-            w.setThursday("Here");
-            w.setFriday("Here");
+//            w.setMonday("Here");
+//            w.setTuesday("Here");
+//            w.setWednesday("Here");
+//            w.setThursday("Here");
+//            w.setFriday("Here");
 
             allWeek.add(w);
         }

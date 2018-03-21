@@ -14,16 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.event.EventHandler;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.SetChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 
 /**
  * FXML Controller class
@@ -39,7 +40,7 @@ public class StudentViewController implements Initializable
     @FXML
     private TableColumn<Week, Integer> columnWeek;
     @FXML
-    private TableColumn<Week, String> columnMonday;
+    private TableColumn<Week, JFXToggleButton> columnMonday;
     @FXML
     private TableColumn<Week, String> columnTuesday;
     @FXML
@@ -52,6 +53,7 @@ public class StudentViewController implements Initializable
     private TableColumn<Week, JFXToggleButton> columnButtons;
     @FXML
     private TableView<Week> weekTableView;
+    private TableColumn<Week, JFXToggleButton> buttonsColumn = new TableColumn<>("Edit");
 
     @FXML
     protected Label labelStudentName;
@@ -61,8 +63,6 @@ public class StudentViewController implements Initializable
     private final List<Integer> yearWeeks = new ArrayList<>();
 
     private AttendanceModel model = new AttendanceModel();
-    
-    
 
     /**
      * Initializes the controller class.
@@ -71,7 +71,6 @@ public class StudentViewController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         columnWeek.setCellValueFactory(new PropertyValueFactory("weekNumber"));
-        columnMonday.setCellValueFactory(new PropertyValueFactory("monday"));
         columnTuesday.setCellValueFactory(new PropertyValueFactory("tuesday"));
         columnWednesday.setCellValueFactory(new PropertyValueFactory("wednesday"));
         columnThursday.setCellValueFactory(new PropertyValueFactory("thursday"));
@@ -88,6 +87,45 @@ public class StudentViewController implements Initializable
         }
         );
         t.start();
+
+        columnMonday.setCellValueFactory(cell
+                -> new ReadOnlyObjectWrapper<>());
+        // cell factory for toggle buttons:
+        columnMonday.setCellFactory(param
+                -> new TableCell<Week, JFXToggleButton>()
+        {
+            @Override
+            protected void updateItem(JFXToggleButton item, boolean empty)
+            {
+                super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                if (empty)
+                {
+                    setGraphic(null);
+                } else
+
+                {
+
+                    setGraphic(tglAttendance);
+                }
+            }
+            // create toggle button once for cell:
+            private final JFXToggleButton tglAttendance = new JFXToggleButton();
+
+            //anonymous constructor:
+            
+            {
+                tglAttendance.setSize(5);
+                tglAttendance.setEllipsisString("");
+
+                tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+                {
+                });
+                // keep text "Absent" or "Present" appropriately
+                tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Present").otherwise("Absent"));
+            }
+
+        }
+        );
     }
 
     public void setParentWindowController(LogInViewController parent)
@@ -102,8 +140,6 @@ public class StudentViewController implements Initializable
     }
 
     private LogInViewController parent;
-
-    
 
     private void choosingTheWeek()
     {
