@@ -4,18 +4,20 @@
     Author     : Samuel
 */
 
-.root{    
+.root
+{    
     -fx-font-family:'SansSerif'; 
     -fx-font-weight: bold;
     -fx-background-color: black;
 }
-.label{
+
+.label
+{
     -fx-text-fill: #019ADC; 
     -fx-font-size: 13.3px;
 }
-.list-view{
-
-
+.list-view
+{
     -fx-border-color: #FBBB2C;
 }
 
@@ -28,4 +30,9 @@
 .default-color0.chart-bar 
 {  
     -fx-bar-fill: #FBBB2C ;
+}
+
+.date-picker
+{
+    -fx-prompt-text-fill: #019ADC;
 }

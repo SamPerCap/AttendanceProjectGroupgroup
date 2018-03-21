@@ -86,22 +86,22 @@ public class StudentAttendance
     
     public String getDate()
     {
-        return name.get();
+        return date.get();
     }
 
     public void setDate(String value)
     {
-        name.set(value);
+        date.set(value);
     }
 
     public StringProperty dateProperty()
     {
-        return name;
+        return date;
     }
 
     @Override
     public String toString()
     {
-        return name.getValue() + presence.getValue() + attendance.getValue();
+        return name.getValue() + presence.getValue() + attendance.getValue() + date.getValue();
     }
 }

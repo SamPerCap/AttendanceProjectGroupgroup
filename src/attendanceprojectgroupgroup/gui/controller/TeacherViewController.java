@@ -63,11 +63,9 @@ public class TeacherViewController implements Initializable
     private final TableColumn<StudentAttendance, JFXToggleButton> buttonsColumn = new TableColumn<>("Buttons");
 
     @FXML
-    private TableColumn<StudentAttendance, StudentAttendance> meon;
+    private TableColumn<StudentAttendance, Date> columnStudentDate;
     @FXML
     private ChoiceBox<AClass> choiceBoxClass;
-
-    private AttendanceModel model = new AttendanceModel();
 
     @FXML
     private JFXDatePicker dtPicker;
@@ -75,6 +73,12 @@ public class TeacherViewController implements Initializable
     private JFXDatePicker dtPickerTo;
 
     @FXML
+    private AttendanceModel model = new AttendanceModel();
+    private StudentAttendance sModel = new StudentAttendance();
+
+    private int studentID;
+    private float attendanceInfo;
+
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
 
     /**
@@ -83,9 +87,9 @@ public class TeacherViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
+        columnStudentDate.setCellValueFactory(new PropertyValueFactory("date"));
         columnStudentPresence.setCellValueFactory(cellData -> cellData.getValue().presenceProperty());
 
         // just use whole row (studentsPresence) as data for cells in this column:
@@ -224,6 +228,7 @@ public class TeacherViewController implements Initializable
 
         while (fromDate.plusDays(i).isBefore(toDate))
         {
+
             System.out.println(fromDate.plusDays(i));
 
             Date date = Date.valueOf(fromDate.plusDays(i));
