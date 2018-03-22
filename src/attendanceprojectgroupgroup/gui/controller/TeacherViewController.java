@@ -148,6 +148,7 @@ public class TeacherViewController implements Initializable
 
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         tableStudents.getColumns().add(buttonsColumn);
+        tableStudents.setItems(model.getStudentsInClassList());
     }
 
     private StudentAttendance getPresence()

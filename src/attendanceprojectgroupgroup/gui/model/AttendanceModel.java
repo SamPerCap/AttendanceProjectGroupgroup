@@ -7,6 +7,7 @@ package attendanceprojectgroupgroup.gui.model;
 
 import attendanceprojectgroupgroup.be.AClass;
 import attendanceprojectgroupgroup.be.Attendance;
+import attendanceprojectgroupgroup.be.Student;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.bll.BLLManager;
@@ -24,6 +25,7 @@ public class AttendanceModel
 {
     BLLManager bllm = new BLLManager();
     
+    private ObservableList<StudentAttendance> studentInClassList = FXCollections.observableArrayList();
     private ObservableList<StudentAttendance> studentAttendanceList = FXCollections.observableArrayList();
     private ObservableList<Week> weekList = FXCollections.observableArrayList();
     
@@ -64,5 +66,27 @@ public class AttendanceModel
     }
     public void editAttendance(StudentAttendance sA) {
         bllm.editAttendance(sA);
+    }
+    
+ 
+        
+        
+    /**
+     * This method gets all Students in class
+     *
+     * @param selectedId
+     * @return
+     */
+    public List<StudentAttendance> getAllStudentsInClass(int selectedId) {
+        return bllm.getAllStudentsInClass(selectedId);
+    }
+    
+        /**
+     * gets the students in class
+     *
+     * @return
+     */
+    public ObservableList<StudentAttendance> getStudentsInClassList() {
+        return studentInClassList;
     }
 }

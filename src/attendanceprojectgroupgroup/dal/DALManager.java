@@ -6,6 +6,7 @@
 package attendanceprojectgroupgroup.dal;
 
 import attendanceprojectgroupgroup.be.AClass;
+import attendanceprojectgroupgroup.be.Attendance;
 import attendanceprojectgroupgroup.be.Student;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.be.StudentAttendance;
@@ -235,17 +236,18 @@ public class DALManager
      *
      * Gets all students from selected Class
      */
-    public List<Student> getAllStudentsInClass(int selectedId)
+    public List<StudentAttendance> getAllStudentsInClass(int selectedId)
     {
-        List<Student> allStudentsInClass = new ArrayList();
+        List<StudentAttendance> allStudentsInClass = new ArrayList();
 
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                    " SELECT * "
-                    + " FROM ((StudentClass "
+                     "SELECT DISTINCT Student.id, Student.name, Attendance.attendance"
+                    + " FROM (((StudentClass "
                     + " JOIN Class ON StucentClass.classId = Class.id) "
-                    + " JOIN Student ON StudentClass.studentId = Student.id) "
+                    + " JOIN Student ON StudentClass.studentId = Student.id)"
+                    + " JOIN Attendance ON StudentClass.studentId = Attendance.studentId)"
                     + " WHERE Class.id = ? "
             );
 
@@ -255,12 +257,19 @@ public class DALManager
 
             while (rs.next())
             {
-                Student s = new Student();
-                s.setId(rs.getInt("id"));
-                s.setName(rs.getString("name"));
-                //     m.setAttendingClass(rs.getString("password"));
+                StudentAttendance a = new StudentAttendance();
 
-                allStudentsInClass.add(s);
+                a.setId(rs.getInt("id"));
+                a.setName(rs.getString("name"));
+                a.setAttendance(50f);
+                a.setPresence(rs.getString("attendance"));
+
+               // allStudentAttendance.add(a);
+                
+                
+                
+
+                allStudentsInClass.add(a);
             }
         } catch (SQLException ex)
         {
