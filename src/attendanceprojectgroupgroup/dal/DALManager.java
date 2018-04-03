@@ -6,7 +6,6 @@
 package attendanceprojectgroupgroup.dal;
 
 import attendanceprojectgroupgroup.be.AClass;
-import attendanceprojectgroupgroup.be.Attendance;
 import attendanceprojectgroupgroup.be.Student;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.be.StudentAttendance;
@@ -14,7 +13,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -75,39 +73,10 @@ public class DALManager
         {
             Week w = new Week();
             w.setWeekNumber(i);
-//            w.setMonday("Here");
-//            w.setTuesday("Here");
-//            w.setWednesday("Here");
-//            w.setThursday("Here");
-//            w.setFriday("Here");
-
             allWeek.add(w);
         }
         return allWeek;
     }
-
-//    public List<Attendance> getAttendance() {
-//        System.out.println("Getting attendance");
-//
-//        List<Attendance> allAttendance = new ArrayList();
-//
-//        try (Connection con = cm.getConnection()) {
-//            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Attendance");
-//            ResultSet rs = stmt.executeQuery();
-//
-//            while (rs.next()) {
-//                Attendance a = new Attendance();
-//                a.setId(rs.getInt("id"));
-//                a.setStudentId(rs.getInt("studentId"));
-//                a.setDate(rs.getString("date"));
-//                a.setAttendance(rs.getString("attendance"));
-//
-//                allAttendance.add(a);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(DALManager.class.getName()).log(
-//                    Level.SEVERE, null, ex);
-//        }
     public List<AClass> getAllClasses()
     {
         System.out.println("Getting all Classes.");
@@ -165,8 +134,6 @@ public class DALManager
     }
 
     /**
-     * This method gets all the movies on a list way.
-     * Really?
      *
      * @return
      */

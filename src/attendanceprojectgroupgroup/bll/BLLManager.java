@@ -6,16 +6,13 @@
 package attendanceprojectgroupgroup.bll;
 
 import attendanceprojectgroupgroup.be.AClass;
-import attendanceprojectgroupgroup.be.Student;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.dal.DALManager;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javafx.beans.property.IntegerProperty;
 
 /**
  *

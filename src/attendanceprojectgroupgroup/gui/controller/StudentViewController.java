@@ -37,7 +37,6 @@ public class StudentViewController implements Initializable
 
     @FXML
     protected Label idLabel;
-
     @FXML
     private TableColumn<Week, Integer> columnWeek;
     @FXML
@@ -51,18 +50,12 @@ public class StudentViewController implements Initializable
     @FXML
     private TableColumn<Week, JFXToggleButton> columnFriday;
     @FXML
-    private TableColumn<Week, JFXToggleButton> columnButtons;
-    @FXML
     private TableView<Week> weekTableView;
-    private TableColumn<Week, JFXToggleButton> buttonsColumn = new TableColumn<>("Edit");
-
     @FXML
     protected Label labelStudentName;
     @FXML
     protected Label labelClass;
-
-    private final List<Integer> yearWeeks = new ArrayList<>();
-
+    private LogInViewController parent;
     private AttendanceModel model = new AttendanceModel();
     private int n;
 
@@ -91,14 +84,16 @@ public class StudentViewController implements Initializable
 
         columnMonday.setCellValueFactory(cell
                 -> new ReadOnlyObjectWrapper<>());
-        // cell factory for toggle buttons:
+
+        //Cell factory for toggle buttons:
         columnMonday.setCellFactory(param
                 -> new TableCell<Week, JFXToggleButton>()
         {
+            //It manages the creation and settings 
             @Override
             protected void updateItem(JFXToggleButton item, boolean empty)
             {
-                super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                super.updateItem(item, empty);
                 if (empty)
                 {
                     setGraphic(null);
@@ -123,10 +118,6 @@ public class StudentViewController implements Initializable
             {
                 tglAttendance.setSize(5);
                 tglAttendance.setEllipsisString("");
-
-                tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-                {
-                });
                 // keep text "Absent" or "Present" appropriately
                 tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
             }
@@ -138,7 +129,7 @@ public class StudentViewController implements Initializable
             @Override
             protected void updateItem(JFXToggleButton item, boolean empty)
             {
-                super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                super.updateItem(item, empty);
                 if (empty)
                 {
                     setGraphic(null);
@@ -155,19 +146,12 @@ public class StudentViewController implements Initializable
                     }
                 }
             }
-            // create toggle button once for cell:
             private final JFXToggleButton tglAttendance = new JFXToggleButton();
 
-            //anonymous constructor:
             
             {
                 tglAttendance.setSize(5);
                 tglAttendance.setEllipsisString("");
-
-                tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-                {
-                });
-                // keep text "Absent" or "Present" appropriately
                 tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
             }
         }
@@ -178,7 +162,7 @@ public class StudentViewController implements Initializable
             @Override
             protected void updateItem(JFXToggleButton item, boolean empty)
             {
-                super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                super.updateItem(item, empty);
                 if (empty)
                 {
                     setGraphic(null);
@@ -195,19 +179,12 @@ public class StudentViewController implements Initializable
                     }
                 }
             }
-            // create toggle button once for cell:
             private final JFXToggleButton tglAttendance = new JFXToggleButton();
 
-            //anonymous constructor:
             
             {
                 tglAttendance.setSize(5);
                 tglAttendance.setEllipsisString("");
-
-                tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-                {
-                });
-                // keep text "Absent" or "Present" appropriately
                 tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
             }
         }
@@ -218,7 +195,7 @@ public class StudentViewController implements Initializable
             @Override
             protected void updateItem(JFXToggleButton item, boolean empty)
             {
-                super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                super.updateItem(item, empty);
                 if (empty)
                 {
                     setGraphic(null);
@@ -235,19 +212,12 @@ public class StudentViewController implements Initializable
                     }
                 }
             }
-            // create toggle button once for cell:
             private final JFXToggleButton tglAttendance = new JFXToggleButton();
 
-            //anonymous constructor:
             
             {
                 tglAttendance.setSize(5);
                 tglAttendance.setEllipsisString("");
-
-                tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-                {
-                });
-                // keep text "Absent" or "Present" appropriately
                 tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
             }
         }
@@ -258,7 +228,7 @@ public class StudentViewController implements Initializable
             @Override
             protected void updateItem(JFXToggleButton item, boolean empty)
             {
-                super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                super.updateItem(item, empty);
                 if (empty)
                 {
                     setGraphic(null);
@@ -275,19 +245,12 @@ public class StudentViewController implements Initializable
                     }
                 }
             }
-            // create toggle button once for cell:
             private final JFXToggleButton tglAttendance = new JFXToggleButton();
 
-            //anonymous constructor:
             
             {
                 tglAttendance.setSize(5);
                 tglAttendance.setEllipsisString("");
-
-                tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-                {
-                });
-                // keep text "Absent" or "Present" appropriately
                 tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
             }
         }
@@ -304,12 +267,5 @@ public class StudentViewController implements Initializable
     public void setParentWindowController(LogInViewController parent)
     {
         this.parent = parent;
-    }
-
-    private LogInViewController parent;
-
-    private void choosingTheWeek()
-    {
-
     }
 }

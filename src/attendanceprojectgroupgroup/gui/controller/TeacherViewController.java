@@ -49,9 +49,6 @@ public class TeacherViewController implements Initializable
     @FXML
     protected Label labelTeachersName;
     @FXML
-    private Button btnStudentDetails;
-    private JFXToggleButton tglAttendance;
-    @FXML
     private TableView<StudentAttendance> tableStudents;
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentsName;
@@ -60,21 +57,16 @@ public class TeacherViewController implements Initializable
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
     private TableColumn<StudentAttendance, JFXToggleButton> buttonsColumn = new TableColumn<>("Presence");
-
     @FXML
     private TableColumn<StudentAttendance, Date> columnStudentDate;
     @FXML
     private ChoiceBox<AClass> choiceBoxClass;
-
     @FXML
     private JFXDatePicker dtPicker;
     @FXML
     private JFXDatePicker dtPickerTo;
     @FXML
-
     private AttendanceModel model = new AttendanceModel();
-    private StudentAttendance sModel = new StudentAttendance();
-
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
 
     /**
@@ -87,9 +79,6 @@ public class TeacherViewController implements Initializable
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
         columnStudentDate.setCellValueFactory(new PropertyValueFactory("date"));
         columnStudentPresence.setCellValueFactory(cellData -> cellData.getValue().presenceProperty());
-
-        // just use whole row (studentsPresence) as data for cells in this column:
-        //buttonsColumn.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>());
         // cell factory for toggle buttons:
         buttonsColumn.setCellFactory(param ->
         {
@@ -98,7 +87,8 @@ public class TeacherViewController implements Initializable
                 @Override
                 protected void updateItem(JFXToggleButton item, boolean empty)
                 {
-                    super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                    //To change body of generated methods, choose Tools | Templates.
+                    super.updateItem(item, empty);
                     if (empty)
                     {
                         setGraphic(null);
@@ -122,16 +112,15 @@ public class TeacherViewController implements Initializable
                 
                 {
                     tglAttendance.setSize(5);
-                    // keep text "Absent" or "Present" appropriately
+                    //Take care of edit the attendance in database
                     tglAttendance.setOnAction((ActionEvent event) ->
                     {
-                        //String thePresence = getTableView().getItems().get(getIndex()).getPresence();
                         StudentAttendance att = ((StudentAttendance) this.getTableRow().getItem());
                         att.setPresence(tglAttendance.getText());
                         model.editAttendance(att);
                     });
+                    // keep text "Absent" or "Present" appropriately
                     tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
-
                 }
             };
         }
@@ -140,19 +129,10 @@ public class TeacherViewController implements Initializable
         buttonsColumn.setPrefWidth(100);
 
         threadLoadsAttendance();
-
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         tableStudents.getColumns().add(buttonsColumn);
-
-        //  tableStudents.setItems(model.getStudentsInClassList());
         choiceBoxClass.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AClass>()
         {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
-//            {
-//                checkChoiceBox();
-//            }
-
             @Override
             public void changed(ObservableValue<? extends AClass> observable, AClass oldValue, AClass newValue)
             {
@@ -164,17 +144,12 @@ public class TeacherViewController implements Initializable
 
     private void checkChoiceBox()
     {
-
         AClass clas = choiceBoxClass.getSelectionModel().getSelectedItem();
         if (clas == null)
         {
             return;
         }
-
-        System.out.println(clas);
         model.loadStudentsInClass(clas.getId());
-
-        //     tableStudents.setItems(model.getStudentsInClassList());
     }
 
     public void setParentWindowController(LogInViewController parent)
@@ -220,14 +195,11 @@ public class TeacherViewController implements Initializable
     @FXML
     private void datePicker(ActionEvent event)
     {
-        //System.out.println(dtPicker.getValue());
     }
 
     @FXML
     private void datePickerTo(ActionEvent event)
     {
-        //System.out.println(dtPickerTo.getValue());
-
         model.clearStudentAttendanceList();
 
         Thread t = new Thread(() ->
@@ -247,8 +219,6 @@ public class TeacherViewController implements Initializable
 
         while (fromDate.plusDays(i).isBefore(toDate))
         {
-            //System.out.println(fromDate.plusDays(i));
-
             Date date = Date.valueOf(fromDate.plusDays(i));
 
             model.getStudentAttendanceByDate(date);
