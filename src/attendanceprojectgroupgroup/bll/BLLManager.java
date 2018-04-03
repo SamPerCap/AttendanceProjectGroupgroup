@@ -45,6 +45,16 @@ public class BLLManager
     {
         return dalm.getAllClasses();
     }
+    
+    public boolean studentLogin(String user,String password)
+    {
+        return dalm.studentLogin(user, password);
+    }
+    
+    public boolean teacherLogin(String user,String password)
+    {
+        return dalm.teacherLogin(user, password);
+    }
 
     /**
      * Returns all the studentss from the selected class

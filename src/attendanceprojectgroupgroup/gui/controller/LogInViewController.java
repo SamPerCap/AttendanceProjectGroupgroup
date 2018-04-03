@@ -5,6 +5,7 @@
  */
 package attendanceprojectgroupgroup.gui.controller;
 
+import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -19,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -26,7 +28,8 @@ import javafx.stage.Stage;
  *
  * @author Samuel
  */
-public class LogInViewController implements Initializable {
+public class LogInViewController implements Initializable
+{
 
     @FXML
     private TextField txtFieldUsername;
@@ -34,25 +37,28 @@ public class LogInViewController implements Initializable {
     private PasswordField txtFieldPassword;
     @FXML
     private Button btnLogIn;
+    @FXML
+    private Label lblError;
 
-    private TeacherViewController tVC = new TeacherViewController();
-    private StudentViewController sVC = new StudentViewController();
+    private AttendanceModel model = new AttendanceModel();
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         // TODO
     }
 
     @FXML
-    private void clickLogIn(ActionEvent event) throws IOException {
+    private void clickLogIn(ActionEvent event) throws IOException
+    {
         String username = txtFieldUsername.getText();
-        String pass = txtFieldPassword.getText();
-
-        if (username.equals("Teacher") && pass.equals("tpass")) {
-
+        String password = txtFieldPassword.getText();
+        
+        if(model.teacherLogin(username, password) == true)
+        {
             Stage stage = new Stage();
 
-            // stage.initModality(Modality.APPLICATION_MODAL);
+            //stage.initModality(Modality.APPLICATION_MODAL);
             FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/TeacherView.fxml"));
 
             Parent root = fxLoader.load();
@@ -69,20 +75,20 @@ public class LogInViewController implements Initializable {
 
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
-        } else if (username.equals("StudentA") || username.equals("StudentB") && pass.equals("spass")) {
+
+        }
+        
+        if(model.studentLogin(username, password) == true)
+        {
             Stage stage = new Stage();
 
+            //stage.initModality(Modality.APPLICATION_MODAL);
             FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/StudentView.fxml"));
 
             Parent root = fxLoader.load();
 
             StudentViewController controller = fxLoader.getController();
             controller.setParentWindowController(this);
-
-            Random rand = new Random();
-            int random = rand.nextInt(999)+1;
-            controller.labelStudentName.setText(username);
-            controller.idLabel.setText(""+random);
 
             Scene scene = new Scene(root);
             stage.setTitle("Student");
@@ -91,20 +97,11 @@ public class LogInViewController implements Initializable {
 
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
-
-            if (username.endsWith("A")) {
-                controller.labelClass.setText("Datamatiker_2017");
-
-            } else if (username.endsWith("B")) {
-                controller.labelClass.setText("ComputerScience_2017");
-
-            }
-        } else {
-            System.out.println("System could not recognize your login. Are you a teacher or studentA or studentB? Try with tpass or spass.");
+        } else
+        {
+            lblError.setText("No match");
+            lblError.setTextFill(Color.web("#ff0000"));
         }
-    }
-
-    private void openingStudentView() {
 
     }
 

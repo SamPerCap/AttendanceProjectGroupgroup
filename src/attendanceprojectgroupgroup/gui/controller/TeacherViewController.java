@@ -70,7 +70,8 @@ public class TeacherViewController implements Initializable
     private JFXDatePicker dtPicker;
     @FXML
     private JFXDatePicker dtPickerTo;
-
+    @FXML
+    
     private AttendanceModel model = new AttendanceModel();
     private StudentAttendance sModel = new StudentAttendance();
 
@@ -254,8 +255,7 @@ public class TeacherViewController implements Initializable
 
         while (fromDate.plusDays(i).isBefore(toDate))
         {
-
-            System.out.println(fromDate.plusDays(i));
+            //System.out.println(fromDate.plusDays(i));
 
             Date date = Date.valueOf(fromDate.plusDays(i));
 

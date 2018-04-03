@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,5 +18,6 @@
       <JFXTextField fx:id="txtFieldUsername" focusColor="#019adc" layoutX="25.0" layoutY="66.0" promptText="User" style="-fx-text-fill: #019adc;" unFocusColor="#fbbb2c" />
       <JFXPasswordField fx:id="txtFieldPassword" focusColor="#019adc" layoutX="25.0" layoutY="102.0" promptText="Password" style="-fx-text-fill: #019adc;" unFocusColor="#fbbb2c" />
       <JFXButton fx:id="btnLogIn" layoutX="115.0" layoutY="135.0" onAction="#clickLogIn" text="Log In" />
+      <Label id="lblError" fx:id="lblError" layoutX="25.0" layoutY="139.0" />
     </children>
 </AnchorPane>

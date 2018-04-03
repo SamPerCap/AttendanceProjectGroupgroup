@@ -166,6 +166,7 @@ public class DALManager
 
     /**
      * This method gets all the movies on a list way.
+     * Really?
      *
      * @return
      */
@@ -277,6 +278,52 @@ public class DALManager
                     Level.SEVERE, null, ex);
         }
         return allStudentsInClass;
+    }
+    
+    public boolean studentLogin(String user, String password)
+    {
+       
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement("SELECT name, password FROM Student WHERE name = ? AND password = ?");
+            stmt.setString(1, user);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next())
+            {
+                return true;
+            } 
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
+    
+    public boolean teacherLogin(String user, String password)
+    {
+       
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement("SELECT name, password FROM Teacher WHERE name = ? AND password = ?");
+            stmt.setString(1, user);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next())
+            {
+                return true;
+            } 
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+        
+        return false;
     }
 
 }
