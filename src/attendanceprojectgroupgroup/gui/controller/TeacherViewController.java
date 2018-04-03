@@ -14,10 +14,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
@@ -35,6 +38,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -72,7 +76,6 @@ public class TeacherViewController implements Initializable
     @FXML
     private JFXDatePicker dtPickerTo;
 
-    @FXML
     private AttendanceModel model = new AttendanceModel();
     private StudentAttendance sModel = new StudentAttendance();
 
@@ -148,7 +151,30 @@ public class TeacherViewController implements Initializable
 
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         tableStudents.getColumns().add(buttonsColumn);
-        tableStudents.setItems(model.getStudentsInClassList());
+      //  tableStudents.setItems(model.getStudentsInClassList());
+        
+        choiceBoxClass.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+            {  
+                checkChoiceBox();
+            }    
+        });
+        
+    }
+        
+    private void checkChoiceBox()
+    {
+ 
+        AClass clas = choiceBoxClass.getSelectionModel().getSelectedItem();
+        if (clas == null)
+        {
+            return ;
+        }
+
+        System.out.println(clas);
+        model.loadStudentsInClass(clas.getId());
+      
     }
 
     private StudentAttendance getPresence()
@@ -277,4 +303,6 @@ public class TeacherViewController implements Initializable
             }
         }
     }
+
+
 }

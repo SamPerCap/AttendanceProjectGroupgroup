@@ -49,6 +49,7 @@ public class AttendanceModel
     {
         return studentAttendanceList;
     }
+
     
     public List<AClass> getAllClasses() {
         return bllm.getAllClasses();
@@ -68,25 +69,35 @@ public class AttendanceModel
         bllm.editAttendance(sA);
     }
     
- 
-        
-        
+   
     /**
-     * This method gets all Students in class
+     * This method gets all Students in class with the selected id.
      *
      * @param selectedId
      * @return
      */
-    public List<StudentAttendance> getAllStudentsInClass(int selectedId) {
-        return bllm.getAllStudentsInClass(selectedId);
+    public void loadStudentsInClass(int selectedId) {
+        studentAttendanceList.clear();
+        studentAttendanceList.addAll(bllm.getAllStudentsInClass(selectedId));
+        
     }
+
     
-        /**
+    /**
+     * This method loads students in a class list.
+     *
+     * @param cats
+     */
+    public void loadAllStudentsInClass(List<AClass> clas) {
+        studentInClassList.setAll(bllm.getAllStudentsInClass(clas));
+    }
+               
+    /**
      * gets the students in class
      *
      * @return
      */
-    public ObservableList<StudentAttendance> getStudentsInClassList() {
-        return studentInClassList;
+    public List<StudentAttendance> getStudentsInClass(int selectedId) { 
+        return bllm.getAllStudentsInClass(selectedId);
     }
 }
