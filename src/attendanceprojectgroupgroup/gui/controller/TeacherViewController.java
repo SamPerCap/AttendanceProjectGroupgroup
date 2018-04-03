@@ -70,12 +70,8 @@ public class TeacherViewController implements Initializable
     private JFXDatePicker dtPicker;
     @FXML
     private JFXDatePicker dtPickerTo;
-<<<<<<< HEAD
     @FXML
     
-=======
-
->>>>>>> 7637927994f9aadb9ea52dd426273a5ad866319a
     private AttendanceModel model = new AttendanceModel();
     private StudentAttendance sModel = new StudentAttendance();
 
