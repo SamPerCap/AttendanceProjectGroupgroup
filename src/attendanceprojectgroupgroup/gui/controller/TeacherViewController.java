@@ -22,6 +22,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -60,7 +63,7 @@ public class TeacherViewController implements Initializable
     private TableColumn<StudentAttendance, Float> columnStudentsAttendance;
     @FXML
     private TableColumn<StudentAttendance, String> columnStudentPresence;
-    private TableColumn<StudentAttendance, JFXToggleButton> buttonsColumn = new TableColumn<>("Edit");
+    private TableColumn<StudentAttendance, JFXToggleButton> buttonsColumn = new TableColumn<>("Presence");
 
     @FXML
     private TableColumn<StudentAttendance, Date> columnStudentDate;
@@ -76,9 +79,6 @@ public class TeacherViewController implements Initializable
     private AttendanceModel model = new AttendanceModel();
     private StudentAttendance sModel = new StudentAttendance();
 
-    private int studentID;
-    private float attendanceInfo;
-
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
 
     /**
@@ -93,62 +93,65 @@ public class TeacherViewController implements Initializable
         columnStudentPresence.setCellValueFactory(cellData -> cellData.getValue().presenceProperty());
 
         // just use whole row (studentsPresence) as data for cells in this column:
-        buttonsColumn.setCellValueFactory(cell
-                -> new ReadOnlyObjectWrapper<>());
+        //buttonsColumn.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>());
         // cell factory for toggle buttons:
-        buttonsColumn.setCellFactory(param
-                -> new TableCell<StudentAttendance, JFXToggleButton>()
+        buttonsColumn.setCellFactory(param ->
         {
-            @Override
-            protected void updateItem(JFXToggleButton item, boolean empty)
+            return new TableCell<StudentAttendance, JFXToggleButton>()
             {
-                super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
-                if (empty)
+                @Override
+                protected void updateItem(JFXToggleButton item, boolean empty)
                 {
-                    setGraphic(null);
-                } else
-
-                {
-
-                    setGraphic(tglAttendance);
-                }
-            }
-            // create toggle button once for cell:
-            private final JFXToggleButton tglAttendance = new JFXToggleButton();
-
-            //anonymous constructor:
-            
-            {
-                tglAttendance.setSize(5);
-                tglAttendance.setEllipsisString("");
-
-               
-                tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-                {
-                    StudentAttendance att = ((StudentAttendance) this.getTableRow().getItem());
-                    if (isNowSelected)
+                    super.updateItem(item, empty); //To change body of generated methods, choose Tools | Templates.
+                    if (empty)
                     {
-                        att.setPresence("Absent");
+                        setGraphic(null);
                     } else
                     {
-                        att.setPresence("Here");
+                        setGraphic(tglAttendance);
+                        String thePresence = getTableView().getItems().get(getIndex()).getPresence();
+                        tglAttendance.setText(thePresence);
+                        if (thePresence.equals("Here"))
+                        {
+                            tglAttendance.setSelected(true);
+                        }
                     }
-                    model.editAttendance(att);
+                }
+                // create toggle button once for cell:
+                private final JFXToggleButton tglAttendance = new JFXToggleButton();
+                //anonymous constructor:
+                {
+                    tglAttendance.setSize(5);
 
-                });
-                // keep text "Absent" or "Present" appropriately
-                tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then(" ").otherwise(" "));
-
-            }
-
+                    // keep text "Absent" or "Present" appropriately
+                    tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
+                    {
+                        tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
+                    });
+                    tglAttendance.setOnAction((ActionEvent event) ->
+                    {
+                        StudentAttendance att = ((StudentAttendance) this.getTableRow().getItem());
+                        if (!att.equals(tglAttendance.getText()))
+                        {
+                            att.setPresence(tglAttendance.getText());
+                            model.editAttendance(att);
+                            System.out.println(att);
+                            System.out.println(tglAttendance.getText());
+                        }
+                    });
+                }
+            };
         }
         );
+        buttonsColumn.setResizable(true);
+        buttonsColumn.setPrefWidth(100);
 
         threadLoadsAttendance();
 
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         tableStudents.getColumns().add(buttonsColumn);
         tableStudents.setItems(model.getStudentsInClassList());
+
     }
 
     private StudentAttendance getPresence()
@@ -189,6 +192,7 @@ public class TeacherViewController implements Initializable
             Platform.runLater(() ->
             {
                 tableStudents.setItems(model.loadStudentAttendance());
+
             });
         }
         );

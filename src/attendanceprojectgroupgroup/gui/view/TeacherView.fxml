@@ -22,7 +22,7 @@
           <TableColumn fx:id="columnStudentsName" prefWidth="127.0" text="Name" />
           <TableColumn fx:id="columnStudentsAttendance" prefWidth="84.0" text="Attendance" />
             <TableColumn fx:id="columnStudentDate" prefWidth="75.0" text="Date" />
-            <TableColumn fx:id="columnStudentPresence" prefWidth="92.0" text="Presence" />
+            <TableColumn fx:id="columnStudentPresence" prefWidth="92.0" text="Presence" visible="false" />
         </columns>
       </TableView>
       <JFXDatePicker fx:id="dtPicker" defaultColor="#019adc" layoutX="228.0" layoutY="11.0" onAction="#datePicker" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="11.0" />
