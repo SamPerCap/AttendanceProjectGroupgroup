@@ -71,7 +71,7 @@ public class TeacherViewController implements Initializable
     @FXML
     private JFXDatePicker dtPickerTo;
     @FXML
-    
+
     private AttendanceModel model = new AttendanceModel();
     private StudentAttendance sModel = new StudentAttendance();
 
@@ -108,7 +108,6 @@ public class TeacherViewController implements Initializable
                         String thePresence = getTableView().getItems().get(getIndex()).getPresence();
                         if (thePresence.equals("Here"))
                         {
-//                            tglAttendance.setText(thePresence);
                             tglAttendance.setSelected(true);
                         } else if (thePresence.equals("Absent"))
                         {
@@ -123,23 +122,16 @@ public class TeacherViewController implements Initializable
                 
                 {
                     tglAttendance.setSize(5);
-
                     // keep text "Absent" or "Present" appropriately
-                    tglAttendance.selectedProperty().addListener((obs, wasSelected, isNowSelected) ->
-                    {
-                        tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
-                    });
                     tglAttendance.setOnAction((ActionEvent event) ->
                     {
+                        //String thePresence = getTableView().getItems().get(getIndex()).getPresence();
                         StudentAttendance att = ((StudentAttendance) this.getTableRow().getItem());
-                        if (!att.equals(tglAttendance.getText()))
-                        {
-                            att.setPresence(tglAttendance.getText());
-                            model.editAttendance(att);
-                            System.out.println(att);
-                            System.out.println(tglAttendance.getText());
-                        }
+                        att.setPresence(tglAttendance.getText());
+                        model.editAttendance(att);
                     });
+                    tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
+
                 }
             };
         }
