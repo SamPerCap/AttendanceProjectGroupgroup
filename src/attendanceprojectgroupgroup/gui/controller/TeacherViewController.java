@@ -17,18 +17,12 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableSet;
-import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -152,11 +146,6 @@ public class TeacherViewController implements Initializable
         tableStudents.getColumns().add(buttonsColumn);
         tableStudents.setItems(model.getStudentsInClassList());
 
-    }
-
-    private StudentAttendance getPresence()
-    {
-        return tableStudents.getSelectionModel().getSelectedItem();
     }
 
     public void setParentWindowController(LogInViewController parent)

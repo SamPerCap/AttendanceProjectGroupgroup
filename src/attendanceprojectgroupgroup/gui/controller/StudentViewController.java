@@ -75,7 +75,7 @@ public class StudentViewController implements Initializable
         columnWednesday.setCellValueFactory(new PropertyValueFactory("wednesday"));
         columnThursday.setCellValueFactory(new PropertyValueFactory("thursday"));
         columnFriday.setCellValueFactory(new PropertyValueFactory("friday"));
-
+        
         Thread t = new Thread(() ->
         {
             model.getWeek();
@@ -112,7 +112,6 @@ public class StudentViewController implements Initializable
             private final JFXToggleButton tglAttendance = new JFXToggleButton();
 
             //anonymous constructor:
-            
             {
                 tglAttendance.setSize(5);
                 tglAttendance.setEllipsisString("");
@@ -121,22 +120,17 @@ public class StudentViewController implements Initializable
                 {
                 });
                 // keep text "Absent" or "Present" appropriately
-                tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Present").otherwise("Absent"));
+                tglAttendance.textProperty().bind(Bindings.when(tglAttendance.selectedProperty()).then("Here").otherwise("Absent"));
             }
 
         }
         );
+       
     }
 
     public void setParentWindowController(LogInViewController parent)
     {
         this.parent = parent;
-    }
-
-    private Week getSelectedPresence()
-    {
-        return weekTableView.getSelectionModel().getSelectedItem();
-
     }
 
     private LogInViewController parent;
