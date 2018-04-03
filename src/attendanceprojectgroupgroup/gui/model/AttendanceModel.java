@@ -52,6 +52,16 @@ public class AttendanceModel
         return bllm.getAllClasses();
     }
     
+    public boolean studentLogin(String user, String password)
+    {
+        return bllm.studentLogin(user, password);
+    }
+    
+    public boolean teacherLogin(String user, String password)
+    {
+        return bllm.teacherLogin(user, password);
+    }
+    
     public void getWeek()
     {
         weekList.clear();
