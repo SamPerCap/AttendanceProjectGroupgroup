@@ -107,7 +107,7 @@ public class TeacherViewController implements Initializable
                         String thePresence = getTableView().getItems().get(getIndex()).getPresence();
                         if (thePresence.equals("Here"))
                         {
-                            tglAttendance.setText(thePresence);
+//                            tglAttendance.setText(thePresence);
                             tglAttendance.setSelected(true);
                         } else if (thePresence.equals("Absent"))
                         {
@@ -152,12 +152,18 @@ public class TeacherViewController implements Initializable
         tableStudents.getColumns().add(buttonsColumn);
 
         //  tableStudents.setItems(model.getStudentsInClassList());
-        choiceBoxClass.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
+        choiceBoxClass.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AClass>()
         {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+//            {
+//                checkChoiceBox();
+//            }
+
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+            public void changed(ObservableValue<? extends AClass> observable, AClass oldValue, AClass newValue)
             {
-                checkChoiceBox();
+                model.loadStudentsInClass(newValue.getId());
             }
         });
 
