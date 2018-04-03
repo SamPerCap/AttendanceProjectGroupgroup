@@ -224,8 +224,7 @@ public class TeacherViewController implements Initializable
 
         while (fromDate.plusDays(i).isBefore(toDate))
         {
-
-            System.out.println(fromDate.plusDays(i));
+            //System.out.println(fromDate.plusDays(i));
 
             Date date = Date.valueOf(fromDate.plusDays(i));
 
