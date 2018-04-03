@@ -7,6 +7,7 @@ package attendanceprojectgroupgroup.gui.model;
 
 import attendanceprojectgroupgroup.be.AClass;
 import attendanceprojectgroupgroup.be.Attendance;
+import attendanceprojectgroupgroup.be.Student;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.bll.BLLManager;
@@ -24,6 +25,7 @@ public class AttendanceModel
 {
     BLLManager bllm = new BLLManager();
     
+    private ObservableList<StudentAttendance> studentInClassList = FXCollections.observableArrayList();
     private ObservableList<StudentAttendance> studentAttendanceList = FXCollections.observableArrayList();
     private ObservableList<Week> weekList = FXCollections.observableArrayList();
     
@@ -47,6 +49,7 @@ public class AttendanceModel
     {
         return studentAttendanceList;
     }
+
     
     public List<AClass> getAllClasses() {
         return bllm.getAllClasses();
@@ -74,5 +77,37 @@ public class AttendanceModel
     }
     public void editAttendance(StudentAttendance sA) {
         bllm.editAttendance(sA);
+    }
+    
+   
+    /**
+     * This method gets all Students in class with the selected id.
+     *
+     * @param selectedId
+     * @return
+     */
+    public void loadStudentsInClass(int selectedId) {
+        studentAttendanceList.clear();
+        studentAttendanceList.addAll(bllm.getAllStudentsInClass(selectedId));
+        
+    }
+
+    
+    /**
+     * This method loads students in a class list.
+     *
+     * @param cats
+     */
+    public void loadAllStudentsInClass(List<AClass> clas) {
+        studentInClassList.setAll(bllm.getAllStudentsInClass(clas));
+    }
+               
+    /**
+     * gets the students in class
+     *
+     * @return
+     */
+    public List<StudentAttendance> getStudentsInClass(int selectedId) { 
+        return bllm.getAllStudentsInClass(selectedId);
     }
 }

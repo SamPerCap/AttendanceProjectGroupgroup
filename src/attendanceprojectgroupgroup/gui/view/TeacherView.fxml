@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="466.0" prefWidth="499.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.TeacherViewController">
+<AnchorPane id="AnchorPane" prefHeight="466.0" prefWidth="499.0" stylesheets="@CSS/CSS.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="attendanceprojectgroupgroup.gui.controller.TeacherViewController">
    <children>
       <Label fx:id="labelTeachersName" layoutX="14.0" layoutY="71.0" text="Teachers name" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="19.0">
          <font>
@@ -22,7 +22,7 @@
           <TableColumn fx:id="columnStudentsName" prefWidth="127.0" text="Name" />
           <TableColumn fx:id="columnStudentsAttendance" prefWidth="84.0" text="Attendance" />
             <TableColumn fx:id="columnStudentDate" prefWidth="75.0" text="Date" />
-            <TableColumn fx:id="columnStudentPresence" prefWidth="92.0" text="Presence" />
+            <TableColumn fx:id="columnStudentPresence" prefWidth="92.0" text="Presence" visible="false" />
         </columns>
       </TableView>
       <JFXDatePicker fx:id="dtPicker" defaultColor="#019adc" layoutX="228.0" layoutY="11.0" onAction="#datePicker" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="11.0" />

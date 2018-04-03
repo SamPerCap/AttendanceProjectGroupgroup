@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javafx.beans.property.IntegerProperty;
 
 /**
  *
@@ -61,7 +62,7 @@ public class BLLManager
      * @param selectedId
      * @return
      */
-    public List<Student> getAllStudentsInClass(int selectedId)
+    public List<StudentAttendance> getAllStudentsInClass(int selectedId)
     {
         return dalm.getAllStudentsInClass(selectedId);
     }
@@ -72,27 +73,27 @@ public class BLLManager
      * @param classes
      * @return
      */
-    public List<Student> getAllStudentsInClass(List<AClass> classes)
+    public List<StudentAttendance> getAllStudentsInClass(List<AClass> classes)
     {
 
-        HashMap<Integer, Student> hm = new HashMap();
+        HashMap<Integer, StudentAttendance> hm = new HashMap();
 
         if (!classes.isEmpty())
         {
             for (AClass aclass : classes)
             {
-                List<Student> allStudents = dalm.getAllStudentsInClass(aclass.getId());
-                for (Student allStudent : allStudents)
+                List<StudentAttendance> allStudents = dalm.getAllStudentsInClass(aclass.getId());
+                for (StudentAttendance allStudent : allStudents)
                 {
                     if (!hm.containsKey(allStudent.getId()))
                     {
-                        //hm.put(allStudent.getId(), allStudent);
+                        hm.put(allStudent.getId(), allStudent);
                     }
                 }
             }
         } else
         {
-            return dalm.getAllStudents();
+            return dalm.getStudentAttendance();
         }
         return new ArrayList<>(hm.values());
     }
