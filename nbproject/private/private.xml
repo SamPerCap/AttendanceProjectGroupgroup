@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Elisabeth/Documents/2.%20Semester/GitHub/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/gui/model/AttendanceModel.java</file>
             <file>file:/C:/Users/Elisabeth/Documents/2.%20Semester/GitHub/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/dal/DALManager.java</file>
             <file>file:/C:/Users/Elisabeth/Documents/2.%20Semester/GitHub/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/gui/controller/TeacherViewController.java</file>
             <file>file:/C:/Users/Elisabeth/Documents/2.%20Semester/GitHub/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/bll/BLLManager.java</file>
+=======
+            <file>file:/C:/Users/Samuel/Documents/NetBeansProjects/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/gui/controller/TeacherViewController.java</file>
+            <file>file:/C:/Users/Samuel/Documents/NetBeansProjects/AttendanceProjectGroupgroup/src/attendanceprojectgroupgroup/gui/view/CSS/CSS.css</file>
+>>>>>>> 3cd8c6371a07a9b82f8df7e8c431d95018483dfa
         </group>
     </open-files>
 </project-private>
