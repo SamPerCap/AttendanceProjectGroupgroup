@@ -243,9 +243,9 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                     "SELECT DISTINCT Student.id, Student.name, Attendance.attendance"
+                      " SELECT DISTINCT Student.id, Student.name, Attendance.attendance"
                     + " FROM (((StudentClass "
-                    + " JOIN Class ON StucentClass.classId = Class.id) "
+                    + " JOIN Class ON StudentClass.classId = Class.id) "
                     + " JOIN Student ON StudentClass.studentId = Student.id)"
                     + " JOIN Attendance ON StudentClass.studentId = Attendance.studentId)"
                     + " WHERE Class.id = ? "
