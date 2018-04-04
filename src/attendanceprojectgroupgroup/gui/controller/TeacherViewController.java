@@ -7,6 +7,7 @@ package attendanceprojectgroupgroup.gui.controller;
 
 import attendanceprojectgroupgroup.be.AClass;
 import attendanceprojectgroupgroup.be.StudentAttendance;
+import attendanceprojectgroupgroup.bll.BLLManager;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -27,7 +30,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -68,13 +70,22 @@ public class TeacherViewController implements Initializable
     @FXML
     private AttendanceModel model = new AttendanceModel();
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
-
+    private BLLManager bll;
+    private List<Integer> changes = new ArrayList<>();
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        for (Integer changess : bll.getChanges())
+        {
+            changes.add(changess);
+        }
+        if (changes.contains(1))
+        {
+            System.out.println("sdad");
+        }
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
         columnStudentDate.setCellValueFactory(new PropertyValueFactory("date"));

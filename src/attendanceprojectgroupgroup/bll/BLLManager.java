@@ -99,4 +99,10 @@ public class BLLManager
     {
         dalm.editStudentAttendance(sA);
     }
+    public void registerChange(Integer number){
+        dalm.registerChange(number);
+    }
+    public List<Integer> getChanges(){
+        return dalm.getStudentChange();
+    }
 }

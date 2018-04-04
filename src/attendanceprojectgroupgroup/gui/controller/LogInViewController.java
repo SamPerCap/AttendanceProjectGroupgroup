@@ -89,7 +89,9 @@ public class LogInViewController implements Initializable
 
             StudentViewController controller = fxLoader.getController();
             controller.setParentWindowController(this);
-
+            controller.labelStudentName.setText(username);
+            controller.idLabel.setText(password);
+            
             Scene scene = new Scene(root);
             stage.setTitle("Student");
             stage.setScene(scene);

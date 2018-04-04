@@ -77,6 +77,7 @@ public class DALManager
         }
         return allWeek;
     }
+
     public List<AClass> getAllClasses()
     {
         System.out.println("Getting all Classes.");
@@ -107,6 +108,7 @@ public class DALManager
         }
         return allClasses;
     }
+
     public void editStudentAttendance(StudentAttendance sA)
     {
         try (Connection con = cm.getConnection())
@@ -167,7 +169,7 @@ public class DALManager
     public List<StudentAttendance> getStudentByDate(Date date)
     {
         List<StudentAttendance> allStudentAttendanceDates = new ArrayList();
-        
+
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
@@ -211,7 +213,7 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                      " SELECT DISTINCT Student.id, Student.name, Attendance.attendance"
+                    " SELECT DISTINCT Student.id, Student.name, Attendance.attendance"
                     + " FROM (((StudentClass "
                     + " JOIN Class ON StudentClass.classId = Class.id) "
                     + " JOIN Student ON StudentClass.studentId = Student.id)"
@@ -232,11 +234,7 @@ public class DALManager
                 a.setAttendance(50f);
                 a.setPresence(rs.getString("attendance"));
 
-               // allStudentAttendance.add(a);
-                
-                
-                
-
+                // allStudentAttendance.add(a);
                 allStudentsInClass.add(a);
             }
         } catch (SQLException ex)
@@ -246,51 +244,112 @@ public class DALManager
         }
         return allStudentsInClass;
     }
-    
+
     public boolean studentLogin(String user, String password)
     {
-       
+
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement("SELECT name, password FROM Student WHERE name = ? AND password = ?");
             stmt.setString(1, user);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
-            
-            if(rs.next())
+
+            if (rs.next())
             {
                 return true;
-            } 
+            }
         } catch (SQLException ex)
         {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-        
+
         return false;
     }
-    
+
     public boolean teacherLogin(String user, String password)
     {
-       
+
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement("SELECT name, password FROM Teacher WHERE name = ? AND password = ?");
             stmt.setString(1, user);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
-            
-            if(rs.next())
+
+            if (rs.next())
             {
                 return true;
-            } 
+            }
         } catch (SQLException ex)
         {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-        
+
         return false;
     }
 
+    public void registerChange(Integer number)
+    {
+        try (Connection con = cm.getConnection())
+        {
+            String sql
+                    = "UPDATE Attendance SET studentChange =? "
+                    + " WHERE id=?";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+
+            pstmt.setInt(1, number);
+            
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Student could not be edited");
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
+
+    public void cancelChange()
+    {
+        try (Connection con = cm.getConnection())
+        {
+            String sql
+                    = "UPDATE Attendance SET studentChange = 0"
+                    + " WHERE id=?";
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+    }
+
+    public List<Integer> getStudentChange()
+    {
+        List<Integer> allChanges = new ArrayList();
+
+        try (Connection con = cm.getConnection())
+        {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT studentID FROM Attendance WHERE studentChange = 1");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                allChanges.add(rs.getInt("studentID"));
+            }
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(DALManager.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        }
+
+        return allChanges;
+    }
 }
