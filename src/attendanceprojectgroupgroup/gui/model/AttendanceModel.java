@@ -6,13 +6,10 @@
 package attendanceprojectgroupgroup.gui.model;
 
 import attendanceprojectgroupgroup.be.AClass;
-import attendanceprojectgroupgroup.be.Attendance;
-import attendanceprojectgroupgroup.be.Student;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.be.Week;
 import attendanceprojectgroupgroup.bll.BLLManager;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

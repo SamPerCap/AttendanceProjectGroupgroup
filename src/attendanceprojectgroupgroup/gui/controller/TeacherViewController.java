@@ -72,8 +72,10 @@ public class TeacherViewController implements Initializable
     
     private AttendanceModel model = new AttendanceModel();
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
-    private BLLManager bll;
+    /* It doesnt work by now
     private List<Integer> changes = new ArrayList<>();
+    */
+    
     /**
      * Initializes the controller class.
      */
