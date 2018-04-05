@@ -131,19 +131,13 @@ public class TeacherViewController implements Initializable
         threadLoadsAttendance();
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         tableStudents.getColumns().add(buttonsColumn);
-        choiceBoxClass.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AClass>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends AClass> observable, AClass oldValue, AClass newValue)
-            {
-                model.loadStudentsInClass(newValue.getId());
-            }
-        });
+        checkChoiceBox();
 
     }
 
-    private void checkChoiceBox()
+    public void setParentWindowController(LogInViewController parent)
     {
+<<<<<<< HEAD
         AClass clas = choiceBoxClass.getSelectionModel().getSelectedItem();
         if (clas == null)
         {
@@ -151,13 +145,40 @@ public class TeacherViewController implements Initializable
         }
         model.loadStudentsInClass(clas.getId());
         attendancePercentage();
-    }
-
-    public void setParentWindowController(LogInViewController parent)
-    {
+=======
         this.parent = parent;
+>>>>>>> fff25c923d40f5f96523752dbf0e7a4afab691cd
     }
 
+    /**
+     * Makes a new thread that handles the choicebox changelistener, loads the
+     * students from the selected class and adds attendance percentage.
+     */
+    private void checkChoiceBox()
+    {
+
+        Thread t = new Thread(() ->
+        {
+            choiceBoxClass.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AClass>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends AClass> observable, AClass oldValue, AClass newValue)
+                {
+                    model.loadStudentsInClass(newValue.getId());
+                    attendancePercentage();
+                }
+            });
+
+        }
+        );
+        t.start();
+    }
+
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void clickStudentDetails(ActionEvent event) throws IOException
     {
@@ -177,6 +198,9 @@ public class TeacherViewController implements Initializable
         stage.showAndWait();
     }
 
+    /**
+     *
+     */
     private void threadLoadsAttendance()
     {
         Thread thread = new Thread(() ->
@@ -193,11 +217,19 @@ public class TeacherViewController implements Initializable
         thread.start();
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void datePicker(ActionEvent event)
     {
     }
 
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void datePickerTo(ActionEvent event)
     {
@@ -212,6 +244,9 @@ public class TeacherViewController implements Initializable
         t.start();
     }
 
+    /**
+     *
+     */
     private void attendanceFromTo()
     {
         int i = 0;
@@ -229,6 +264,9 @@ public class TeacherViewController implements Initializable
         }
     }
 
+    /**
+     *
+     */
     private void attendancePercentage()
     {
         for (int i = 0; i < model.loadStudentAttendance().size(); i++)

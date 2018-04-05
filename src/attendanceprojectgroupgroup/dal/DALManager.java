@@ -77,6 +77,7 @@ public class DALManager
         }
         return allWeek;
     }
+
     public List<AClass> getAllClasses()
     {
         System.out.println("Getting all Classes.");
@@ -107,6 +108,7 @@ public class DALManager
         }
         return allClasses;
     }
+
     public void editStudentAttendance(StudentAttendance sA)
     {
         try (Connection con = cm.getConnection())
@@ -167,7 +169,7 @@ public class DALManager
     public List<StudentAttendance> getStudentByDate(Date date)
     {
         List<StudentAttendance> allStudentAttendanceDates = new ArrayList();
-        
+
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
@@ -202,7 +204,7 @@ public class DALManager
 
     /**
      *
-     * Gets all students from selected Class
+     * Gets all students from selected Class by joining all tables together
      */
     public List<StudentAttendance> getAllStudentsInClass(int selectedId)
     {
@@ -211,7 +213,7 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                      " SELECT DISTINCT Student.id, Student.name, Attendance.attendance"
+                    " SELECT DISTINCT Student.id, Student.name, Attendance.attendance"
                     + " FROM (((StudentClass "
                     + " JOIN Class ON StudentClass.classId = Class.id) "
                     + " JOIN Student ON StudentClass.studentId = Student.id)"
@@ -232,11 +234,7 @@ public class DALManager
                 a.setAttendance(0f);
                 a.setPresence(rs.getString("attendance"));
 
-               // allStudentAttendance.add(a);
-                
-                
-                
-
+                // allStudentAttendance.add(a);
                 allStudentsInClass.add(a);
             }
         } catch (SQLException ex)
@@ -246,50 +244,56 @@ public class DALManager
         }
         return allStudentsInClass;
     }
-    
+
     public boolean studentLogin(String user, String password)
     {
-       
+
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement("SELECT name, password FROM Student WHERE name = ? AND password = ?");
             stmt.setString(1, user);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
-            
-            if(rs.next())
+
+            if (rs.next())
             {
                 return true;
-            } 
+            }
         } catch (SQLException ex)
         {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-        
+
         return false;
     }
-    
+
+    /**
+     *
+     * @param user
+     * @param password
+     * @return
+     */
     public boolean teacherLogin(String user, String password)
     {
-       
+
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement("SELECT name, password FROM Teacher WHERE name = ? AND password = ?");
             stmt.setString(1, user);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
-            
-            if(rs.next())
+
+            if (rs.next())
             {
                 return true;
-            } 
+            }
         } catch (SQLException ex)
         {
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-        
+
         return false;
     }
 

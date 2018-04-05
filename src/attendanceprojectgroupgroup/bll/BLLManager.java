@@ -42,57 +42,21 @@ public class BLLManager
     {
         return dalm.getAllClasses();
     }
-    
-    public boolean studentLogin(String user,String password)
+
+    public boolean studentLogin(String user, String password)
     {
         return dalm.studentLogin(user, password);
     }
-    
-    public boolean teacherLogin(String user,String password)
+
+    public boolean teacherLogin(String user, String password)
     {
         return dalm.teacherLogin(user, password);
     }
 
-    /**
-     * Returns all the studentss from the selected class
-     *
-     * @param selectedId
-     * @return
-     */
+    
     public List<StudentAttendance> getAllStudentsInClass(int selectedId)
     {
         return dalm.getAllStudentsInClass(selectedId);
-    }
-
-    /**
-     * Gets all students from selected class.
-     *
-     * @param classes
-     * @return
-     */
-    public List<StudentAttendance> getAllStudentsInClass(List<AClass> classes)
-    {
-
-        HashMap<Integer, StudentAttendance> hm = new HashMap();
-
-        if (!classes.isEmpty())
-        {
-            for (AClass aclass : classes)
-            {
-                List<StudentAttendance> allStudents = dalm.getAllStudentsInClass(aclass.getId());
-                for (StudentAttendance allStudent : allStudents)
-                {
-                    if (!hm.containsKey(allStudent.getId()))
-                    {
-                        hm.put(allStudent.getId(), allStudent);
-                    }
-                }
-            }
-        } else
-        {
-            return dalm.getStudentAttendance();
-        }
-        return new ArrayList<>(hm.values());
     }
 
     public void editAttendance(StudentAttendance sA)

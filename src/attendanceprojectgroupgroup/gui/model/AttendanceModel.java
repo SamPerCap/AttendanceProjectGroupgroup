@@ -23,91 +23,75 @@ import javafx.collections.ObservableList;
  */
 public class AttendanceModel
 {
+
     BLLManager bllm = new BLLManager();
-    
+
     private ObservableList<StudentAttendance> studentInClassList = FXCollections.observableArrayList();
     private ObservableList<StudentAttendance> studentAttendanceList = FXCollections.observableArrayList();
     private ObservableList<Week> weekList = FXCollections.observableArrayList();
-    
+
     public void getStudentAttendance()
     {
         studentAttendanceList.clear();
         studentAttendanceList.addAll(bllm.getStudentAttendance());
     }
-    
+
     public void getStudentAttendanceByDate(Date date)
     {
         studentAttendanceList.addAll(bllm.getStudentAttendanceByDate(date));
     }
-    
+
     public void clearStudentAttendanceList()
     {
         studentAttendanceList.clear();
     }
-    
+
     public ObservableList<StudentAttendance> loadStudentAttendance()
     {
         return studentAttendanceList;
     }
 
-    
-    public List<AClass> getAllClasses() {
+    public List<AClass> getAllClasses()
+    {
         return bllm.getAllClasses();
     }
-    
+
     public boolean studentLogin(String user, String password)
     {
         return bllm.studentLogin(user, password);
     }
-    
+
     public boolean teacherLogin(String user, String password)
     {
         return bllm.teacherLogin(user, password);
     }
-    
+
     public void getWeek()
     {
         weekList.clear();
         weekList.addAll(bllm.getWeek());
     }
-    
+
     public ObservableList<Week> loadWeek()
     {
         return weekList;
     }
-    public void editAttendance(StudentAttendance sA) {
+
+    public void editAttendance(StudentAttendance sA)
+    {
         bllm.editAttendance(sA);
     }
-    
-   
+
     /**
-     * This method gets all Students in class with the selected id.
+     * This method clears the list of students and then adds the ones with the selected class id.
      *
      * @param selectedId
      * @return
      */
-    public void loadStudentsInClass(int selectedId) {
+    public void loadStudentsInClass(int selectedId)
+    {
         studentAttendanceList.clear();
         studentAttendanceList.addAll(bllm.getAllStudentsInClass(selectedId));
-        
-    }
 
-    
-    /**
-     * This method loads students in a class list.
-     *
-     * @param cats
-     */
-    public void loadAllStudentsInClass(List<AClass> clas) {
-        studentInClassList.setAll(bllm.getAllStudentsInClass(clas));
-    }
-               
-    /**
-     * gets the students in class
-     *
-     * @return
-     */
-    public List<StudentAttendance> getStudentsInClass(int selectedId) { 
-        return bllm.getAllStudentsInClass(selectedId);
     }
 }
