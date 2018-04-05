@@ -49,7 +49,7 @@ public class DALManager
 
                 a.setId(rs.getInt("id"));
                 a.setName(rs.getString("name"));
-                a.setAttendance(50f);
+                a.setAttendance(0f);
                 a.setPresence(rs.getString("attendance"));
 
                 allStudentAttendance.add(a);
@@ -204,7 +204,7 @@ public class DALManager
 
     /**
      *
-     * Gets all students from selected Class
+     * Gets all students from selected Class by joining all tables together
      */
     public List<StudentAttendance> getAllStudentsInClass(int selectedId)
     {
@@ -231,7 +231,7 @@ public class DALManager
 
                 a.setId(rs.getInt("id"));
                 a.setName(rs.getString("name"));
-                a.setAttendance(50f);
+                a.setAttendance(0f);
                 a.setPresence(rs.getString("attendance"));
 
                 // allStudentAttendance.add(a);
@@ -268,6 +268,12 @@ public class DALManager
         return false;
     }
 
+    /**
+     *
+     * @param user
+     * @param password
+     * @return
+     */
     public boolean teacherLogin(String user, String password)
     {
 

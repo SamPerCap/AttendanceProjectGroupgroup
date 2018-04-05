@@ -45,7 +45,7 @@ public class LogInViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+
     }
 
     @FXML
@@ -53,8 +53,8 @@ public class LogInViewController implements Initializable
     {
         String username = txtFieldUsername.getText();
         String password = txtFieldPassword.getText();
-        
-        if(model.teacherLogin(username, password) == true)
+
+        if (model.teacherLogin(username, password) == true)
         {
             Stage stage = new Stage();
 
@@ -75,10 +75,9 @@ public class LogInViewController implements Initializable
 
             Stage window = (Stage) btnLogIn.getScene().getWindow();
             window.close();
-
         }
-        
-        if(model.studentLogin(username, password) == true)
+
+        if (model.studentLogin(username, password) == true)
         {
             Stage stage = new Stage();
 
@@ -104,7 +103,6 @@ public class LogInViewController implements Initializable
             lblError.setText("No match");
             lblError.setTextFill(Color.web("#ff0000"));
         }
-
     }
 
 }

@@ -9,6 +9,7 @@ import attendanceprojectgroupgroup.be.AClass;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.bll.BLLManager;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
 import java.io.IOException;
@@ -68,6 +69,7 @@ public class TeacherViewController implements Initializable
     @FXML
     private JFXDatePicker dtPickerTo;
     @FXML
+    
     private AttendanceModel model = new AttendanceModel();
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
     private BLLManager bll;
@@ -84,7 +86,7 @@ public class TeacherViewController implements Initializable
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
         columnStudentDate.setCellValueFactory(new PropertyValueFactory("date"));
         columnStudentPresence.setCellValueFactory(cellData -> cellData.getValue().presenceProperty());
-        // cell factory for toggle buttons:
+        //Cell factory for toggle buttons:
         buttonsColumn.setCellFactory(param ->
         {
             return new TableCell<StudentAttendance, JFXToggleButton>()
@@ -110,10 +112,10 @@ public class TeacherViewController implements Initializable
                         }
                     }
                 }
-                // create toggle button once for cell:
+                //Create toggle button once for cell:
                 private final JFXToggleButton tglAttendance = new JFXToggleButton();
 
-                //anonymous constructor:
+                //Anonymous constructor:
                 
                 {
                     tglAttendance.setSize(5);
@@ -134,20 +136,19 @@ public class TeacherViewController implements Initializable
         buttonsColumn.setPrefWidth(100);
 
         threadLoadsAttendance();
+        
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         tableStudents.getColumns().add(buttonsColumn);
-        choiceBoxClass.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AClass>()
-        {
-            @Override
-            public void changed(ObservableValue<? extends AClass> observable, AClass oldValue, AClass newValue)
-            {
-                model.loadStudentsInClass(newValue.getId());
-            }
-        });
+        
+        checkChoiceBox();
 
     }
 
-    private void checkChoiceBox()
+    /**
+     * 
+     * @param parent 
+     */
+    public void setParentWindowController(LogInViewController parent)
     {
         AClass clas = choiceBoxClass.getSelectionModel().getSelectedItem();
         if (clas == null)
@@ -155,13 +156,39 @@ public class TeacherViewController implements Initializable
             return;
         }
         model.loadStudentsInClass(clas.getId());
-    }
-
-    public void setParentWindowController(LogInViewController parent)
-    {
+        attendancePercentage();
         this.parent = parent;
     }
 
+    /**
+     * Makes a new thread that handles the choicebox changelistener, loads the
+     * students from the selected class and adds attendance percentage.
+     */
+    private void checkChoiceBox()
+    {
+
+        Thread t = new Thread(() ->
+        {
+            choiceBoxClass.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AClass>()
+            {
+                @Override
+                public void changed(ObservableValue<? extends AClass> observable, AClass oldValue, AClass newValue)
+                {
+                    model.loadStudentsInClass(newValue.getId());
+                    attendancePercentage();
+                }
+            });
+
+        }
+        );
+        t.start();
+    }
+
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     private void clickStudentDetails(ActionEvent event) throws IOException
     {
@@ -181,6 +208,9 @@ public class TeacherViewController implements Initializable
         stage.showAndWait();
     }
 
+    /**
+     *
+     */
     private void threadLoadsAttendance()
     {
         Thread thread = new Thread(() ->
@@ -197,11 +227,19 @@ public class TeacherViewController implements Initializable
         thread.start();
     }
 
+    /**
+     * 
+     * @param event 
+     */
     @FXML
     private void datePicker(ActionEvent event)
     {
     }
-
+    
+    /**
+     *
+     * @param event
+     */
     @FXML
     private void datePickerTo(ActionEvent event)
     {
@@ -216,6 +254,9 @@ public class TeacherViewController implements Initializable
         t.start();
     }
 
+    /**
+     *
+     */
     private void attendanceFromTo()
     {
         int i = 0;
@@ -233,6 +274,9 @@ public class TeacherViewController implements Initializable
         }
     }
 
+    /**
+     *
+     */
     private void attendancePercentage()
     {
         for (int i = 0; i < model.loadStudentAttendance().size(); i++)
