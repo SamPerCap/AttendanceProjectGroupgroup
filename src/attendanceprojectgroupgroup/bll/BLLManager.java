@@ -42,13 +42,13 @@ public class BLLManager
     {
         return dalm.getAllClasses();
     }
-    
-    public boolean studentLogin(String user,String password)
+
+    public boolean studentLogin(String user, String password)
     {
         return dalm.studentLogin(user, password);
     }
-    
-    public boolean teacherLogin(String user,String password)
+
+    public boolean teacherLogin(String user, String password)
     {
         return dalm.teacherLogin(user, password);
     }
@@ -99,10 +99,14 @@ public class BLLManager
     {
         dalm.editStudentAttendance(sA);
     }
-    public void registerChange(Integer number){
-        dalm.registerChange(number);
+
+    public void registerChange()
+    {
+        dalm.registerChange();
     }
-    public List<Integer> getChanges(){
+
+    public List<Integer> getChanges()
+    {
         return dalm.getStudentChange();
     }
 }

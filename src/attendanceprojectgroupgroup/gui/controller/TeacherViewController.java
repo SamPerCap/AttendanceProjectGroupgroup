@@ -78,14 +78,8 @@ public class TeacherViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        for (Integer changess : bll.getChanges())
-        {
-            changes.add(changess);
-        }
-        if (changes.contains(1))
-        {
-            System.out.println("sdad");
-        }
+        //System.out.println(bll.getChanges());
+        
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
         columnStudentDate.setCellValueFactory(new PropertyValueFactory("date"));

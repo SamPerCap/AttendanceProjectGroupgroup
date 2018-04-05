@@ -291,17 +291,17 @@ public class DALManager
         return false;
     }
 
-    public void registerChange(Integer number)
+    public void registerChange()
     {
+        int number = 1;
         try (Connection con = cm.getConnection())
         {
             String sql
-                    = "UPDATE Attendance SET studentChange =? "
-                    + " WHERE id=?";
+                    = "UPDATE Attendance SET studentChange =1 "
+                    + " WHERE studentId=1";
 
             PreparedStatement pstmt = con.prepareStatement(sql);
 
-            pstmt.setInt(1, number);
             
             int affected = pstmt.executeUpdate();
             if (affected < 1)
@@ -349,7 +349,6 @@ public class DALManager
             Logger.getLogger(DALManager.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
-
         return allChanges;
     }
 }

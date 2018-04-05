@@ -110,4 +110,7 @@ public class AttendanceModel
     public List<StudentAttendance> getStudentsInClass(int selectedId) { 
         return bllm.getAllStudentsInClass(selectedId);
     }
+    public void registerChange(){
+        bllm.registerChange();
+    }
 }

@@ -6,7 +6,6 @@
 package attendanceprojectgroupgroup.gui.controller;
 
 import attendanceprojectgroupgroup.be.Week;
-import attendanceprojectgroupgroup.bll.BLLManager;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import com.jfoenix.controls.JFXToggleButton;
 import java.net.URL;
@@ -54,7 +53,6 @@ public class StudentViewController implements Initializable
     private LogInViewController parent;
     private AttendanceModel model = new AttendanceModel();
     private int n;
-    private BLLManager bll;
 
     /**
      * Initializes the controller class.
@@ -119,7 +117,7 @@ public class StudentViewController implements Initializable
                 {
                     if (idLabel.getText().equals("1"))
                     {
-                        bll.registerChange(1);
+                        model.registerChange();
                     }
                 }));
                 // keep text "Absent" or "Present" appropriately
