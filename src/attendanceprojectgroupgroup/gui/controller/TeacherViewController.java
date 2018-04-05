@@ -8,6 +8,7 @@ package attendanceprojectgroupgroup.gui.controller;
 import attendanceprojectgroupgroup.be.AClass;
 import attendanceprojectgroupgroup.be.StudentAttendance;
 import attendanceprojectgroupgroup.gui.model.AttendanceModel;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
 import java.io.IOException;
@@ -27,7 +28,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -66,6 +66,7 @@ public class TeacherViewController implements Initializable
     @FXML
     private JFXDatePicker dtPickerTo;
     @FXML
+    
     private AttendanceModel model = new AttendanceModel();
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
 
@@ -79,7 +80,7 @@ public class TeacherViewController implements Initializable
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
         columnStudentDate.setCellValueFactory(new PropertyValueFactory("date"));
         columnStudentPresence.setCellValueFactory(cellData -> cellData.getValue().presenceProperty());
-        // cell factory for toggle buttons:
+        //Cell factory for toggle buttons:
         buttonsColumn.setCellFactory(param ->
         {
             return new TableCell<StudentAttendance, JFXToggleButton>()
@@ -105,10 +106,10 @@ public class TeacherViewController implements Initializable
                         }
                     }
                 }
-                // create toggle button once for cell:
+                //Create toggle button once for cell:
                 private final JFXToggleButton tglAttendance = new JFXToggleButton();
 
-                //anonymous constructor:
+                //Anonymous constructor:
                 
                 {
                     tglAttendance.setSize(5);
@@ -129,15 +130,20 @@ public class TeacherViewController implements Initializable
         buttonsColumn.setPrefWidth(100);
 
         threadLoadsAttendance();
+        
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         tableStudents.getColumns().add(buttonsColumn);
+        
         checkChoiceBox();
 
     }
 
+    /**
+     * 
+     * @param parent 
+     */
     public void setParentWindowController(LogInViewController parent)
     {
-<<<<<<< HEAD
         AClass clas = choiceBoxClass.getSelectionModel().getSelectedItem();
         if (clas == null)
         {
@@ -145,9 +151,7 @@ public class TeacherViewController implements Initializable
         }
         model.loadStudentsInClass(clas.getId());
         attendancePercentage();
-=======
         this.parent = parent;
->>>>>>> fff25c923d40f5f96523752dbf0e7a4afab691cd
     }
 
     /**
@@ -218,14 +222,14 @@ public class TeacherViewController implements Initializable
     }
 
     /**
-     *
-     * @param event
+     * 
+     * @param event 
      */
     @FXML
     private void datePicker(ActionEvent event)
     {
     }
-
+    
     /**
      *
      * @param event
