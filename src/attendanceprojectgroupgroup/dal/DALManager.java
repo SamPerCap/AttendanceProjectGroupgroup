@@ -229,7 +229,7 @@ public class DALManager
 
                 a.setId(rs.getInt("id"));
                 a.setName(rs.getString("name"));
-                a.setAttendance(50f);
+                a.setAttendance(0f);
                 a.setPresence(rs.getString("attendance"));
 
                // allStudentAttendance.add(a);

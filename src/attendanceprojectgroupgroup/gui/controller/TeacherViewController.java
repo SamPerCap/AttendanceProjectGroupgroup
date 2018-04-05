@@ -150,6 +150,7 @@ public class TeacherViewController implements Initializable
             return;
         }
         model.loadStudentsInClass(clas.getId());
+        attendancePercentage();
     }
 
     public void setParentWindowController(LogInViewController parent)
