@@ -259,6 +259,10 @@ public class StudentViewController implements Initializable
         );
     }
 
+    /**
+     *
+     * @return A number that the program translate to button selected or not
+     */
     private int fakeData()
     {
         Random rand = new Random();

@@ -186,7 +186,7 @@ public class TeacherViewController implements Initializable
 
     /**
      *
-     * @param event
+     * @param event Opens the student view
      * @throws IOException
      */
     @FXML

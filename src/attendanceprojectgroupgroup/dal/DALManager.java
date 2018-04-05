@@ -28,6 +28,10 @@ public class DALManager
 
     private ConnectionManager cm = new ConnectionManager();
 
+    /**
+     *
+     * @return List composed by information about StudentAttendance
+     */
     public List<StudentAttendance> getStudentAttendance()
     {
         System.out.println("Getting attendance");
@@ -63,6 +67,11 @@ public class DALManager
         return allStudentAttendance;
     }
 
+    /**
+     *
+     * @return It takes a list composed by week number. From 1 to 8, not very
+     * real data
+     */
     public List<Week> getWeek()
     {
         System.out.println("Getting attendance");
@@ -109,6 +118,10 @@ public class DALManager
         return allClasses;
     }
 
+    /**
+     *
+     * @param sA Able to edit the student's attendance
+     */
     public void editStudentAttendance(StudentAttendance sA)
     {
         try (Connection con = cm.getConnection())
@@ -137,7 +150,7 @@ public class DALManager
 
     /**
      *
-     * @return
+     * @return List composed by Student's information
      */
     public List<Student> getAllStudents()
     {
@@ -297,6 +310,10 @@ public class DALManager
         return false;
     }
 
+    /**
+     * Everytime a student press a button to change attendance. It registers the
+     * change to 1
+     */
     public void registerChange()
     {
         int number = 1;
@@ -308,7 +325,6 @@ public class DALManager
 
             PreparedStatement pstmt = con.prepareStatement(sql);
 
-            
             int affected = pstmt.executeUpdate();
             if (affected < 1)
             {
@@ -321,6 +337,10 @@ public class DALManager
         }
     }
 
+    /**
+     * Created to teacher. Teacher sees a student made a change -> Teacher
+     * refueses or accepts Then the student change is setting to 0
+     */
     public void cancelChange()
     {
         try (Connection con = cm.getConnection())
@@ -335,6 +355,10 @@ public class DALManager
         }
     }
 
+    /**
+     *
+     * @return Every student that made a change in their own attendance
+     */
     public List<Integer> getStudentChange()
     {
         List<Integer> allChanges = new ArrayList();
