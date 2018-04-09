@@ -12,6 +12,8 @@ import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
+import com.sun.webkit.graphics.GraphicsDecoder;
+import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -19,6 +21,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -69,21 +73,27 @@ public class TeacherViewController implements Initializable
     @FXML
     private JFXDatePicker dtPickerTo;
     @FXML
-    
+
     private AttendanceModel model = new AttendanceModel();
     ObservableSet<StudentAttendance> studentsPresence = FXCollections.observableSet();
-    /* It doesnt work by now
-    private List<Integer> changes = new ArrayList<>();
-    */
-    
+    private List<Integer> changes;
+    BLLManager bll = new BLLManager();
+    private TeacherViewController parent2;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        //System.out.println(bll.getChanges());
-        
+
+        changes = new ArrayList<>();
+        for (int i = 0; i < bll.getChanges().size(); i++)
+        {
+            int j = bll.getChanges().get(i);
+            changes.add(j);
+        }
+
         columnStudentsName.setCellValueFactory(new PropertyValueFactory("name"));
         columnStudentsAttendance.setCellValueFactory(new PropertyValueFactory("attendance"));
         columnStudentDate.setCellValueFactory(new PropertyValueFactory("date"));
@@ -138,27 +148,29 @@ public class TeacherViewController implements Initializable
         buttonsColumn.setPrefWidth(100);
 
         threadLoadsAttendance();
-        
+
         choiceBoxClass.setItems(FXCollections.observableArrayList(model.getAllClasses()));
         tableStudents.getColumns().add(buttonsColumn);
-        
-        checkChoiceBox();
 
+        checkChoiceBox();
+        if (!changes.isEmpty())
+        {
+            try
+            {
+                openPopUp();
+            } catch (IOException ex)
+            {
+                Logger.getLogger(TeacherViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**
-     * 
-     * @param parent 
+     *
+     * @param parent
      */
     public void setParentWindowController(LogInViewController parent)
     {
-        AClass clas = choiceBoxClass.getSelectionModel().getSelectedItem();
-        if (clas == null)
-        {
-            return;
-        }
-        model.loadStudentsInClass(clas.getId());
-        attendancePercentage();
         this.parent = parent;
     }
 
@@ -230,14 +242,14 @@ public class TeacherViewController implements Initializable
     }
 
     /**
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void datePicker(ActionEvent event)
     {
     }
-    
+
     /**
      *
      * @param event
@@ -308,6 +320,7 @@ public class TeacherViewController implements Initializable
 
             for (int j = 0; j < model.loadStudentAttendance().size(); j++)
             {
+              
                 tableStudents.getSelectionModel().select(j);
                 int studentId = tableStudents.getSelectionModel().getSelectedItem().getId();
 
@@ -316,8 +329,37 @@ public class TeacherViewController implements Initializable
                     tableStudents.getSelectionModel().select(j);
                     tableStudents.getSelectionModel().getSelectedItem().setAttendance(absensePercentage);
                 }
+                  
+                if (columnStudentsAttendance.getCellData(j) ==0)
+                {
+                    
+                    columnStudentsAttendance.setStyle("-fx-background-color: red");
+                }
             }
         }
     }
 
+    private void openPopUp() throws IOException
+    {
+        for (int i = 0; i < changes.size(); i++)
+        {
+            Stage stage = new Stage();
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader fxLoader = new FXMLLoader(getClass().getResource("/attendanceprojectgroupgroup/gui/view/PopUp.fxml"));
+
+            Parent root = fxLoader.load();
+
+            PopUpController controller = fxLoader.getController();
+            controller.setParentWindowController(parent2);
+            controller.labelID.setText("" + changes.get(i));
+            controller.ID = changes.get(i);
+
+            Scene scene = new Scene(root);
+            stage.setTitle("Warning");
+            stage.setScene(scene);
+            stage.showAndWait();
+        }
+
+    }
 }

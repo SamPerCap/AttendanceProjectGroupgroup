@@ -341,13 +341,22 @@ public class DALManager
      * Created to teacher. Teacher sees a student made a change -> Teacher
      * refueses or accepts Then the student change is setting to 0
      */
-    public void cancelChange()
+    public void cancelChange(int ID)
     {
         try (Connection con = cm.getConnection())
         {
             String sql
                     = "UPDATE Attendance SET studentChange = 0"
-                    + " WHERE id=?";
+                    + " WHERE studentId=?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+
+            pstmt.setInt(1, ID);
+
+            int affected = pstmt.executeUpdate();
+            if (affected < 1)
+            {
+                throw new SQLException("Register could not be edited");
+            }
         } catch (SQLException ex)
         {
             Logger.getLogger(DALManager.class.getName()).log(
@@ -366,7 +375,7 @@ public class DALManager
         try (Connection con = cm.getConnection())
         {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT studentID FROM Attendance WHERE studentChange = 1");
+                    "SELECT DISTINCT studentID FROM Attendance WHERE studentChange = 1");
 
             ResultSet rs = stmt.executeQuery();
 

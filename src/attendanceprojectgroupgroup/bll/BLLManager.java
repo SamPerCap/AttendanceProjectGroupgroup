@@ -71,4 +71,7 @@ public class BLLManager
     {
         return dalm.getStudentChange();
     }
+    public void cancelChange(int ID){
+        dalm.cancelChange(ID);
+    }
 }
