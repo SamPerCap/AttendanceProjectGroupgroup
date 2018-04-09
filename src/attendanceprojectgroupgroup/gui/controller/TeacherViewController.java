@@ -12,6 +12,8 @@ import attendanceprojectgroupgroup.gui.model.AttendanceModel;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXToggleButton;
+import com.sun.webkit.graphics.GraphicsDecoder;
+import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -152,13 +154,6 @@ public class TeacherViewController implements Initializable
      */
     public void setParentWindowController(LogInViewController parent)
     {
-        AClass clas = choiceBoxClass.getSelectionModel().getSelectedItem();
-        if (clas == null)
-        {
-            return;
-        }
-        model.loadStudentsInClass(clas.getId());
-        attendancePercentage();
         this.parent = parent;
     }
 
@@ -308,6 +303,7 @@ public class TeacherViewController implements Initializable
 
             for (int j = 0; j < model.loadStudentAttendance().size(); j++)
             {
+              
                 tableStudents.getSelectionModel().select(j);
                 int studentId = tableStudents.getSelectionModel().getSelectedItem().getId();
 
@@ -315,6 +311,12 @@ public class TeacherViewController implements Initializable
                 {
                     tableStudents.getSelectionModel().select(j);
                     tableStudents.getSelectionModel().getSelectedItem().setAttendance(absensePercentage);
+                }
+                  
+                if (columnStudentsAttendance.getCellData(j) ==0)
+                {
+                    
+                    columnStudentsAttendance.setStyle("-fx-background-color: red");
                 }
             }
         }
