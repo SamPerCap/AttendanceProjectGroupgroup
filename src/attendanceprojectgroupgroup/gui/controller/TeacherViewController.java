@@ -330,10 +330,10 @@ public class TeacherViewController implements Initializable
                     tableStudents.getSelectionModel().getSelectedItem().setAttendance(absensePercentage);
                 }
                   
-                if (columnStudentsAttendance.getCellData(j) ==0)
+                if (columnStudentsAttendance.getCellData(j) < 80)
                 {
-                    
-                    columnStudentsAttendance.setStyle("-fx-background-color: red");
+//                    columnStudentsAttendance.getCellData(j).setStyle();
+                    columnStudentsAttendance.setStyle("-fx-text-fill: red");
                 }
             }
         }
